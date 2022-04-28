@@ -28,112 +28,7 @@ var CONFIG = {
   sourcePath: {"js":"js","css":"css","images":"images"},
 };
 
-window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">BrathBlog</div><div class="header-banner-info__subtitle">Brath</div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content content-home" id="content"><section class="postlist"><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2022/04/28/typora%E9%85%8D%E7%BD%AEgitee%E5%92%8C%E9%98%BF%E9%87%8C%E4%BA%91OSS%E5%9B%BE%E5%BA%93%E4%BD%BF%E7%94%A8picgo%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">Typora使用gitee和阿里云OSS作为图库用picgo上传图片的教程~</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2022-04-28</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-04-28</span></span></div></header><div class="post-body"><div class="post-excerpt">
-        <h2 id="前言"   >
-          <a href="#前言" class="heading-link"><i class="fas fa-link"></i></a><a href="#前言" class="headerlink" title="前言"></a>前言</h2>
-      <ul>
-<li>这一年，写的博客也多，总是需要<strong>插入图片</strong>的，图片存在本地的话上传到博客网站去就没法显示了，就算一个图一个图的复制粘贴上去，想移植到其他的博客网站，图就会失效，为了解决这个问题，这篇文章就诞生了！</li>
-<li>首先，还是一如既往的推荐别人是怎么搞的！</li>
-<li>参考文章如下：</li>
-<li><span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://blog.csdn.net/make_11111111/article/details/104839492" >《Typora上传图片到CSDN——PicGo + Gitee(码云)实现markdown免费图床——开局第一篇》</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
-<li><span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://segmentfault.com/a/1190000022535154" >《markdown笔记神器Typora如何上传图片？（图床功能）</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
-<li><span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://www.codenong.com/cs106528795/" >《一文教你用Typora + Gitee(码云) + PicGo 实现 云 markdown笔记》</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
-</ul>
-
-        <h2 id="环境配置预览"   >
-          <a href="#环境配置预览" class="heading-link"><i class="fas fa-link"></i></a><a href="#环境配置预览" class="headerlink" title="环境配置预览"></a>环境配置预览</h2>
-      <ul>
-<li>安装nodejs：<span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://nodejs.org/en/" >https://nodejs.org/en/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
-<li>Gitee账户：<span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://gitee.com/" >https://gitee.com/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
-<li>阿里云：<span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://homenew.console.aliyun.com/" >https://homenew.console.aliyun.com/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
-<li>Typora软件:<span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://www.typora.io/%23windows" >https://www.typora.io/#windows</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
-<li>PicGo:<span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://molunerfinn.com/PicGo/" >https://molunerfinn.com/PicGo/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
-<li></li>
-</ul>
-
-        <h2 id="01-安装nodejs"   >
-          <a href="#01-安装nodejs" class="heading-link"><i class="fas fa-link"></i></a><a href="#01-安装nodejs" class="headerlink" title="01.安装nodejs"></a>01.安装nodejs</h2>
-      <p>请百度自行安装，不过多介绍 </p>
-<p>node和npm环境检测：</p>
-<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;node -v</span><br><span class="line">v14.16.0</span><br><span class="line"></span><br><span class="line">C:\&gt;npm -v</span><br><span class="line">6.14.11</span><br></pre></td></tr></table></div></figure>
-
-
-        <h2 id="02-Gitee账户配置"   >
-          <a href="#02-Gitee账户配置" class="heading-link"><i class="fas fa-link"></i></a><a href="#02-Gitee账户配置" class="headerlink" title="02.Gitee账户配置"></a>02.Gitee账户配置</h2>
-      
-        <h2 id="新建仓库"   >
-          <a href="#新建仓库" class="heading-link"><i class="fas fa-link"></i></a><a href="#新建仓库" class="headerlink" title="新建仓库"></a>新建仓库</h2>
-      <p><img src="https://brath.cloud/blogImg/v2-2fe1a9ce620e81b91401ea878be94548_720w.jpg" alt="img"></p>
-<p><img src="https://brath.cloud/blogImg/v2-02b0a2c63381b110e5bdc4ac994bd274_720w.jpg" alt="img"></p>
-
-        <h2 id="私人令牌token配置获取"   >
-          <a href="#私人令牌token配置获取" class="heading-link"><i class="fas fa-link"></i></a><a href="#私人令牌token配置获取" class="headerlink" title="私人令牌token配置获取"></a>私人令牌token配置获取</h2>
-      <ul>
-<li>找到<code>设置</code>-&gt;<code>安全设置</code>-&gt;<code>私人令牌</code>，点击生成新令牌</li>
-</ul>
-<p><img src="https://brath.cloud/blogImg/v2-5493431b257b8313f420cd1c456d5550_720w.jpg" alt="img"></p>
-<ul>
-<li>选择下面的选项即可！</li>
-</ul>
-<p><img src="https://brath.cloud/blogImg/v2-06263bbbc624e2b9d5d3782cad1f68b3_720w.jpg" alt="img"></p>
-<ul>
-<li>点击提交，账户安全验证即可</li>
-</ul>
-<p><img src="https://brath.cloud/blogImg/v2-a9ab747329a35bc374101fe870a48084_720w.jpg" alt="img"></p>
-<ul>
-<li>保存后面生成的私人令牌</li>
-</ul>
-<p><img src="https://brath.cloud/blogImg/v2-cf484c849d232aaf07e91460899b0a0e_720w.jpg" alt="v2-cf484c849d232aaf07e91460899b0a0e_720w"></p>
-<ul>
-<li>gitee配置到此完毕！</li>
-</ul>
-
-        <h2 id="03-阿里云OSS配置"   >
-          <a href="#03-阿里云OSS配置" class="heading-link"><i class="fas fa-link"></i></a><a href="#03-阿里云OSS配置" class="headerlink" title="03.阿里云OSS配置"></a>03.阿里云OSS配置</h2>
-      <ul>
-<li>如果没注册过阿里云，访问阿里云官网 <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://homenew.console.aliyun.com/" >https://homenew.console.aliyun.com/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> 新建阿里云账户</li>
-<li>主页搜索对象存储或者 OSS ：</li>
-<li><img src="https://brath.cloud/blogImg/image-20220428095801549.png" alt="image-20220428095801549"></li>
-<li>点击创建Bucket</li>
-<li><img src="https://brath.cloud/blogImg/image-20220428095838515.png" alt="image-20220428095838515"></li>
-<li><img src="https://brath.cloud/blogImg/image-20220428095939979.png" alt="image-20220428095939979"></li>
-<li>创建完毕后进入bucket存储</li>
-<li><img src="https://brath.cloud/blogImg/image-20220428100040269.png" alt="image-20220428100040269"></li>
-<li>OSS配置到此完毕！</li>
-</ul>
-
-        <h2 id="04-PicGo配置"   >
-          <a href="#04-PicGo配置" class="heading-link"><i class="fas fa-link"></i></a><a href="#04-PicGo配置" class="headerlink" title="04.PicGo配置"></a>04.PicGo配置</h2>
-      
-        <h2 id="gitee插件安装"   >
-          <a href="#gitee插件安装" class="heading-link"><i class="fas fa-link"></i></a><a href="#gitee插件安装" class="headerlink" title="gitee插件安装"></a>gitee插件安装</h2>
-      <p><img src="https://brath.cloud/blogImg/v2-c6b94bdc27f8f0300673d02e4800c360_720w.jpg" alt="img"></p>
-
-        <h2 id="gitee插件配置"   >
-          <a href="#gitee插件配置" class="heading-link"><i class="fas fa-link"></i></a><a href="#gitee插件配置" class="headerlink" title="gitee插件配置"></a>gitee插件配置</h2>
-      <p><img src="https://brath.cloud/blogImg/v2-599672d63434fc5cc4dff76104f21778_720w.jpg" alt="img"></p>
-
-        <h2 id="上传尝试"   >
-          <a href="#上传尝试" class="heading-link"><i class="fas fa-link"></i></a><a href="#上传尝试" class="headerlink" title="上传尝试"></a>上传尝试</h2>
-      <p><img src="https://brath.cloud/blogImg/v2-9cd264eef40166488ebdda103631689d_720w.jpg" alt="img"></p>
-
-        <h2 id="阿里云OSS配置"   >
-          <a href="#阿里云OSS配置" class="heading-link"><i class="fas fa-link"></i></a><a href="#阿里云OSS配置" class="headerlink" title="阿里云OSS配置"></a>阿里云OSS配置</h2>
-      <p><img src="https://brath.cloud/blogImg/image-20220428100403657.png" alt="image-20220428100403657"></p>
-<ul>
-<li>这里，您可以随便截图一张，剪贴板图片上传试试效果</li>
-<li>图片放大看看，本文的图片是不是就在下面这里！哈哈哈！</li>
-</ul>
-<p><img src="https://brath.cloud/blogImg/v2-05a45967b7af32a9f3299d93fdeab526_720w.jpg" alt="img"></p>
-
-        <h2 id="05-Typora配置"   >
-          <a href="#05-Typora配置" class="heading-link"><i class="fas fa-link"></i></a><a href="#05-Typora配置" class="headerlink" title="05.Typora配置"></a>05.Typora配置</h2>
-      <ul>
-<li>说实话，写这篇文章，就是想用到markdown自动上传图片，自动同步图片到各个平台！</li>
-<li>废话不多说，建议直接和博主配置一样就行！</li>
-</ul>
-<p><img src="https://brath.cloud/blogImg/image-20220428093756533.png" alt="image-20220428093756533"></p>
-</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2022/04/28/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2VUE%E9%A1%B9%E7%9B%AE/">Linux服务器下部署vue 2.0项目</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2022-04-28</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-04-28</span></span></div></header><div class="post-body"><div class="post-excerpt">
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">BrathBlog</div><div class="header-banner-info__subtitle">Brath</div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content content-home" id="content"><section class="postlist"><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2022/04/28/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2VUE%E9%A1%B9%E7%9B%AE/">Linux服务器下部署vue 2.0项目</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2022-04-28</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-04-28</span></span></div></header><div class="post-body"><div class="post-excerpt">
         <h3 id="一、安装VUE环境"   >
           <a href="#一、安装VUE环境" class="heading-link"><i class="fas fa-link"></i></a><a href="#一、安装VUE环境" class="headerlink" title="一、安装VUE环境"></a>一、安装VUE环境</h3>
       <p>1.wget指定进行下载，下载后文件默认存在根目录下的root包下面；</p>
@@ -672,4 +567,9 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></he
 </div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/10/28/Alibaba%E5%88%86%E5%B1%82%E9%A2%86%E5%9F%9F%E6%A8%A1%E5%9E%8B%E8%A7%84%E7%BA%A6/">阿里巴巴Java开发手册中的DO、DTO、BO、AO、VO、POJO定义</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-10-28</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-04-25</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>分层领域模型规约：</p>
 <p>DO（ Data Object）：与数据库表结构一一对应，通过DAO层向上传输数据源对象。<br>DTO（ Data Transfer Object）：数据传输对象，Service或Manager向外传输的对象。<br>BO（ Business Object）：业务对象。 由Service层输出的封装业务逻辑的对象。<br>AO（ Application Object）：应用对象。 在Web层与Service层之间抽象的复用对象模型，极为贴近展示层，复用度不高。<br>VO（ View Object）：显示层对象，通常是Web向模板渲染引擎层传输的对象。<br>POJO（ Plain Ordinary Java Object）：在本手册中， POJO专指只有setter/getter/toString的简单类，包括DO/DTO/BO/VO等。<br>Query：数据查询对象，各层接收上层的查询请求。 注意超过2个参数的查询封装，禁止使用Map类来传输。<br>领域模型命名规约：</p>
 <p>数据对象：xxxDO，xxx即为数据表名。<br>数据传输对象：xxxDTO，xxx为业务领域相关的名称。<br>展示对象：xxxVO，xxx一般为网页名称。<br>POJO是DO/DTO/BO/VO的统称，禁止命名成xxxPOJO。</p>
-</div></div></article></section><nav class="paginator"><div class="paginator-inner"><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-right"></i></a></div></nav></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><section class="sidebar-toc hide"></section><!-- ov = overview--><section class="sidebar-ov"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="https://brath.cloud/EnjoyNotesLogo.png?versionId=CAEQMhiBgID_rP.3_BciIGMyZGVkMjNmNzM0MDQxNWI5YmE4MGZjYTdkY2FkNjQw" alt="avatar"></div><p class="sidebar-ov-author__text">Brath</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">25</div><div class="sidebar-ov-state-item__name">归档</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2022</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Brath</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v5.4.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.2</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script></body></html>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/10/28/%E7%AB%AF%E5%8F%A3%E5%8F%B7%E8%A2%AB%E5%8D%A0%E7%94%A8%E7%9A%84%E6%83%85%E5%86%B5%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3/">端口占用问题</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-10-28</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-04-25</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>安装好Maven之后配置环境变量：</p>
+<p>netstat -ano：查询全部活动连接</p>
+<p>tasklist ：查询全部的进程和PID</p>
+<p>tasklist | findstr “占用端口的进程PID”</p>
+<p>taskkill /f /t /im 占用端口的进程名字.exe</p>
+</div></div></article></section><nav class="paginator"><div class="paginator-inner"><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-right"></i></a></div></nav></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><section class="sidebar-toc hide"></section><!-- ov = overview--><section class="sidebar-ov"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="https://brath.cloud/EnjoyNotesLogo.png?versionId=CAEQMhiBgID_rP.3_BciIGMyZGVkMjNmNzM0MDQxNWI5YmE4MGZjYTdkY2FkNjQw" alt="avatar"></div><p class="sidebar-ov-author__text">Brath</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">24</div><div class="sidebar-ov-state-item__name">归档</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2022</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Brath</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v5.4.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.2</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script></body></html>
