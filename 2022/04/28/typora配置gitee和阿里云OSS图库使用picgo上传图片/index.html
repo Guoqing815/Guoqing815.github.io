@@ -1,0 +1,170 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.2" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.2" type="image/png" sizes="32x32"><meta name="description" content="前言        这一年，写的博客也多，总是需要插入图片的，图片存在本地的话上传到博客网站去就没法显示了，就算一个图一个图的复制粘贴上去，想移植到其他的博客网站，图就会失效，为了解决这个问题，这篇文章就诞生了！ 首先，还是一如既往的推荐别人是怎么搞的！ 参考文章如下： 《Typora上传图片到CSDN——PicGo + Gitee(码云)实现markdow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Typora使用gitee和阿里云OSS作为图库用picgo上传图片的教程~">
+<meta property="og:url" content="http://example.com/2022/04/28/typora%E9%85%8D%E7%BD%AEgitee%E5%92%8C%E9%98%BF%E9%87%8C%E4%BA%91OSS%E5%9B%BE%E5%BA%93%E4%BD%BF%E7%94%A8picgo%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/index.html">
+<meta property="og:site_name" content="BrathBlog">
+<meta property="og:description" content="前言        这一年，写的博客也多，总是需要插入图片的，图片存在本地的话上传到博客网站去就没法显示了，就算一个图一个图的复制粘贴上去，想移植到其他的博客网站，图就会失效，为了解决这个问题，这篇文章就诞生了！ 首先，还是一如既往的推荐别人是怎么搞的！ 参考文章如下： 《Typora上传图片到CSDN——PicGo + Gitee(码云)实现markdow">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://brath.cloud/blogImg/v2-2fe1a9ce620e81b91401ea878be94548_720w.jpg">
+<meta property="og:image" content="https://brath.cloud/blogImg/v2-02b0a2c63381b110e5bdc4ac994bd274_720w.jpg">
+<meta property="og:image" content="https://brath.cloud/blogImg/v2-5493431b257b8313f420cd1c456d5550_720w.jpg">
+<meta property="og:image" content="https://brath.cloud/blogImg/v2-06263bbbc624e2b9d5d3782cad1f68b3_720w.jpg">
+<meta property="og:image" content="https://brath.cloud/blogImg/v2-a9ab747329a35bc374101fe870a48084_720w.jpg">
+<meta property="og:image" content="https://brath.cloud/blogImg/v2-cf484c849d232aaf07e91460899b0a0e_720w.jpg">
+<meta property="og:image" content="https://brath.cloud/blogImg/image-20220428095801549.png">
+<meta property="og:image" content="https://brath.cloud/blogImg/image-20220428095838515.png">
+<meta property="og:image" content="https://brath.cloud/blogImg/image-20220428095939979.png">
+<meta property="og:image" content="https://brath.cloud/blogImg/image-20220428100040269.png">
+<meta property="og:image" content="https://brath.cloud/blogImg/v2-c6b94bdc27f8f0300673d02e4800c360_720w.jpg">
+<meta property="og:image" content="https://brath.cloud/blogImg/v2-599672d63434fc5cc4dff76104f21778_720w.jpg">
+<meta property="og:image" content="https://brath.cloud/blogImg/v2-9cd264eef40166488ebdda103631689d_720w.jpg">
+<meta property="og:image" content="https://brath.cloud/blogImg/image-20220428100403657.png">
+<meta property="og:image" content="https://brath.cloud/blogImg/v2-05a45967b7af32a9f3299d93fdeab526_720w.jpg">
+<meta property="og:image" content="https://brath.cloud/blogImg/image-20220428093756533.png">
+<meta property="article:published_time" content="2022-04-28T02:04:36.862Z">
+<meta property="article:modified_time" content="2022-04-28T02:04:18.565Z">
+<meta property="article:author" content="Brath">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://brath.cloud/blogImg/v2-2fe1a9ce620e81b91401ea878be94548_720w.jpg"><title>Typora使用gitee和阿里云OSS作为图库用picgo上传图片的教程~ | BrathBlog</title><link ref="canonical" href="http://example.com/2022/04/28/typora%E9%85%8D%E7%BD%AEgitee%E5%92%8C%E9%98%BF%E9%87%8C%E4%BA%91OSS%E5%9B%BE%E5%BA%93%E4%BD%BF%E7%94%A8picgo%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: true,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">BrathBlog</div><div class="header-banner-info__subtitle">Brath</div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">Typora使用gitee和阿里云OSS作为图库用picgo上传图片的教程~</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2022-04-28</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-04-28</span></span></div></header><div class="post-body">
+        <h2 id="前言"   >
+          <a href="#前言" class="heading-link"><i class="fas fa-link"></i></a><a href="#前言" class="headerlink" title="前言"></a>前言</h2>
+      <ul>
+<li>这一年，写的博客也多，总是需要<strong>插入图片</strong>的，图片存在本地的话上传到博客网站去就没法显示了，就算一个图一个图的复制粘贴上去，想移植到其他的博客网站，图就会失效，为了解决这个问题，这篇文章就诞生了！</li>
+<li>首先，还是一如既往的推荐别人是怎么搞的！</li>
+<li>参考文章如下：</li>
+<li><span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://blog.csdn.net/make_11111111/article/details/104839492" >《Typora上传图片到CSDN——PicGo + Gitee(码云)实现markdown免费图床——开局第一篇》</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+<li><span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://segmentfault.com/a/1190000022535154" >《markdown笔记神器Typora如何上传图片？（图床功能）</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+<li><span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://www.codenong.com/cs106528795/" >《一文教你用Typora + Gitee(码云) + PicGo 实现 云 markdown笔记》</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+</ul>
+
+        <h2 id="环境配置预览"   >
+          <a href="#环境配置预览" class="heading-link"><i class="fas fa-link"></i></a><a href="#环境配置预览" class="headerlink" title="环境配置预览"></a>环境配置预览</h2>
+      <ul>
+<li>安装nodejs：<span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://nodejs.org/en/" >https://nodejs.org/en/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+<li>Gitee账户：<span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://gitee.com/" >https://gitee.com/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+<li>阿里云：<span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://homenew.console.aliyun.com/" >https://homenew.console.aliyun.com/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+<li>Typora软件:<span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://www.typora.io/%23windows" >https://www.typora.io/#windows</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+<li>PicGo:<span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://molunerfinn.com/PicGo/" >https://molunerfinn.com/PicGo/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+<li></li>
+</ul>
+
+        <h2 id="01-安装nodejs"   >
+          <a href="#01-安装nodejs" class="heading-link"><i class="fas fa-link"></i></a><a href="#01-安装nodejs" class="headerlink" title="01.安装nodejs"></a>01.安装nodejs</h2>
+      <p>请百度自行安装，不过多介绍 </p>
+<p>node和npm环境检测：</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;node -v</span><br><span class="line">v14.16.0</span><br><span class="line"></span><br><span class="line">C:\&gt;npm -v</span><br><span class="line">6.14.11</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="02-Gitee账户配置"   >
+          <a href="#02-Gitee账户配置" class="heading-link"><i class="fas fa-link"></i></a><a href="#02-Gitee账户配置" class="headerlink" title="02.Gitee账户配置"></a>02.Gitee账户配置</h2>
+      
+        <h2 id="新建仓库"   >
+          <a href="#新建仓库" class="heading-link"><i class="fas fa-link"></i></a><a href="#新建仓库" class="headerlink" title="新建仓库"></a>新建仓库</h2>
+      <p><img src="https://brath.cloud/blogImg/v2-2fe1a9ce620e81b91401ea878be94548_720w.jpg" alt="img"></p>
+<p><img src="https://brath.cloud/blogImg/v2-02b0a2c63381b110e5bdc4ac994bd274_720w.jpg" alt="img"></p>
+
+        <h2 id="私人令牌token配置获取"   >
+          <a href="#私人令牌token配置获取" class="heading-link"><i class="fas fa-link"></i></a><a href="#私人令牌token配置获取" class="headerlink" title="私人令牌token配置获取"></a>私人令牌token配置获取</h2>
+      <ul>
+<li>找到<code>设置</code>-&gt;<code>安全设置</code>-&gt;<code>私人令牌</code>，点击生成新令牌</li>
+</ul>
+<p><img src="https://brath.cloud/blogImg/v2-5493431b257b8313f420cd1c456d5550_720w.jpg" alt="img"></p>
+<ul>
+<li>选择下面的选项即可！</li>
+</ul>
+<p><img src="https://brath.cloud/blogImg/v2-06263bbbc624e2b9d5d3782cad1f68b3_720w.jpg" alt="img"></p>
+<ul>
+<li>点击提交，账户安全验证即可</li>
+</ul>
+<p><img src="https://brath.cloud/blogImg/v2-a9ab747329a35bc374101fe870a48084_720w.jpg" alt="img"></p>
+<ul>
+<li>保存后面生成的私人令牌</li>
+</ul>
+<p><img src="https://brath.cloud/blogImg/v2-cf484c849d232aaf07e91460899b0a0e_720w.jpg" alt="v2-cf484c849d232aaf07e91460899b0a0e_720w"></p>
+<ul>
+<li>gitee配置到此完毕！</li>
+</ul>
+
+        <h2 id="03-阿里云OSS配置"   >
+          <a href="#03-阿里云OSS配置" class="heading-link"><i class="fas fa-link"></i></a><a href="#03-阿里云OSS配置" class="headerlink" title="03.阿里云OSS配置"></a>03.阿里云OSS配置</h2>
+      <ul>
+<li>如果没注册过阿里云，访问阿里云官网 <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://homenew.console.aliyun.com/" >https://homenew.console.aliyun.com/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> 新建阿里云账户</li>
+<li>主页搜索对象存储或者 OSS ：</li>
+<li><img src="https://brath.cloud/blogImg/image-20220428095801549.png" alt="image-20220428095801549"></li>
+<li>点击创建Bucket</li>
+<li><img src="https://brath.cloud/blogImg/image-20220428095838515.png" alt="image-20220428095838515"></li>
+<li><img src="https://brath.cloud/blogImg/image-20220428095939979.png" alt="image-20220428095939979"></li>
+<li>创建完毕后进入bucket存储</li>
+<li><img src="https://brath.cloud/blogImg/image-20220428100040269.png" alt="image-20220428100040269"></li>
+<li>OSS配置到此完毕！</li>
+</ul>
+
+        <h2 id="04-PicGo配置"   >
+          <a href="#04-PicGo配置" class="heading-link"><i class="fas fa-link"></i></a><a href="#04-PicGo配置" class="headerlink" title="04.PicGo配置"></a>04.PicGo配置</h2>
+      
+        <h2 id="gitee插件安装"   >
+          <a href="#gitee插件安装" class="heading-link"><i class="fas fa-link"></i></a><a href="#gitee插件安装" class="headerlink" title="gitee插件安装"></a>gitee插件安装</h2>
+      <p><img src="https://brath.cloud/blogImg/v2-c6b94bdc27f8f0300673d02e4800c360_720w.jpg" alt="img"></p>
+
+        <h2 id="gitee插件配置"   >
+          <a href="#gitee插件配置" class="heading-link"><i class="fas fa-link"></i></a><a href="#gitee插件配置" class="headerlink" title="gitee插件配置"></a>gitee插件配置</h2>
+      <p><img src="https://brath.cloud/blogImg/v2-599672d63434fc5cc4dff76104f21778_720w.jpg" alt="img"></p>
+
+        <h2 id="上传尝试"   >
+          <a href="#上传尝试" class="heading-link"><i class="fas fa-link"></i></a><a href="#上传尝试" class="headerlink" title="上传尝试"></a>上传尝试</h2>
+      <p><img src="https://brath.cloud/blogImg/v2-9cd264eef40166488ebdda103631689d_720w.jpg" alt="img"></p>
+
+        <h2 id="阿里云OSS配置"   >
+          <a href="#阿里云OSS配置" class="heading-link"><i class="fas fa-link"></i></a><a href="#阿里云OSS配置" class="headerlink" title="阿里云OSS配置"></a>阿里云OSS配置</h2>
+      <p><img src="https://brath.cloud/blogImg/image-20220428100403657.png" alt="image-20220428100403657"></p>
+<ul>
+<li>这里，您可以随便截图一张，剪贴板图片上传试试效果</li>
+<li>图片放大看看，本文的图片是不是就在下面这里！哈哈哈！</li>
+</ul>
+<p><img src="https://brath.cloud/blogImg/v2-05a45967b7af32a9f3299d93fdeab526_720w.jpg" alt="img"></p>
+
+        <h2 id="05-Typora配置"   >
+          <a href="#05-Typora配置" class="heading-link"><i class="fas fa-link"></i></a><a href="#05-Typora配置" class="headerlink" title="05.Typora配置"></a>05.Typora配置</h2>
+      <ul>
+<li>说实话，写这篇文章，就是想用到markdown自动上传图片，自动同步图片到各个平台！</li>
+<li>废话不多说，建议直接和博主配置一样就行！</li>
+</ul>
+<p><img src="https://brath.cloud/blogImg/image-20220428093756533.png" alt="image-20220428093756533"></p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="http://example.com">Brath</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="http://example.com/2022/04/28/typora%E9%85%8D%E7%BD%AEgitee%E5%92%8C%E9%98%BF%E9%87%8C%E4%BA%91OSS%E5%9B%BE%E5%BA%93%E4%BD%BF%E7%94%A8picgo%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">http://example.com/2022/04/28/typora%E9%85%8D%E7%BD%AEgitee%E5%92%8C%E9%98%BF%E9%87%8C%E4%BA%91OSS%E5%9B%BE%E5%BA%93%E4%BD%BF%E7%94%A8picgo%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-reward reward"><div class="reward-button">请我喝杯咖啡~</div><div class="reward-qrcode"><span class="reward-qrcode-alipay"><img class="reward-qrcode-alipay__img" src="https://brath.cloud/zfb.jpg"><div class="reward-qrcode-alipay__text">支付宝打赏</div></span><span class="reward-qrcode-wechat"><img class="reward-qrcode-wechat__img" src="https://brath.cloud/wx.jpg"><div class="reward-qrcode-wechat__text">微信打赏</div></span></div></div><nav class="post-paginator paginator"><div class="paginator-next"><a class="paginator-next__link" href="/2022/04/28/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2VUE%E9%A1%B9%E7%9B%AE/"><span class="paginator-prev__text">Linux服务器下部署vue 2.0项目</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">
+          前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E9%A2%84%E8%A7%88"><span class="toc-number">2.</span> <span class="toc-text">
+          环境配置预览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#01-%E5%AE%89%E8%A3%85nodejs"><span class="toc-number">3.</span> <span class="toc-text">
+          01.安装nodejs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#02-Gitee%E8%B4%A6%E6%88%B7%E9%85%8D%E7%BD%AE"><span class="toc-number">4.</span> <span class="toc-text">
+          02.Gitee账户配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E4%BB%93%E5%BA%93"><span class="toc-number">5.</span> <span class="toc-text">
+          新建仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%81%E4%BA%BA%E4%BB%A4%E7%89%8Ctoken%E9%85%8D%E7%BD%AE%E8%8E%B7%E5%8F%96"><span class="toc-number">6.</span> <span class="toc-text">
+          私人令牌token配置获取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#03-%E9%98%BF%E9%87%8C%E4%BA%91OSS%E9%85%8D%E7%BD%AE"><span class="toc-number">7.</span> <span class="toc-text">
+          03.阿里云OSS配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#04-PicGo%E9%85%8D%E7%BD%AE"><span class="toc-number">8.</span> <span class="toc-text">
+          04.PicGo配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gitee%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="toc-number">9.</span> <span class="toc-text">
+          gitee插件安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gitee%E6%8F%92%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="toc-number">10.</span> <span class="toc-text">
+          gitee插件配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E4%BC%A0%E5%B0%9D%E8%AF%95"><span class="toc-number">11.</span> <span class="toc-text">
+          上传尝试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%BF%E9%87%8C%E4%BA%91OSS%E9%85%8D%E7%BD%AE"><span class="toc-number">12.</span> <span class="toc-text">
+          阿里云OSS配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#05-Typora%E9%85%8D%E7%BD%AE"><span class="toc-number">13.</span> <span class="toc-text">
+          05.Typora配置</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="https://brath.cloud/EnjoyNotesLogo.png?versionId=CAEQMhiBgID_rP.3_BciIGMyZGVkMjNmNzM0MDQxNWI5YmE4MGZjYTdkY2FkNjQw" alt="avatar"></div><p class="sidebar-ov-author__text">Brath</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">25</div><div class="sidebar-ov-state-item__name">归档</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2022</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Brath</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v5.4.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.2</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script></body></html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.2" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.2" type="image/png" sizes="32x32"><meta name="description" content="一、持久化简介       Redis 的数据 全部存储 在 内存 中，如果 突然宕机，数据就会全部丢失，因此必须有一套机制来保证Redis 的数据不会因为故障而丢失，这种机制就是 Redis 的 持久化机制，它会将内存中的数据库状态保存到磁盘 中。 持久化发生了什么？ | 从内存到磁盘： 我们来稍微考虑一下 Redis 作为一个内存数据库 要做的关于持久化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis持久化">
+<meta property="og:url" content="http://example.com/2021/09/30/Redis%E6%8C%81%E4%B9%85%E5%8C%96/index.html">
+<meta property="og:site_name" content="BrathBlog">
+<meta property="og:description" content="一、持久化简介       Redis 的数据 全部存储 在 内存 中，如果 突然宕机，数据就会全部丢失，因此必须有一套机制来保证Redis 的数据不会因为故障而丢失，这种机制就是 Redis 的 持久化机制，它会将内存中的数据库状态保存到磁盘 中。 持久化发生了什么？ | 从内存到磁盘： 我们来稍微考虑一下 Redis 作为一个内存数据库 要做的关于持久化">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-09-30T06:49:49.725Z">
+<meta property="article:modified_time" content="2021-09-30T09:27:30.806Z">
+<meta property="article:author" content="Brath">
+<meta name="twitter:card" content="summary"><title>Redis持久化 | BrathBlog</title><link ref="canonical" href="http://example.com/2021/09/30/Redis%E6%8C%81%E4%B9%85%E5%8C%96/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: true,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">BrathBlog</div><div class="header-banner-info__subtitle">Brath</div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">Redis持久化</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-09-30</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-09-30</span></span></div></header><div class="post-body">
+        <h3 id="一、持久化简介"   >
+          <a href="#一、持久化简介" class="heading-link"><i class="fas fa-link"></i></a><a href="#一、持久化简介" class="headerlink" title="一、持久化简介"></a><strong>一、持久化简介</strong></h3>
+      <p><strong>Redis</strong> 的数据 <strong>全部存储</strong> 在 <strong>内存</strong> 中，如果 <strong>突然宕机</strong>，数据就会全部丢失，因此必须有一套机制来保证Redis 的数据不会因为故障而丢失，这种机制就是 Redis 的 <strong>持久化机制</strong>，它会将内存中的数据库状态保存到磁盘 中。</p>
+<p><strong>持久化发生了什么</strong>？ <strong>|</strong> <strong>从内存到磁盘</strong>：</p>
+<p>我们来稍微考虑一下 <strong>Redis</strong> 作为一个内存数据库 要做的关于持久化的事情。通常来说，从客户端发</p>
+<p>起请求开始，到服务器真实地写入磁盘，需要发生如下几件事情：</p>
+<p><strong>详细版</strong> 的文字描述大概就是下面这样：</p>
+<p>\1. 客户端向数据库 <strong>发送写命令</strong> <em>(<em>数据在客户端的内存中</em>)</em> </p>
+<p>\2. 数据库 <strong>接收</strong> 到客户端的 <strong>写请求</strong> <em>(<em>数据在服务器的内存中</em>)</em> </p>
+<p>\3. 数据库 <strong>调用系统</strong> <strong>API</strong> 将数据写入磁盘 <em>(<em>数据在内核缓冲区中</em>)</em> </p>
+<p>\4. 操作系统将 <strong>写缓冲区</strong> 传输到 <strong>磁盘控控制器</strong> <em>(<em>数据在磁盘缓存中</em>)</em> </p>
+<p>\5. 操作系统的磁盘控制器将数据 <strong>写入实际的物理媒介</strong> 中 <em>(<em>数据在磁盘中</em>)</em></p>
+<p><strong>注意、上面的过程其实是 <strong>极度精简 的，在实际的操作系统中，</strong>缓存</strong> 和 <strong>缓冲区</strong> 会比这 <strong>多得多</strong>…</p>
+
+        <h3 id="如何尽可能保证持久化的安全"   >
+          <a href="#如何尽可能保证持久化的安全" class="heading-link"><i class="fas fa-link"></i></a><a href="#如何尽可能保证持久化的安全" class="headerlink" title="如何尽可能保证持久化的安全"></a><strong>如何尽可能保证持久化的安全</strong></h3>
+      <p>如果我们故障仅仅涉及到 <strong>软件层面</strong> <em>(<em>该进程被管理员终止或程序崩溃</em>)</em> 并且没有接触到内核，那么在 上 述步骤 <em>3</em> 成功返回之后，我们就认为成功了。即使进程崩溃，操作系统仍然会帮助我们把数据正确地写入磁盘。</p>
+<p>如果我们考虑 **停电 **火灾 等 <strong>更具灾难性</strong> 的事情，那么只有在完成了第 <strong>5</strong> 步之后，才是安全的。</p>
+<p>所以我们可以总结得出数据安全最重要的阶段是：<strong>步骤三、四、五</strong>，即：</p>
+<p>数据库软件调用写操作将用户空间的缓冲区转移到内核缓冲区的频率是多少？</p>
+<p>内核多久从缓冲区取数据刷新到磁盘控制器？</p>
+<p>磁盘控制器多久把数据写入物理媒介一次？</p>
+<p><strong>注意：</strong> 如果真的发生灾难性的事件，我们可以从上图的过程中看到，任何一步都可能被意外打断</p>
+<p>丢失，所以只能 <strong>尽可能地保证</strong> 数据的安全，这对于所有数据库来说都是一样的。</p>
+<p>我们从 <strong>第三步</strong> 开始。Linux 系统提供了清晰、易用的用于操作文件的 POSIX file API ， 20 多年过</p>
+<p>去，仍然还有很多人对于这一套 API 的设计津津乐道，我想其中一个原因就是因为你光从 API 的命名</p>
+<p>就能够很清晰地知道这一套 API 的用途：</p>
+<figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">open</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *path, <span class="keyword">int</span> oflag, ...<span class="comment">/*,mode_t mode */</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">close</span> <span class="params">(<span class="keyword">int</span> filedes)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">remove</span><span class="params">( <span class="keyword">const</span> <span class="keyword">char</span> *fname )</span></span>; </span><br><span class="line"><span class="function">ssize_t <span class="title">write</span><span class="params">(<span class="keyword">int</span> fildes, <span class="keyword">const</span> <span class="keyword">void</span> *buf, size_t nbyte)</span></span>;</span><br><span class="line"><span class="function">ssize_t <span class="title">read</span><span class="params">(<span class="keyword">int</span> fildes, <span class="keyword">void</span> *buf, size_t nbyte)</span></span>;</span><br></pre></td></tr></table></div></figure>
+
+<p>所以，我们有很好的可用的 API 来完成 <strong>第三步</strong>，但是对于成功返回之前，我们对系统调用花费的时间没有太多的控制权。</p>
+<p>然后我们来说说 <strong>第四步</strong>。我们知道，除了早期对电脑特别了解那帮人 *(<em>操作系统就这帮人搞的</em>)*，实际的物理硬件都不是我们能够 <strong>直接操作</strong> 的，都是通过 <strong>操作系统调用</strong> 来达到目的的。为了防止过慢的 I/O 操作拖慢整个系统的运行，操作系统层面做了很多的努力，譬如说 <strong>上述第四步</strong> 提到的 <strong>写缓冲区</strong>，并不是所有的写操作都会被立即写入磁盘，而是要先经过一个缓冲区，默认情况下，Linux 将在 <strong>30</strong> <strong>秒</strong> 后实际提交写入。</p>
+<p>但是很明显，<strong>30</strong> <strong>秒</strong> 并不是 Redis 能够承受的，这意味着，如果发生故障，那么最近 30 秒内写入的所有数据都可能会丢失。幸好 PROSIX API 提供了另一个解决方案： fsync ，该命令会 <strong>强制</strong> 内核将 <strong>缓****冲区</strong> 写入 <strong>磁盘</strong>，但这是一个非常消耗性能的操作，每次调用都会 <strong>阻塞等待</strong> 直到设备报告 IO 完成，所以一般在生产环境的服务器中，<strong>Redis</strong> 通常是每隔 1s 左右执行一次 fsync 操作。到目前为止，我们了解到了如何控制 第三步 和 第四步 ，但是对于 <strong>第五步</strong>，我们 <strong>完全无法控制</strong>。也许一些内核实现将试图告诉驱动实际提交物理介质上的数据，或者控制器可能会为了提高速度而重新排序写操作，不会尽快将数据真正写到磁盘上，而是会等待几个多毫秒。这完全是我们无法控制的。</p>
+
+        <h3 id="二、Redis-中的两种持久化方式"   >
+          <a href="#二、Redis-中的两种持久化方式" class="heading-link"><i class="fas fa-link"></i></a><a href="#二、Redis-中的两种持久化方式" class="headerlink" title="**二、Redis **中的两种持久化方式"></a>**二、Redis **中的两种持久化方式</h3>
+      <p><strong>方式一：快照</strong></p>
+<p><strong>Redis</strong> <strong>快照</strong> 是最简单的 Redis 持久性模式。当满足特定条件时，它将生成数据集的时间点快照，例如，</p>
+<p>如果先前的快照是在2分钟前创建的，并且现在已经至少有 <em>100</em> 次新写入，则将创建一个新的快照。此条件可以由用户配置 Redis 实例来控制，也可以在运行时修改而无需重新启动服务器。快照作为包含整个数据集的单个 .rdb 文件生成。</p>
+<p>但我们知道，Redis 是一个 <strong>单线程</strong> 的程序，这意味着，我们不仅仅要响应用户的请求，还需要进行内存快照。而后者要求 Redis 必须进行 IO 操作，这会严重拖累服务器的性能。</p>
+<p>还有一个重要的问题是，我们在 <strong>持久化的同时</strong>，<strong>内存数据结构</strong> 还可能在 <strong>变化</strong>，比如一个大型的 hash字典正在持久化，结果一个请求过来把它删除了，可是这才刚持久化结束，咋办？</p>
+<p><strong>使用系统多进程</strong> <strong>COW(Copy On Write)</strong> <strong>机制</strong> <strong>| fork</strong> <strong>函数</strong></p>
+<p>操作系统多进程 <strong>COW(Copy On Write)</strong> <strong>机制</strong> 拯救了我们。<strong>Redis</strong> 在持久化时会调用 glibc 的函数</p>
+<p>fork 产生一个子进程，简单理解也就是基于当前进程 <strong>复制</strong> 了一个进程，主进程和子进程会共享内存</p>
+<p>里面的代码块和数据段：</p>
+<p>这里多说一点，<strong>为什么</strong> <strong>fork</strong> <strong>成功调用后会有两个返回值呢？</strong> 因为子进程在复制时复制了父进程的堆栈</p>
+<p>段，所以两个进程都停留在了 fork 函数中 *(<em>都在同一个地方往下继续</em>“<em>同时</em>“<em>执行</em>)*，等待返回，所以 <strong>一</strong></p>
+<p><strong>次在父进程中返回子进程的</strong> *<em>pid</em>***，另一次在子进程中返回零，系统资源不够时返回负数</p>
+<figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pid = os.fork() </span><br><span class="line">  <span class="keyword">if</span> pid &gt; 0a:</span><br><span class="line">	handle_client_request() # 父进程继续处理客户端请求 </span><br><span class="line">  <span class="keyword">if</span> pid == <span class="number">0</span>: </span><br><span class="line">    handle_snapshot_write() # 子进程处理快照写磁盘 </span><br><span class="line">  <span class="keyword">if</span> pid &lt; <span class="number">0</span>: # fork error</span><br></pre></td></tr></table></div></figure>
+
+<p>所以 <strong>快照持久化</strong> 可以完全交给 <strong>子进程</strong> 来处理，<strong>父进程</strong> 则继续 <strong>处理客户端请求</strong>。<strong>子进程</strong> 做数据持久</p>
+<p>化，它 <strong>不会修改现有的内存数据结构</strong>，它只是对数据结构进行遍历读取，然后序列化写到磁盘中。但是</p>
+<p><strong>父进程</strong> 不一样，它必须持续服务客户端请求，然后对 <strong>内存数据结构进行不间断的修改</strong>。</p>
+<p>这个时候就会使用操作系统的 COW 机制来进行 <strong>数据段页面</strong> 的分离。数据段是由很多操作系统的页面组合而成，当父进程对其中一个页面的数据进行修改时，会将被共享的页面复 制一份分离出来，然后</p>
+<p><strong>对这个复制的页面进行修改</strong>。这时 <strong>子进程</strong> 相应的页面是 <strong>没有变化的</strong>，还是进程产生时那一瞬间的数据。</p>
+<p>子进程因为数据没有变化，它能看到的内存里的数据在进程产生的一瞬间就凝固了，再也不会改变，这也是为什么 <strong>Redis</strong> 的持久化 <strong>叫「快照」的原因</strong>。接下来子进程就可以非常安心的遍历数据了进行序列化写磁盘了。</p>
+<p><strong>快照不是很持久</strong>。如果运行 Redis 的计算机停止运行，电源线出现故障或者您 kill -9 的实例意外发生，则写入 Redis 的最新数据将丢失。尽管这对于某些应用程序可能不是什么大问题，但有些使用案例具有充分的耐用性，在这些情况下，快照并不是可行的选择。</p>
+<p><strong>AOF(Append Only File -</strong> <strong>仅追加文件</strong><strong>)</strong> 它的工作方式非常简单：每次执行 <strong>修改内存</strong> 中数据集的写操作时，都会 <strong>记录</strong> 该操作。假设 AOF 日志记录了自 Redis 实例创建以来 <strong>所有的修改性指令序列</strong>，那么就可以通过对一个空的 Redis 实例 <strong>顺序执行所有的指令</strong>，也就是 <strong>「重放」</strong>，来恢复 Redis 当前实例的内存数据结构的状态。</p>
+
+        <h3 id="AOF重写"   >
+          <a href="#AOF重写" class="heading-link"><i class="fas fa-link"></i></a><a href="#AOF重写" class="headerlink" title="AOF重写"></a>AOF重写</h3>
+      <p><strong>Redis</strong> 在长期运行的过程中，AOF 的日志会越变越长。如果实例宕机重启，重放整个 AOF 日志会非常耗时，导致长时间 Redis 无法对外提供服务。所以需要对 <strong>AOF</strong> <strong>日志</strong> 瘦身。</p>
+<p><strong>Redis</strong> 提供了 bgrewriteaof 指令用于对 AOF 日志进行瘦身。其 <strong>原理</strong> 就是 <strong>开辟一个子进程</strong> 对内存进行 <strong>遍历</strong> 转换成一系列 Redis 的操作指令，<strong>序列化到一个新的</strong> <strong>AOF</strong> <strong>日志文件</strong> 中。序列化完毕后再将操作期间发生的 <strong>增量</strong> <strong>AOF</strong> <strong>日志</strong> 追加到这个新的 AOF 日志文件中，追加完毕后就立即替代旧的 AOF 日志文件了，瘦身工作就完成了。</p>
+<p><strong>fsync</strong></p>
+<p>AOF 日志是以文件的形式存在的，当程序对 AOF 日志文件进行写操作时，实际上是将内容写到了内核</p>
+<p>为文件描述符分配的一个内存缓存中，然后内核会异步将脏数据刷回到磁盘的。</p>
+<p>就像我们 上方第四步 描述的那样，我们需要借助 glibc 提供的 fsync(int fd) 函数来讲指定的文件内容 <strong>强制从内核缓存刷到磁盘</strong>。但 强制开车 仍然是一个很消耗资源的一个过程，需要 节制！通常来说，生产环境的服务器，Redis 每隔 1s 左右执行一次 fsync 操作就可以了。</p>
+<p>Redis 同样也提供了另外两种策略，一个是 <strong>永不</strong> <strong>fsync</strong>，来让操作系统来决定合适同步磁盘，很不安全，另一个是 <strong>来一个指令就</strong> <strong>fsync</strong> <strong>一次</strong>，非常慢。但是在生产环境基本不会使用，了解一下即可。</p>
+
+        <h3 id="Redis-4-0混合持久化"   >
+          <a href="#Redis-4-0混合持久化" class="heading-link"><i class="fas fa-link"></i></a><a href="#Redis-4-0混合持久化" class="headerlink" title="Redis 4.0混合持久化"></a><strong>Redis 4.0</strong>混合持久化</h3>
+      <p>重启 Redis 时，我们很少使用 rdb 来恢复内存状态，因为会丢失大量数据。我们通常使用 AOF 日志重放，但是重放 AOF 日志性能相对 rdb 来说要慢很多，这样在 Redis 实例很大的情况下，启动需要花费很长的时间。</p>
+<p><strong>Redis 4.0</strong> 为了解决这个问题，带来了一个新的持久化选项——<strong>混合持久化</strong>。将 rdb 文件的内容和增量的 AOF 日志文件存在一起。这里的 AOF 日志不再是全量的日志，而是 <strong>自持久化开始到持久化结束</strong> 的</p>
+<p>这段时间发生的增量 AOF 日志，通常这部分 AOF 日志很小：</p>
+<p>于是在 Redis 重启的时候，可以先加载 rdb 的内容，然后再重放增量 AOF 日志就可以完全替代之前的AOF 全量文件重放，重启效率因此大幅得到提升。</p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="http://example.com">Brath</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="http://example.com/2021/09/30/Redis%E6%8C%81%E4%B9%85%E5%8C%96/">http://example.com/2021/09/30/Redis%E6%8C%81%E4%B9%85%E5%8C%96/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-reward reward"><div class="reward-button">请我喝杯咖啡~</div><div class="reward-qrcode"><span class="reward-qrcode-alipay"><img class="reward-qrcode-alipay__img" src="https://brath.cloud/zfb.jpg"><div class="reward-qrcode-alipay__text">支付宝打赏</div></span><span class="reward-qrcode-wechat"><img class="reward-qrcode-wechat__img" src="https://brath.cloud/wx.jpg"><div class="reward-qrcode-wechat__text">微信打赏</div></span></div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2021/10/09/JUC%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E3%80%81%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%94%E8%AE%B0/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">JUC并发多线程笔记</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2021/09/28/Nginx%E4%BB%A5%E5%8F%8Akeepalived%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E9%83%A8%E7%BD%B2/"><span class="paginator-prev__text">Nginx以及Keepalived安装以及部署</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%8C%81%E4%B9%85%E5%8C%96%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">
+          一、持久化简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%B0%BD%E5%8F%AF%E8%83%BD%E4%BF%9D%E8%AF%81%E6%8C%81%E4%B9%85%E5%8C%96%E7%9A%84%E5%AE%89%E5%85%A8"><span class="toc-number">2.</span> <span class="toc-text">
+          如何尽可能保证持久化的安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Redis-%E4%B8%AD%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%8C%81%E4%B9%85%E5%8C%96%E6%96%B9%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">
+          **二、Redis **中的两种持久化方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AOF%E9%87%8D%E5%86%99"><span class="toc-number">4.</span> <span class="toc-text">
+          AOF重写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-4-0%E6%B7%B7%E5%90%88%E6%8C%81%E4%B9%85%E5%8C%96"><span class="toc-number">5.</span> <span class="toc-text">
+          Redis 4.0混合持久化</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="https://brath.cloud/EnjoyNotesLogo.png?versionId=CAEQMhiBgID_rP.3_BciIGMyZGVkMjNmNzM0MDQxNWI5YmE4MGZjYTdkY2FkNjQw" alt="avatar"></div><p class="sidebar-ov-author__text">Brath</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">25</div><div class="sidebar-ov-state-item__name">归档</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2022</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Brath</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v5.4.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.2</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script></body></html>

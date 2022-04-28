@@ -1,0 +1,225 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.2" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.2" type="image/png" sizes="32x32"><meta name="description" content="设计模式笔记  __Brath.Li                           GoF23：23种设计模式       ​        设计模式的本质是面向对象设原则的实际运用，是对类的封装性，继承性，多态性以及类的关联关系和组合关系的充分理解。 ​            正确使用设计模式具有以下优点： ​            1.提高程序员思">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式（一）">
+<meta property="og:url" content="http://example.com/2022/04/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="BrathBlog">
+<meta property="og:description" content="设计模式笔记  __Brath.Li                           GoF23：23种设计模式       ​        设计模式的本质是面向对象设原则的实际运用，是对类的封装性，继承性，多态性以及类的关联关系和组合关系的充分理解。 ​            正确使用设计模式具有以下优点： ​            1.提高程序员思">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:/Users/26344/AppData/Roaming/Typora/typora-user-images/饿汉式.png">
+<meta property="og:image" content="c:/Users/26344/AppData/Roaming/Typora/typora-user-images/image-20210910151318667.png">
+<meta property="og:image" content="c:/Users/26344/AppData/Roaming/Typora/typora-user-images/image-20210910153316119.png">
+<meta property="og:image" content="c:/Users/26344/AppData/Roaming/Typora/typora-user-images/image-20210910153327761.png">
+<meta property="og:image" content="c:/Users/26344/AppData/Roaming/Typora/typora-user-images/image-20210910152638263.png">
+<meta property="og:image" content="c:/Users/26344/AppData/Roaming/Typora/typora-user-images/image-20210910153630120.png">
+<meta property="og:image" content="c:/Users/26344/AppData/Roaming/Typora/typora-user-images/image-20210910153756918.png">
+<meta property="og:image" content="c:/Users/26344/AppData/Roaming/Typora/typora-user-images/image-20210910155204370.png">
+<meta property="og:image" content="c:/Users/26344/AppData/Roaming/Typora/typora-user-images/image-20210910150042754.png">
+<meta property="og:image" content="c:/Users/26344/AppData/Roaming/Typora/typora-user-images/image-20210910150706569.png">
+<meta property="og:image" content="c:/Users/26344/AppData/Roaming/Typora/typora-user-images/image-20210910150400927.png">
+<meta property="og:image" content="c:/Users/26344/AppData/Roaming/Typora/typora-user-images/image-20210910150429958.png">
+<meta property="og:image" content="c:/Users/26344/AppData/Roaming/Typora/typora-user-images/image-20210910150418256.png">
+<meta property="og:image" content="c:/Users/26344/AppData/Roaming/Typora/typora-user-images/image-20210910160648326.png">
+<meta property="og:image" content="c:/Users/26344/AppData/Roaming/Typora/typora-user-images/image-20210910160638735.png">
+<meta property="article:published_time" content="2022-04-25T04:33:52.993Z">
+<meta property="article:modified_time" content="2022-04-25T04:34:10.453Z">
+<meta property="article:author" content="Brath">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/26344/AppData/Roaming/Typora/typora-user-images/饿汉式.png"><title>设计模式（一） | BrathBlog</title><link ref="canonical" href="http://example.com/2022/04/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%AC%94%E8%AE%B0/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: true,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">BrathBlog</div><div class="header-banner-info__subtitle">Brath</div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">设计模式（一）</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2022-04-25</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-04-25</span></span></div></header><div class="post-body">
+        <h3 id="设计模式笔记-Brath-Li"   >
+          <a href="#设计模式笔记-Brath-Li" class="heading-link"><i class="fas fa-link"></i></a><a href="#设计模式笔记-Brath-Li" class="headerlink" title="设计模式笔记  __Brath.Li"></a>设计模式笔记  <strong>__Brath.Li</strong></h3>
+      
+        <h3 id="GoF23：23种设计模式"   >
+          <a href="#GoF23：23种设计模式" class="heading-link"><i class="fas fa-link"></i></a><a href="#GoF23：23种设计模式" class="headerlink" title="GoF23：23种设计模式"></a>GoF23：23种设计模式</h3>
+      <p>​        <strong>设计模式的本质是面向对象设原则的实际运用，是对类的封装性，继承性，多态性以及类的关联关系和组合关系的充分理解。</strong></p>
+<p>​            <strong>正确使用设计模式具有以下优点：</strong></p>
+<p>​            <strong>1.提高程序员思维能力，编程能力和设计能力</strong></p>
+<p>​            <strong>2.使程序设计更加标准化，代码编制更加工程化，使软件开发效率大大提高，从而缩短软件的开的周期。</strong></p>
+<p>​            <strong>3.使设计的代码可重用性高、可读性强、可靠性高、灵活性好、可维护性强。</strong></p>
+
+        <h3 id="创建型模式："   >
+          <a href="#创建型模式：" class="heading-link"><i class="fas fa-link"></i></a><a href="#创建型模式：" class="headerlink" title="创建型模式："></a><strong>创建型模式：</strong></h3>
+      <p>​            <strong>单例模式、工厂模式、抽象工厂模式、建造者模式、原型模式。</strong></p>
+
+        <h3 id="结构型模式："   >
+          <a href="#结构型模式：" class="heading-link"><i class="fas fa-link"></i></a><a href="#结构型模式：" class="headerlink" title="结构型模式："></a><strong>结构型模式：</strong></h3>
+      <p>​            <strong>适配器模式、桥接模式、装饰模式、组合模式、外欧冠模式、享元模式、代理模式。</strong></p>
+
+        <h3 id="行为性模式："   >
+          <a href="#行为性模式：" class="heading-link"><i class="fas fa-link"></i></a><a href="#行为性模式：" class="headerlink" title="行为性模式："></a><strong>行为性模式：</strong></h3>
+      <p>​            <strong>模板方法模式、命令模式、迭代器模式、观察者模式、中介者模式、备忘录模式、解释器模式、状态模式、策略模式、责任链模式、访问者模式。</strong></p>
+
+        <h4 id="OOP面向对象七大原则："   >
+          <a href="#OOP面向对象七大原则：" class="heading-link"><i class="fas fa-link"></i></a><a href="#OOP面向对象七大原则：" class="headerlink" title="OOP面向对象七大原则："></a>OOP面向对象七大原则：</h4>
+      <p><strong>1.OCP开闭原则：</strong></p>
+<p>​            <strong>软件实体（包括类、模块、功能等）应该对扩展开放，但是对修改关闭。</strong></p>
+<p><strong>2.里氏替换原则：</strong></p>
+<p>​            <strong>继承必须确保超类锁拥有的性质在子类中仍然成立。</strong></p>
+<p><strong>3.依赖倒置原则：</strong></p>
+<p>​            <strong>面向接口编程，不要面向实现编程。</strong></p>
+<p><strong>4.单一职责原则：</strong></p>
+<p>​            <strong>控制类粒度大小、将对象解耦合、提高内聚性。</strong></p>
+<p><strong>5.接口隔离原则：</strong></p>
+<p>​            <strong>要为各个类建立他们需要的专用接口。</strong></p>
+<p><strong>6.迪米特法则：</strong></p>
+<p>​            **只与你的直接朋友交谈、不跟 “陌生人” 说话。 **</p>
+<p><strong>7.合成复用原则：</strong></p>
+<p>​            <strong>尽量先使用组合或者聚合等关联关系来实现，其次才考虑使用继承关系来实现。</strong></p>
+
+        <h2 id="单例设计模式："   >
+          <a href="#单例设计模式：" class="heading-link"><i class="fas fa-link"></i></a><a href="#单例设计模式：" class="headerlink" title="单例设计模式："></a>单例设计模式：</h2>
+      <p>作用：让一个类只能创建一个实例（因为频繁的创建对象，回收对象会造成系统性能下降。）。解决对象的唯一性，保证了内存中一个对象是唯一的 。</p>
+
+        <h4 id="饿汉式：Hunary"   >
+          <a href="#饿汉式：Hunary" class="heading-link"><i class="fas fa-link"></i></a><a href="#饿汉式：Hunary" class="headerlink" title="饿汉式：Hunary"></a>饿汉式：Hunary</h4>
+      <p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\饿汉式.png" alt="饿汉式"></p>
+<p><strong>步骤：1.私有化构造器  2.直接创建静态对象 3.创建一个静态的方法，供外部调用实例</strong></p>
+<p>优点：类初始化的时候，会立即加载该对象，线程天生安全，调用效率高。</p>
+<p>缺点：无法避免被反射破解，不安全</p>
+
+        <h4 id="懒汉式：LazyMan"   >
+          <a href="#懒汉式：LazyMan" class="heading-link"><i class="fas fa-link"></i></a><a href="#懒汉式：LazyMan" class="headerlink" title="懒汉式：LazyMan"></a>懒汉式：LazyMan</h4>
+      <p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910151318667.png" alt="image-20210910151318667"></p>
+<p>步骤：1.私有化构造器，不会直接创建对象  2.向外暴露调用对象方法，在方法中先进行对象判空，为空才创建对象，这就是懒汉式 </p>
+<p>优点：类初始化时，不会初始化该对象，真正需要使用的时候才会去创建该对象，具备懒加载功能。</p>
+<p>缺点：</p>
+<p>1.判空浪费时间</p>
+<p>2.不加Synchronized的懒汉式线程不安全，需要用到volatile关键字保持new对象的原子性一致</p>
+<p>懒汉式单线程下是OK的，但是多线程并发下不安全。</p>
+<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910153316119.png" alt="image-20210910153316119">开启十次线程测试</p>
+<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910153327761.png" alt="image-20210910153327761"></p>
+<p><strong>每次重启线程数都不一致</strong>，线程不安全。</p>
+<p>怎么解决：</p>
+<p>Tips：懒汉式也是可以实现线程安全的：只要加上Synchronized加锁即可：</p>
+<p>但是这样一来，会降低整个访问的速度，而且每次都要判断。那么有没有更好的方式来实现呢？</p>
+<p>解决方案：</p>
+<p><strong>double-check-lock双重加锁</strong></p>
+<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910152638263.png" alt="image-20210910152638263"></p>
+<p>所谓双重加锁机制。指的是，并不是每次进入getInstance方法都需要同步，而是先不同步，进入方法之后先检查实例是否存在，如果不存在才进入下面Synchronized加锁，之后会再次检查实例是否存在，如果还不存在才创建实例。</p>
+<p>双重检测方式（因为JVM本身重排序的原因，可能会出现多次的初始化）</p>
+<p>这种模式下的懒汉式，称为<strong>DCL懒汉式</strong>！</p>
+<p>你以为这样就没问题了？大错特错，注意：这里的new对象操作不是原子性的</p>
+<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910153630120.png" alt="image-20210910153630120"></p>
+<p>new 一个对象的执行顺序 ↓</p>
+<figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 1.分配内存空间</span></span><br><span class="line"><span class="comment">  * 2.执行构造方法初始化对象</span></span><br><span class="line"><span class="comment">  * 3.把这个对象指向内存空间</span></span><br><span class="line"><span class="comment">  * 这是创建对象的步骤 正确顺序为 123</span></span><br><span class="line"><span class="comment">  * 举例：</span></span><br><span class="line"><span class="comment">  * 线程A 创建对象 步骤为 123, 我们的代码没有问题</span></span><br><span class="line"><span class="comment">  * 线程B 创建对象 因为操作步骤不是原子性的，可能会走成 1 3 2，先指向了内存空间，再去构造对象</span></span><br><span class="line"><span class="comment">  * 这时会出现一个问题，指令重排：双重检测模式会失效，因为此时我们的类，不为空了，但是里面返回的对象是空的。</span></span><br><span class="line"><span class="comment">  * 所以就要用到一个关键字volatile，避免指令重排，保持操作原子性</span></span><br><span class="line"><span class="comment">  */</span></span><br></pre></td></tr></table></div></figure>
+
+<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910153756918.png" alt="image-20210910153756918"></p>
+
+        <h4 id="静态内部类模式："   >
+          <a href="#静态内部类模式：" class="heading-link"><i class="fas fa-link"></i></a><a href="#静态内部类模式：" class="headerlink" title="静态内部类模式："></a>静态内部类模式：</h4>
+      <p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910155204370.png" alt="image-20210910155204370"></p>
+<p>步骤：1. 私有化构造器  2. 创建一个静态内部类，类中创建外部类的实例  3.向外暴露一个方法获取静态内部类中创建的对象</p>
+<p>优点：结合了懒汉式和饿汉式各自的优点，真正需要对象的时候才会加载，加载类是线程安全的。</p>
+<p>缺点：每次调用都会创建多余的对象</p>
+
+        <h3 id="以上单例设计模式都会被反射破解，枚举不会！"   >
+          <a href="#以上单例设计模式都会被反射破解，枚举不会！" class="heading-link"><i class="fas fa-link"></i></a><a href="#以上单例设计模式都会被反射破解，枚举不会！" class="headerlink" title="以上单例设计模式都会被反射破解，枚举不会！"></a>以上单例设计模式都会被反射破解，枚举不会！</h3>
+      <p>枚举：枚举本身是一个类，继承了Enum的实例就成为了枚举类</p>
+<p>使用枚举实现单例模式，实现简单、调用效率高，枚举本身就是单例，由JVM从根本上提供保障，避免通过反射和反序列化的漏洞，缺点是没有延迟加载。</p>
+<p>在源码Constructor中<img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910150042754.png" alt="image-20210910150042754"></p>
+<p>如果是对象是通过反射机制创建的会抛出一个异常</p>
+<p>IllegalArgumentException: Cannot reflectively create enum objects</p>
+<p>枚举类在traget输出的代码中，构造器是空的，隐藏起来了，用javap -p 反编译也看不见构造器</p>
+<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910150706569.png" alt="image-20210910150706569"></p>
+<p>我们用反射机制获取空构造器会获取不到对象，这时候用jad反编译工具，得到的java文件中，</p>
+<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910150400927.png" alt="image-20210910150400927"></p>
+<p>可以看见构造器其实是有数据的，我们把数据放到反射中实现，就会得到这个异常Cannot reflectively create enum objects</p>
+<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910150429958.png" alt="image-20210910150429958"></p>
+<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910150418256.png" alt="image-20210910150418256"></p>
+<p>由此可见，反射不能破坏枚举的单例模式</p>
+<p>优点：实现简单，线程安全，防止反射攻击等。</p>
+<p>缺点： 在不需要的时候可能就加载了，造成内存浪费</p>
+<p>Tips：利用反射破解懒汉式。懒汉式不是安全的！</p>
+<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910160648326.png" alt="image-20210910160648326"></p>
+<p>私有化构造器的时候判断外面的字段guoqing是否==false，等于的话就设置为true，如果不等于的话就抛出运行异常，这样设计的话在我们用反射机制获取构造器的时候，就获取不到对象了</p>
+<p>但是有解决方法：利用反射强大的机制，假如我们反编译，知道要破解的字段是guoqing，那我们直接用反射获取guoqing字段，然后设置解除私有化限制，在创建构造器实例的时候，把guoqing设置为true，就可以破解DCL懒汉式了</p>
+<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910160638735.png" alt="image-20210910160638735"></p>
+
+        <h2 id="工厂设计模式-Factory-Model："   >
+          <a href="#工厂设计模式-Factory-Model：" class="heading-link"><i class="fas fa-link"></i></a><a href="#工厂设计模式-Factory-Model：" class="headerlink" title="工厂设计模式 Factory Model："></a>工厂设计模式 Factory Model：</h2>
+      <p>​        <strong>核心本质：</strong></p>
+<p>​            <strong>实例化对象不使用new，用工厂方法代替</strong></p>
+<p>​            <strong>将选择实现类，创建对象统一管理和控制。从而将调用者跟我们的实现类解耦。</strong></p>
+<p>​        <strong>详细分类：</strong></p>
+<p>​            <strong>简单工厂模式</strong></p>
+<p>​                        <strong>用来生产同一等级结构中的任意产品：扩展性差</strong></p>
+<p>​            <strong>工厂方法模式</strong></p>
+<p>​                        <strong>用来生产同一等级结构中的固定产品：扩展性强</strong></p>
+<p>​            <strong>抽象工厂模式</strong></p>
+<p>​                        <strong>围绕一个超级工厂创建其他工厂。该超级工厂又称为其他工厂的工厂。</strong></p>
+<p><strong>工厂设计模式应用场景：</strong></p>
+<p>​            <strong>JDK中的Calendar的getInstance方法</strong></p>
+<p>​            <strong>JDBC中的Connection对象的获取</strong></p>
+<p>​            <strong>Spring的IOC容器创建管理Bean对象</strong></p>
+<p>​            <strong>反射Class对象的newInsetance方法</strong></p>
+
+        <h2 id="建造者模式："   >
+          <a href="#建造者模式：" class="heading-link"><i class="fas fa-link"></i></a><a href="#建造者模式：" class="headerlink" title="建造者模式："></a>建造者模式：</h2>
+      <p>​    <strong>建造者模式也属于创建型模式，它提供了一种创建对象的最佳方式。</strong></p>
+<p>​    <strong>定义：将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示</strong></p>
+<p>​    <strong>主要作用：在用户不知道对象的建造过程和细节的情况下就可以直接创建复杂对象。</strong></p>
+<p>​    <strong>用户只需要给出指定复杂对象的类型和内容，建造者模式负责将按顺序创建复杂对象（把内部的建造过程和细节隐藏起来）</strong></p>
+<p>​    <strong>例子：</strong></p>
+<p>​            <strong>工厂（建造者模式）：负责制造汽车（组装过程和细节在工厂内）</strong></p>
+<p>​            <strong>汽车购买者（用户）：你只需要说你需要的型号（对象的类型和内容），然后直接购买就可以了（不需要知道汽车是怎么组装的（发动机、变速箱、轮毂、车门））</strong></p>
+
+        <h2 id="原型模式："   >
+          <a href="#原型模式：" class="heading-link"><i class="fas fa-link"></i></a><a href="#原型模式：" class="headerlink" title="原型模式："></a>原型模式：</h2>
+      <p>​        创建型模式之一。</p>
+<p>​        </p>
+
+        <h2 id="适配器模式"   >
+          <a href="#适配器模式" class="heading-link"><i class="fas fa-link"></i></a><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h2>
+      <p>​        将一个类的接口转换成客户希望的另外一个接口，Adapter模式使得原本由于接口不兼容而不能一起工作的那些类可以在一起工作！</p>
+<p>​        角色分析：</p>
+<p>​                1 . 目标接口：客户所期待的接口，目标可以使具体或抽象的类，也可以是接口。</p>
+<p>​                2 . 需要适配的类：需要适配的类或者适配者类。</p>
+<p>​                3 . 适配器：通过包装一个需要适配的对象，将原接口转换成目标对象。</p>
+<p>​        对象适配器优点</p>
+<p>​                1 . 一个对象适配器可以把多个不同的适配者适配到同一个目标</p>
+<p>​                2 . 可以适配一个适配者的子类，由于适配器和适配者之间是关联关系，根据 “里氏代换原则” ，适配者的子类也可以通过该适配器进行适配。</p>
+<p>​        类适配器缺点：</p>
+<p>​                1 . 对于Java、C# 等不支持多重类继承的语言，一次最多只能适配一个适配者类，不能同时适配多个适配者。</p>
+<p>​                2 . 在Java、C#等语言中，适配器模式中的目标抽象类只能为接口，不能为类，其使用有一定的局限性。 </p>
+<p>​        适用场景：</p>
+<p>​                1 . 系统需要使用一些现有的类，而这些类的接口不符合系统的需要，甚至没有这些类的代码。</p>
+<p>​                2 . 想创建一个可以重复使用的类，用于与一些彼此之间没有太大关联的一些类，包括一些可能在将来引进的类一起工作。</p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="http://example.com">Brath</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="http://example.com/2022/04/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%AC%94%E8%AE%B0/">http://example.com/2022/04/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%AC%94%E8%AE%B0/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-reward reward"><div class="reward-button">请我喝杯咖啡~</div><div class="reward-qrcode"><span class="reward-qrcode-alipay"><img class="reward-qrcode-alipay__img" src="https://brath.cloud/zfb.jpg"><div class="reward-qrcode-alipay__text">支付宝打赏</div></span><span class="reward-qrcode-wechat"><img class="reward-qrcode-wechat__img" src="https://brath.cloud/wx.jpg"><div class="reward-qrcode-wechat__text">微信打赏</div></span></div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2022/04/25/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%8B%86%E5%88%86%E7%BB%86%E5%88%99/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">微服务拆分细则</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2022/04/25/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2%E5%AE%9D%E5%A1%94/"><span class="paginator-prev__text">云服务器部署宝塔面板</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%AC%94%E8%AE%B0-Brath-Li"><span class="toc-number">1.</span> <span class="toc-text">
+          设计模式笔记  __Brath.Li</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GoF23%EF%BC%9A23%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">
+          GoF23：23种设计模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">
+          创建型模式：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F%EF%BC%9A"><span class="toc-number">4.</span> <span class="toc-text">
+          结构型模式：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%8C%E4%B8%BA%E6%80%A7%E6%A8%A1%E5%BC%8F%EF%BC%9A"><span class="toc-number">5.</span> <span class="toc-text">
+          行为性模式：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#OOP%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E4%B8%83%E5%A4%A7%E5%8E%9F%E5%88%99%EF%BC%9A"><span class="toc-number">5.1.</span> <span class="toc-text">
+          OOP面向对象七大原则：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E4%BE%8B%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%9A"><span class="toc-number"></span> <span class="toc-text">
+          单例设计模式：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A5%BF%E6%B1%89%E5%BC%8F%EF%BC%9AHunary"><span class="toc-number">0.1.</span> <span class="toc-text">
+          饿汉式：Hunary</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%87%92%E6%B1%89%E5%BC%8F%EF%BC%9ALazyMan"><span class="toc-number">0.2.</span> <span class="toc-text">
+          懒汉式：LazyMan</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%E6%A8%A1%E5%BC%8F%EF%BC%9A"><span class="toc-number">0.3.</span> <span class="toc-text">
+          静态内部类模式：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A5%E4%B8%8A%E5%8D%95%E4%BE%8B%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E9%83%BD%E4%BC%9A%E8%A2%AB%E5%8F%8D%E5%B0%84%E7%A0%B4%E8%A7%A3%EF%BC%8C%E6%9E%9A%E4%B8%BE%E4%B8%8D%E4%BC%9A%EF%BC%81"><span class="toc-number">1.</span> <span class="toc-text">
+          以上单例设计模式都会被反射破解，枚举不会！</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E5%8E%82%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-Factory-Model%EF%BC%9A"><span class="toc-number"></span> <span class="toc-text">
+          工厂设计模式 Factory Model：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F%EF%BC%9A"><span class="toc-number"></span> <span class="toc-text">
+          建造者模式：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F%EF%BC%9A"><span class="toc-number"></span> <span class="toc-text">
+          原型模式：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F"><span class="toc-number"></span> <span class="toc-text">
+          适配器模式</span></a></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="https://brath.cloud/EnjoyNotesLogo.png?versionId=CAEQMhiBgID_rP.3_BciIGMyZGVkMjNmNzM0MDQxNWI5YmE4MGZjYTdkY2FkNjQw" alt="avatar"></div><p class="sidebar-ov-author__text">Brath</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">25</div><div class="sidebar-ov-state-item__name">归档</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2022</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Brath</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v5.4.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.2</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script></body></html>

@@ -1,0 +1,675 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.2" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.2" type="image/png" sizes="32x32"><meta property="og:type" content="website">
+<meta property="og:title" content="BrathBlog">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="BrathBlog">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Brath">
+<meta name="twitter:card" content="summary"><title>BrathBlog | Brath</title><link ref="canonical" href="http://example.com/index.html"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">BrathBlog</div><div class="header-banner-info__subtitle">Brath</div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content content-home" id="content"><section class="postlist"><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2022/04/28/typora%E9%85%8D%E7%BD%AEgitee%E5%92%8C%E9%98%BF%E9%87%8C%E4%BA%91OSS%E5%9B%BE%E5%BA%93%E4%BD%BF%E7%94%A8picgo%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/">Typora使用gitee和阿里云OSS作为图库用picgo上传图片的教程~</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2022-04-28</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-04-28</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h2 id="前言"   >
+          <a href="#前言" class="heading-link"><i class="fas fa-link"></i></a><a href="#前言" class="headerlink" title="前言"></a>前言</h2>
+      <ul>
+<li>这一年，写的博客也多，总是需要<strong>插入图片</strong>的，图片存在本地的话上传到博客网站去就没法显示了，就算一个图一个图的复制粘贴上去，想移植到其他的博客网站，图就会失效，为了解决这个问题，这篇文章就诞生了！</li>
+<li>首先，还是一如既往的推荐别人是怎么搞的！</li>
+<li>参考文章如下：</li>
+<li><span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://blog.csdn.net/make_11111111/article/details/104839492" >《Typora上传图片到CSDN——PicGo + Gitee(码云)实现markdown免费图床——开局第一篇》</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+<li><span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://segmentfault.com/a/1190000022535154" >《markdown笔记神器Typora如何上传图片？（图床功能）</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+<li><span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://www.codenong.com/cs106528795/" >《一文教你用Typora + Gitee(码云) + PicGo 实现 云 markdown笔记》</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+</ul>
+
+        <h2 id="环境配置预览"   >
+          <a href="#环境配置预览" class="heading-link"><i class="fas fa-link"></i></a><a href="#环境配置预览" class="headerlink" title="环境配置预览"></a>环境配置预览</h2>
+      <ul>
+<li>安装nodejs：<span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://nodejs.org/en/" >https://nodejs.org/en/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+<li>Gitee账户：<span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://gitee.com/" >https://gitee.com/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+<li>阿里云：<span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://homenew.console.aliyun.com/" >https://homenew.console.aliyun.com/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+<li>Typora软件:<span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://www.typora.io/%23windows" >https://www.typora.io/#windows</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+<li>PicGo:<span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://molunerfinn.com/PicGo/" >https://molunerfinn.com/PicGo/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+<li></li>
+</ul>
+
+        <h2 id="01-安装nodejs"   >
+          <a href="#01-安装nodejs" class="heading-link"><i class="fas fa-link"></i></a><a href="#01-安装nodejs" class="headerlink" title="01.安装nodejs"></a>01.安装nodejs</h2>
+      <p>请百度自行安装，不过多介绍 </p>
+<p>node和npm环境检测：</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;node -v</span><br><span class="line">v14.16.0</span><br><span class="line"></span><br><span class="line">C:\&gt;npm -v</span><br><span class="line">6.14.11</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="02-Gitee账户配置"   >
+          <a href="#02-Gitee账户配置" class="heading-link"><i class="fas fa-link"></i></a><a href="#02-Gitee账户配置" class="headerlink" title="02.Gitee账户配置"></a>02.Gitee账户配置</h2>
+      
+        <h2 id="新建仓库"   >
+          <a href="#新建仓库" class="heading-link"><i class="fas fa-link"></i></a><a href="#新建仓库" class="headerlink" title="新建仓库"></a>新建仓库</h2>
+      <p><img src="https://brath.cloud/blogImg/v2-2fe1a9ce620e81b91401ea878be94548_720w.jpg" alt="img"></p>
+<p><img src="https://brath.cloud/blogImg/v2-02b0a2c63381b110e5bdc4ac994bd274_720w.jpg" alt="img"></p>
+
+        <h2 id="私人令牌token配置获取"   >
+          <a href="#私人令牌token配置获取" class="heading-link"><i class="fas fa-link"></i></a><a href="#私人令牌token配置获取" class="headerlink" title="私人令牌token配置获取"></a>私人令牌token配置获取</h2>
+      <ul>
+<li>找到<code>设置</code>-&gt;<code>安全设置</code>-&gt;<code>私人令牌</code>，点击生成新令牌</li>
+</ul>
+<p><img src="https://brath.cloud/blogImg/v2-5493431b257b8313f420cd1c456d5550_720w.jpg" alt="img"></p>
+<ul>
+<li>选择下面的选项即可！</li>
+</ul>
+<p><img src="https://brath.cloud/blogImg/v2-06263bbbc624e2b9d5d3782cad1f68b3_720w.jpg" alt="img"></p>
+<ul>
+<li>点击提交，账户安全验证即可</li>
+</ul>
+<p><img src="https://brath.cloud/blogImg/v2-a9ab747329a35bc374101fe870a48084_720w.jpg" alt="img"></p>
+<ul>
+<li>保存后面生成的私人令牌</li>
+</ul>
+<p><img src="https://brath.cloud/blogImg/v2-cf484c849d232aaf07e91460899b0a0e_720w.jpg" alt="v2-cf484c849d232aaf07e91460899b0a0e_720w"></p>
+<ul>
+<li>gitee配置到此完毕！</li>
+</ul>
+
+        <h2 id="03-阿里云OSS配置"   >
+          <a href="#03-阿里云OSS配置" class="heading-link"><i class="fas fa-link"></i></a><a href="#03-阿里云OSS配置" class="headerlink" title="03.阿里云OSS配置"></a>03.阿里云OSS配置</h2>
+      <ul>
+<li>如果没注册过阿里云，访问阿里云官网 <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://homenew.console.aliyun.com/" >https://homenew.console.aliyun.com/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> 新建阿里云账户</li>
+<li>主页搜索对象存储或者 OSS ：</li>
+<li><img src="https://brath.cloud/blogImg/image-20220428095801549.png" alt="image-20220428095801549"></li>
+<li>点击创建Bucket</li>
+<li><img src="https://brath.cloud/blogImg/image-20220428095838515.png" alt="image-20220428095838515"></li>
+<li><img src="https://brath.cloud/blogImg/image-20220428095939979.png" alt="image-20220428095939979"></li>
+<li>创建完毕后进入bucket存储</li>
+<li><img src="https://brath.cloud/blogImg/image-20220428100040269.png" alt="image-20220428100040269"></li>
+<li>OSS配置到此完毕！</li>
+</ul>
+
+        <h2 id="04-PicGo配置"   >
+          <a href="#04-PicGo配置" class="heading-link"><i class="fas fa-link"></i></a><a href="#04-PicGo配置" class="headerlink" title="04.PicGo配置"></a>04.PicGo配置</h2>
+      
+        <h2 id="gitee插件安装"   >
+          <a href="#gitee插件安装" class="heading-link"><i class="fas fa-link"></i></a><a href="#gitee插件安装" class="headerlink" title="gitee插件安装"></a>gitee插件安装</h2>
+      <p><img src="https://brath.cloud/blogImg/v2-c6b94bdc27f8f0300673d02e4800c360_720w.jpg" alt="img"></p>
+
+        <h2 id="gitee插件配置"   >
+          <a href="#gitee插件配置" class="heading-link"><i class="fas fa-link"></i></a><a href="#gitee插件配置" class="headerlink" title="gitee插件配置"></a>gitee插件配置</h2>
+      <p><img src="https://brath.cloud/blogImg/v2-599672d63434fc5cc4dff76104f21778_720w.jpg" alt="img"></p>
+
+        <h2 id="上传尝试"   >
+          <a href="#上传尝试" class="heading-link"><i class="fas fa-link"></i></a><a href="#上传尝试" class="headerlink" title="上传尝试"></a>上传尝试</h2>
+      <p><img src="https://brath.cloud/blogImg/v2-9cd264eef40166488ebdda103631689d_720w.jpg" alt="img"></p>
+
+        <h2 id="阿里云OSS配置"   >
+          <a href="#阿里云OSS配置" class="heading-link"><i class="fas fa-link"></i></a><a href="#阿里云OSS配置" class="headerlink" title="阿里云OSS配置"></a>阿里云OSS配置</h2>
+      <p><img src="https://brath.cloud/blogImg/image-20220428100403657.png" alt="image-20220428100403657"></p>
+<ul>
+<li>这里，您可以随便截图一张，剪贴板图片上传试试效果</li>
+<li>图片放大看看，本文的图片是不是就在下面这里！哈哈哈！</li>
+</ul>
+<p><img src="https://brath.cloud/blogImg/v2-05a45967b7af32a9f3299d93fdeab526_720w.jpg" alt="img"></p>
+
+        <h2 id="05-Typora配置"   >
+          <a href="#05-Typora配置" class="heading-link"><i class="fas fa-link"></i></a><a href="#05-Typora配置" class="headerlink" title="05.Typora配置"></a>05.Typora配置</h2>
+      <ul>
+<li>说实话，写这篇文章，就是想用到markdown自动上传图片，自动同步图片到各个平台！</li>
+<li>废话不多说，建议直接和博主配置一样就行！</li>
+</ul>
+<p><img src="https://brath.cloud/blogImg/image-20220428093756533.png" alt="image-20220428093756533"></p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2022/04/28/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2VUE%E9%A1%B9%E7%9B%AE/">Linux服务器下部署vue 2.0项目</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2022-04-28</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-04-28</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h3 id="一、安装VUE环境"   >
+          <a href="#一、安装VUE环境" class="heading-link"><i class="fas fa-link"></i></a><a href="#一、安装VUE环境" class="headerlink" title="一、安装VUE环境"></a>一、安装VUE环境</h3>
+      <p>1.wget指定进行下载，下载后文件默认存在根目录下的root包下面；</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://nodejs.org/dist/v16.14.0/node-v16.14.0-linux-x64.tar.xz</span><br></pre></td></tr></table></div></figure>
+
+
+
+<p>解压缩</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xz -d node-v16.14.0-linux-x64.tar.xz  #将xz格式解压为tar</span><br><span class="line"></span><br><span class="line">tar -xvf node-v16.14.0-linux-x64.tar  #将tar解压为文件</span><br></pre></td></tr></table></div></figure>
+
+
+
+<p>重命名文件夹</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mv node-v16.14.0-linux-x64 nodeJS-V16.14.0</span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+
+
+
+<p>配置node.js环境变量</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br></pre></td></tr></table></div></figure>
+
+
+
+<p>进入编辑,在文件最下面加上如下字段</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export NODEJS_HOME=/root/nodeJS-V16.14.0</span><br><span class="line">export PATH=$NODEJS_HOME/bin:$PATH</span><br></pre></td></tr></table></div></figure>
+
+
+<p>个人比较喜欢用Xftp将profile文件传输到windows系统下进行配置后再覆盖回去</p>
+<p>配置完成后使用source命令重新执行刚修改的初始化文件，使之立即生效，而不必注销并重新登录</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></div></figure>
+
+
+<p>检查环境变量是否配置成功</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></div></figure>
+
+
+<p>安装WebPackage</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install webpack -g --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></div></figure>
+
+
+
+
+        <h3 id="二、Nginx环境搭建配置"   >
+          <a href="#二、Nginx环境搭建配置" class="heading-link"><i class="fas fa-link"></i></a><a href="#二、Nginx环境搭建配置" class="headerlink" title="二、Nginx环境搭建配置"></a>二、Nginx环境搭建配置</h3>
+      <p>wget指定进行下载，下载后文件默认存在根目录下的 root 下面；</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1.wget https://nginx.org/download/nginx-1.21.6.tar.gz</span><br></pre></td></tr></table></div></figure>
+
+
+<p>解压缩</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf nginx-1.21.6.tar.gz</span><br></pre></td></tr></table></div></figure>
+
+
+<p>进入nginx文件夹</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /root/nginx-1.21.6</span><br></pre></td></tr></table></div></figure>
+
+
+<p>检查配置</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure</span><br></pre></td></tr></table></div></figure>
+
+
+<p>安装gcc环境，有就不需要安装了</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install gcc-c++</span><br></pre></td></tr></table></div></figure>
+
+
+<p>安装PCRE依赖库</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y pcre pcre-devel</span><br></pre></td></tr></table></div></figure>
+
+
+<p>安装zlib 依赖库</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y zlib zlib-devel</span><br></pre></td></tr></table></div></figure>
+
+
+<p>安装OpenSSL安全套接字层密码库</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y openssl openssl-devel</span><br></pre></td></tr></table></div></figure>
+
+
+<p>再次执行配置检查命令</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./configure</span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+
+
+<p>编译安装nginx</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make install</span><br></pre></td></tr></table></div></figure>
+
+
+<p>查找默认安装路径</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whereis nginx</span><br></pre></td></tr></table></div></figure>
+
+
+
+<p>配置nginx环境变量</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br></pre></td></tr></table></div></figure>
+
+
+<p>进入编辑,在文件最下面加上如下字段</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=$PATH:/usr/local/nginx/sbin</span><br></pre></td></tr></table></div></figure>
+
+
+<p>个人比较喜欢用Xftp将profile文件传输到windows系统下进行配置后再覆盖回去</p>
+<p>初始化配置</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></div></figure>
+
+
+<p>检查环境变量是否配置成功</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -v</span><br></pre></td></tr></table></div></figure>
+
+
+<p>启动nginx</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx</span><br></pre></td></tr></table></div></figure>
+
+
+<p>查看nginx是否启动，远程访问服务器，跳出nginx欢迎界面就算配置成功了！</p>
+<p>nginx常用命令</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">启动服务：nginx</span><br><span class="line">退出服务：nginx -s quit</span><br><span class="line">强制关闭服务：nginx -s stop</span><br><span class="line">重载服务：nginx -s reload　　（重载服务配置文件，类似于重启，但服务不会中止）</span><br><span class="line">验证配置文件：nginx -t</span><br><span class="line">使用配置文件：nginx -c &quot;配置文件路径&quot;</span><br><span class="line">使用帮助：nginx -h</span><br></pre></td></tr></table></div></figure>
+
+
+
+
+        <h3 id="三、发布VUE项目"   >
+          <a href="#三、发布VUE项目" class="heading-link"><i class="fas fa-link"></i></a><a href="#三、发布VUE项目" class="headerlink" title="三、发布VUE项目"></a>三、发布VUE项目</h3>
+      
+        <h5 id="打包VUE项目"   >
+          <a href="#打包VUE项目" class="heading-link"><i class="fas fa-link"></i></a><a href="#打包VUE项目" class="headerlink" title="打包VUE项目"></a>打包VUE项目</h5>
+      <p>1.首先配置好线上环境的路径：prod.env </p>
+<p><img src="https://brath.cloud/blogImg/image-20220428084247115.png" alt="image-20220428084247115"></p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">	NODE_ENV: &#x27;&quot;production&quot;&#x27;,</span><br><span class="line">	ENV_CONFIG: &#x27;&quot;prod&quot;&#x27;,</span><br><span class="line">	MANAGEMENT_SERVICE_API: &#x27;&quot;http://42.193.125.92:7815&quot;&#x27;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+
+
+<p>2.控制台输入 npm run build:prod</p>
+<p><img src="https://brath.cloud/blogImg/image-20220428084349346.png" alt="image-20220428084349346"></p>
+<p>3.打包完会生成一个dist文件夹</p>
+<p><img src="https://brath.cloud/blogImg/image-20220428084359625.png" alt="image-20220428084359625"></p>
+<p>4.将dist文件夹内容覆盖到/usr/local/nginx/html目录下面</p>
+<p><img src="https://brath.cloud/blogImg/image-20220428084414353.png" alt="image-20220428084414353"></p>
+<p>5.修改nginx配置</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/nginx/conf/nginx.conf 编辑打开</span><br></pre></td></tr></table></div></figure>
+
+<figure class="highlight nginx"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">worker_processes</span>  <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="section">events</span> &#123;</span><br><span class="line">    <span class="attribute">worker_connections</span>  <span class="number">1024</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">    <span class="attribute">include</span>       mime.types;</span><br><span class="line">    <span class="attribute">default_type</span>  application/octet-stream;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">sendfile</span>        <span class="literal">on</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">keepalive_timeout</span>  <span class="number">65</span>;</span><br><span class="line"></span><br><span class="line">    <span class="section">server</span> &#123;</span><br><span class="line">        <span class="attribute">listen</span>       <span class="number">8099</span>;  <span class="comment">#配置当前服务端口</span></span><br><span class="line">        <span class="attribute">server_name</span>  localhost; <span class="comment">#配置当前服务IP</span></span><br><span class="line">        </span><br><span class="line">        <span class="attribute">location</span> / &#123;</span><br><span class="line">            <span class="attribute">root</span>   html/dist; <span class="comment">#配置服务根目录</span></span><br><span class="line">            <span class="attribute">index</span>  index.html index.htm; <span class="comment">#配置服务索引页面</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">error_page</span>   <span class="number">500</span> <span class="number">502</span> <span class="number">503</span> <span class="number">504</span>  /50x.html;</span><br><span class="line">        <span class="attribute">location</span> = /50x.html &#123;</span><br><span class="line">            <span class="attribute">root</span>   html;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+
+
+
+<p>6.重启或关闭重开Nginx</p>
+<figure class="highlight nginx"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">nginx</span> -s reload <span class="comment">#重启</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">nginx -s stop <span class="comment">#强制停止</span></span><br><span class="line"></span><br><span class="line">nginx <span class="comment">#开启</span></span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2022/04/25/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%8B%86%E5%88%86%E7%BB%86%E5%88%99/">微服务拆分细则</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2022-04-25</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-04-25</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>​    在微服务的设计过程中，微服务设计有多大，微服务粒度的把控，一直是设计人员需要考虑和设计的难点。</p>
+<p>因为服务粒度设计过大，不能得到微服务架构带来的便利，例如：更加敏态的开发，更频繁的版本发布，由于服务功能划分的小，可以根据实际的业务场景，选择更加合适的技术进行代码重构等等。</p>
+<p>​        但同时我们也要注意，不是服务越”微“越好，因为服务的过度拆分会使架构的设计复杂度大大提升，同时也会大大提升运维和测试的复杂度等。</p>
+<p>​        所以对服务拆分粒度的把控，对设计人员来讲就至关重要了，甚至对项目的成败有非常重要的影响。</p>
+<p>这篇文档提供了一些主要的微服务拆分原则，供您参考，来帮助您进行更加合理粒度的微服务设计。</p>
+
+        <h3 id="微服务的拆分原则-通用"   >
+          <a href="#微服务的拆分原则-通用" class="heading-link"><i class="fas fa-link"></i></a><a href="#微服务的拆分原则-通用" class="headerlink" title="微服务的拆分原则 - 通用"></a>微服务的拆分原则 - 通用</h3>
+      <div class="table-container"><table>
+<thead>
+<tr>
+<th><strong>编号</strong></th>
+<th><strong>原则</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>原则1</td>
+<td>基于业务分析拆分</td>
+<td>基于TOGAF， ADA等</td>
+</tr>
+<tr>
+<td>原则2</td>
+<td>基于DDD领域驱动设计中的子域设计拆分</td>
+<td>基于领域驱动设计</td>
+</tr>
+<tr>
+<td>原则3</td>
+<td>根据动作和用例拆分</td>
+<td>比如支付</td>
+</tr>
+<tr>
+<td>原则4</td>
+<td>根据名词或者资源拆</td>
+<td>比如账号</td>
+</tr>
+<tr>
+<td>原则5</td>
+<td>架构稳定</td>
+<td>拆分的结构稳定, 不会经常修改</td>
+</tr>
+<tr>
+<td>原则6</td>
+<td>服务是可测试的</td>
+<td>集成测试要可定义，测试可回溯</td>
+</tr>
+<tr>
+<td>原则7</td>
+<td>单一原则</td>
+<td>一个服务做一个业务， 自己治理自己的数据库</td>
+</tr>
+<tr>
+<td>原则8</td>
+<td>开闭原则</td>
+<td>面向对象理论， 对扩展开放， 对修改关闭</td>
+</tr>
+<tr>
+<td>原则9</td>
+<td>高内聚</td>
+<td>强一致，强依赖关系的放在一起， 减少分布式事务</td>
+</tr>
+<tr>
+<td>原则10</td>
+<td>低耦合</td>
+<td>服务间互相独立</td>
+</tr>
+<tr>
+<td>原则11</td>
+<td>足够小的团队可维护，最大两个pizza team</td>
+<td>6-10人一个pizza team</td>
+</tr>
+<tr>
+<td>原则12</td>
+<td>团队自治，自己的服务的开发和发布要跟别的团队尽可能小的协调</td>
+<td></td>
+</tr>
+</tbody></table></div>
+
+        <h2 id="微服务的拆分原则-技术侧重点"   >
+          <a href="#微服务的拆分原则-技术侧重点" class="heading-link"><i class="fas fa-link"></i></a><a href="#微服务的拆分原则-技术侧重点" class="headerlink" title="微服务的拆分原则 - 技术侧重点"></a>微服务的拆分原则 - 技术侧重点</h2>
+      <div class="table-container"><table>
+<thead>
+<tr>
+<th><strong>编号</strong></th>
+<th><strong>原则</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>原则1</td>
+<td>潜在风险</td>
+<td>服务的风险性</td>
+</tr>
+<tr>
+<td>原则2</td>
+<td>资源性能计算性能硬盘性能内存容量网络带宽</td>
+<td>机器的性能决定了方案的部分选择</td>
+</tr>
+<tr>
+<td>原则3</td>
+<td>安全</td>
+<td>安全要求是否很高，安全的策略</td>
+</tr>
+<tr>
+<td>原则4</td>
+<td>高并发瞬时并发持续并发</td>
+<td>并发的种类， 持续的时间</td>
+</tr>
+<tr>
+<td>原则5</td>
+<td>数据库数据量大小读操作写操作数据类型</td>
+<td>数据的类型， 读写的多少，数据量</td>
+</tr>
+</tbody></table></div>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2022/04/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%AC%94%E8%AE%B0/">设计模式（一）</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2022-04-25</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-04-25</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h3 id="设计模式笔记-Brath-Li"   >
+          <a href="#设计模式笔记-Brath-Li" class="heading-link"><i class="fas fa-link"></i></a><a href="#设计模式笔记-Brath-Li" class="headerlink" title="设计模式笔记  __Brath.Li"></a>设计模式笔记  <strong>__Brath.Li</strong></h3>
+      
+        <h3 id="GoF23：23种设计模式"   >
+          <a href="#GoF23：23种设计模式" class="heading-link"><i class="fas fa-link"></i></a><a href="#GoF23：23种设计模式" class="headerlink" title="GoF23：23种设计模式"></a>GoF23：23种设计模式</h3>
+      <p>​        <strong>设计模式的本质是面向对象设原则的实际运用，是对类的封装性，继承性，多态性以及类的关联关系和组合关系的充分理解。</strong></p>
+<p>​            <strong>正确使用设计模式具有以下优点：</strong></p>
+<p>​            <strong>1.提高程序员思维能力，编程能力和设计能力</strong></p>
+<p>​            <strong>2.使程序设计更加标准化，代码编制更加工程化，使软件开发效率大大提高，从而缩短软件的开的周期。</strong></p>
+<p>​            <strong>3.使设计的代码可重用性高、可读性强、可靠性高、灵活性好、可维护性强。</strong></p>
+
+        <h3 id="创建型模式："   >
+          <a href="#创建型模式：" class="heading-link"><i class="fas fa-link"></i></a><a href="#创建型模式：" class="headerlink" title="创建型模式："></a><strong>创建型模式：</strong></h3>
+      <p>​            <strong>单例模式、工厂模式、抽象工厂模式、建造者模式、原型模式。</strong></p>
+
+        <h3 id="结构型模式："   >
+          <a href="#结构型模式：" class="heading-link"><i class="fas fa-link"></i></a><a href="#结构型模式：" class="headerlink" title="结构型模式："></a><strong>结构型模式：</strong></h3>
+      <p>​            <strong>适配器模式、桥接模式、装饰模式、组合模式、外欧冠模式、享元模式、代理模式。</strong></p>
+
+        <h3 id="行为性模式："   >
+          <a href="#行为性模式：" class="heading-link"><i class="fas fa-link"></i></a><a href="#行为性模式：" class="headerlink" title="行为性模式："></a><strong>行为性模式：</strong></h3>
+      <p>​            <strong>模板方法模式、命令模式、迭代器模式、观察者模式、中介者模式、备忘录模式、解释器模式、状态模式、策略模式、责任链模式、访问者模式。</strong></p>
+
+        <h4 id="OOP面向对象七大原则："   >
+          <a href="#OOP面向对象七大原则：" class="heading-link"><i class="fas fa-link"></i></a><a href="#OOP面向对象七大原则：" class="headerlink" title="OOP面向对象七大原则："></a>OOP面向对象七大原则：</h4>
+      <p><strong>1.OCP开闭原则：</strong></p>
+<p>​            <strong>软件实体（包括类、模块、功能等）应该对扩展开放，但是对修改关闭。</strong></p>
+<p><strong>2.里氏替换原则：</strong></p>
+<p>​            <strong>继承必须确保超类锁拥有的性质在子类中仍然成立。</strong></p>
+<p><strong>3.依赖倒置原则：</strong></p>
+<p>​            <strong>面向接口编程，不要面向实现编程。</strong></p>
+<p><strong>4.单一职责原则：</strong></p>
+<p>​            <strong>控制类粒度大小、将对象解耦合、提高内聚性。</strong></p>
+<p><strong>5.接口隔离原则：</strong></p>
+<p>​            <strong>要为各个类建立他们需要的专用接口。</strong></p>
+<p><strong>6.迪米特法则：</strong></p>
+<p>​            **只与你的直接朋友交谈、不跟 “陌生人” 说话。 **</p>
+<p><strong>7.合成复用原则：</strong></p>
+<p>​            <strong>尽量先使用组合或者聚合等关联关系来实现，其次才考虑使用继承关系来实现。</strong></p>
+
+        <h2 id="单例设计模式："   >
+          <a href="#单例设计模式：" class="heading-link"><i class="fas fa-link"></i></a><a href="#单例设计模式：" class="headerlink" title="单例设计模式："></a>单例设计模式：</h2>
+      <p>作用：让一个类只能创建一个实例（因为频繁的创建对象，回收对象会造成系统性能下降。）。解决对象的唯一性，保证了内存中一个对象是唯一的 。</p>
+
+        <h4 id="饿汉式：Hunary"   >
+          <a href="#饿汉式：Hunary" class="heading-link"><i class="fas fa-link"></i></a><a href="#饿汉式：Hunary" class="headerlink" title="饿汉式：Hunary"></a>饿汉式：Hunary</h4>
+      <p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\饿汉式.png" alt="饿汉式"></p>
+<p><strong>步骤：1.私有化构造器  2.直接创建静态对象 3.创建一个静态的方法，供外部调用实例</strong></p>
+<p>优点：类初始化的时候，会立即加载该对象，线程天生安全，调用效率高。</p>
+<p>缺点：无法避免被反射破解，不安全</p>
+
+        <h4 id="懒汉式：LazyMan"   >
+          <a href="#懒汉式：LazyMan" class="heading-link"><i class="fas fa-link"></i></a><a href="#懒汉式：LazyMan" class="headerlink" title="懒汉式：LazyMan"></a>懒汉式：LazyMan</h4>
+      <p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910151318667.png" alt="image-20210910151318667"></p>
+<p>步骤：1.私有化构造器，不会直接创建对象  2.向外暴露调用对象方法，在方法中先进行对象判空，为空才创建对象，这就是懒汉式 </p>
+<p>优点：类初始化时，不会初始化该对象，真正需要使用的时候才会去创建该对象，具备懒加载功能。</p>
+<p>缺点：</p>
+<p>1.判空浪费时间</p>
+<p>2.不加Synchronized的懒汉式线程不安全，需要用到volatile关键字保持new对象的原子性一致</p>
+<p>懒汉式单线程下是OK的，但是多线程并发下不安全。</p>
+<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910153316119.png" alt="image-20210910153316119">开启十次线程测试</p>
+<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910153327761.png" alt="image-20210910153327761"></p>
+<p><strong>每次重启线程数都不一致</strong>，线程不安全。</p>
+<p>怎么解决：</p>
+<p>Tips：懒汉式也是可以实现线程安全的：只要加上Synchronized加锁即可：</p>
+<p>但是这样一来，会降低整个访问的速度，而且每次都要判断。那么有没有更好的方式来实现呢？</p>
+<p>解决方案：</p>
+<p><strong>double-check-lock双重加锁</strong></p>
+<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910152638263.png" alt="image-20210910152638263"></p>
+<p>所谓双重加锁机制。指的是，并不是每次进入getInstance方法都需要同步，而是先不同步，进入方法之后先检查实例是否存在，如果不存在才进入下面Synchronized加锁，之后会再次检查实例是否存在，如果还不存在才创建实例。</p>
+<p>双重检测方式（因为JVM本身重排序的原因，可能会出现多次的初始化）</p>
+<p>这种模式下的懒汉式，称为<strong>DCL懒汉式</strong>！</p>
+<p>你以为这样就没问题了？大错特错，注意：这里的new对象操作不是原子性的</p>
+<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910153630120.png" alt="image-20210910153630120"></p>
+<p>new 一个对象的执行顺序 ↓</p>
+<figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 1.分配内存空间</span></span><br><span class="line"><span class="comment">  * 2.执行构造方法初始化对象</span></span><br><span class="line"><span class="comment">  * 3.把这个对象指向内存空间</span></span><br><span class="line"><span class="comment">  * 这是创建对象的步骤 正确顺序为 123</span></span><br><span class="line"><span class="comment">  * 举例：</span></span><br><span class="line"><span class="comment">  * 线程A 创建对象 步骤为 123, 我们的代码没有问题</span></span><br><span class="line"><span class="comment">  * 线程B 创建对象 因为操作步骤不是原子性的，可能会走成 1 3 2，先指向了内存空间，再去构造对象</span></span><br><span class="line"><span class="comment">  * 这时会出现一个问题，指令重排：双重检测模式会失效，因为此时我们的类，不为空了，但是里面返回的对象是空的。</span></span><br><span class="line"><span class="comment">  * 所以就要用到一个关键字volatile，避免指令重排，保持操作原子性</span></span><br><span class="line"><span class="comment">  */</span></span><br></pre></td></tr></table></div></figure>
+
+<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910153756918.png" alt="image-20210910153756918"></p>
+
+        <h4 id="静态内部类模式："   >
+          <a href="#静态内部类模式：" class="heading-link"><i class="fas fa-link"></i></a><a href="#静态内部类模式：" class="headerlink" title="静态内部类模式："></a>静态内部类模式：</h4>
+      <p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910155204370.png" alt="image-20210910155204370"></p>
+<p>步骤：1. 私有化构造器  2. 创建一个静态内部类，类中创建外部类的实例  3.向外暴露一个方法获取静态内部类中创建的对象</p>
+<p>优点：结合了懒汉式和饿汉式各自的优点，真正需要对象的时候才会加载，加载类是线程安全的。</p>
+<p>缺点：每次调用都会创建多余的对象</p>
+
+        <h3 id="以上单例设计模式都会被反射破解，枚举不会！"   >
+          <a href="#以上单例设计模式都会被反射破解，枚举不会！" class="heading-link"><i class="fas fa-link"></i></a><a href="#以上单例设计模式都会被反射破解，枚举不会！" class="headerlink" title="以上单例设计模式都会被反射破解，枚举不会！"></a>以上单例设计模式都会被反射破解，枚举不会！</h3>
+      <p>枚举：枚举本身是一个类，继承了Enum的实例就成为了枚举类</p>
+<p>使用枚举实现单例模式，实现简单、调用效率高，枚举本身就是单例，由JVM从根本上提供保障，避免通过反射和反序列化的漏洞，缺点是没有延迟加载。</p>
+<p>在源码Constructor中<img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910150042754.png" alt="image-20210910150042754"></p>
+<p>如果是对象是通过反射机制创建的会抛出一个异常</p>
+<p>IllegalArgumentException: Cannot reflectively create enum objects</p>
+<p>枚举类在traget输出的代码中，构造器是空的，隐藏起来了，用javap -p 反编译也看不见构造器</p>
+<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910150706569.png" alt="image-20210910150706569"></p>
+<p>我们用反射机制获取空构造器会获取不到对象，这时候用jad反编译工具，得到的java文件中，</p>
+<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910150400927.png" alt="image-20210910150400927"></p>
+<p>可以看见构造器其实是有数据的，我们把数据放到反射中实现，就会得到这个异常Cannot reflectively create enum objects</p>
+<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910150429958.png" alt="image-20210910150429958"></p>
+<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910150418256.png" alt="image-20210910150418256"></p>
+<p>由此可见，反射不能破坏枚举的单例模式</p>
+<p>优点：实现简单，线程安全，防止反射攻击等。</p>
+<p>缺点： 在不需要的时候可能就加载了，造成内存浪费</p>
+<p>Tips：利用反射破解懒汉式。懒汉式不是安全的！</p>
+<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910160648326.png" alt="image-20210910160648326"></p>
+<p>私有化构造器的时候判断外面的字段guoqing是否==false，等于的话就设置为true，如果不等于的话就抛出运行异常，这样设计的话在我们用反射机制获取构造器的时候，就获取不到对象了</p>
+<p>但是有解决方法：利用反射强大的机制，假如我们反编译，知道要破解的字段是guoqing，那我们直接用反射获取guoqing字段，然后设置解除私有化限制，在创建构造器实例的时候，把guoqing设置为true，就可以破解DCL懒汉式了</p>
+<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910160638735.png" alt="image-20210910160638735"></p>
+
+        <h2 id="工厂设计模式-Factory-Model："   >
+          <a href="#工厂设计模式-Factory-Model：" class="heading-link"><i class="fas fa-link"></i></a><a href="#工厂设计模式-Factory-Model：" class="headerlink" title="工厂设计模式 Factory Model："></a>工厂设计模式 Factory Model：</h2>
+      <p>​        <strong>核心本质：</strong></p>
+<p>​            <strong>实例化对象不使用new，用工厂方法代替</strong></p>
+<p>​            <strong>将选择实现类，创建对象统一管理和控制。从而将调用者跟我们的实现类解耦。</strong></p>
+<p>​        <strong>详细分类：</strong></p>
+<p>​            <strong>简单工厂模式</strong></p>
+<p>​                        <strong>用来生产同一等级结构中的任意产品：扩展性差</strong></p>
+<p>​            <strong>工厂方法模式</strong></p>
+<p>​                        <strong>用来生产同一等级结构中的固定产品：扩展性强</strong></p>
+<p>​            <strong>抽象工厂模式</strong></p>
+<p>​                        <strong>围绕一个超级工厂创建其他工厂。该超级工厂又称为其他工厂的工厂。</strong></p>
+<p><strong>工厂设计模式应用场景：</strong></p>
+<p>​            <strong>JDK中的Calendar的getInstance方法</strong></p>
+<p>​            <strong>JDBC中的Connection对象的获取</strong></p>
+<p>​            <strong>Spring的IOC容器创建管理Bean对象</strong></p>
+<p>​            <strong>反射Class对象的newInsetance方法</strong></p>
+
+        <h2 id="建造者模式："   >
+          <a href="#建造者模式：" class="heading-link"><i class="fas fa-link"></i></a><a href="#建造者模式：" class="headerlink" title="建造者模式："></a>建造者模式：</h2>
+      <p>​    <strong>建造者模式也属于创建型模式，它提供了一种创建对象的最佳方式。</strong></p>
+<p>​    <strong>定义：将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示</strong></p>
+<p>​    <strong>主要作用：在用户不知道对象的建造过程和细节的情况下就可以直接创建复杂对象。</strong></p>
+<p>​    <strong>用户只需要给出指定复杂对象的类型和内容，建造者模式负责将按顺序创建复杂对象（把内部的建造过程和细节隐藏起来）</strong></p>
+<p>​    <strong>例子：</strong></p>
+<p>​            <strong>工厂（建造者模式）：负责制造汽车（组装过程和细节在工厂内）</strong></p>
+<p>​            <strong>汽车购买者（用户）：你只需要说你需要的型号（对象的类型和内容），然后直接购买就可以了（不需要知道汽车是怎么组装的（发动机、变速箱、轮毂、车门））</strong></p>
+
+        <h2 id="原型模式："   >
+          <a href="#原型模式：" class="heading-link"><i class="fas fa-link"></i></a><a href="#原型模式：" class="headerlink" title="原型模式："></a>原型模式：</h2>
+      <p>​        创建型模式之一。</p>
+<p>​        </p>
+
+        <h2 id="适配器模式"   >
+          <a href="#适配器模式" class="heading-link"><i class="fas fa-link"></i></a><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h2>
+      <p>​        将一个类的接口转换成客户希望的另外一个接口，Adapter模式使得原本由于接口不兼容而不能一起工作的那些类可以在一起工作！</p>
+<p>​        角色分析：</p>
+<p>​                1 . 目标接口：客户所期待的接口，目标可以使具体或抽象的类，也可以是接口。</p>
+<p>​                2 . 需要适配的类：需要适配的类或者适配者类。</p>
+<p>​                3 . 适配器：通过包装一个需要适配的对象，将原接口转换成目标对象。</p>
+<p>​        对象适配器优点</p>
+<p>​                1 . 一个对象适配器可以把多个不同的适配者适配到同一个目标</p>
+<p>​                2 . 可以适配一个适配者的子类，由于适配器和适配者之间是关联关系，根据 “里氏代换原则” ，适配者的子类也可以通过该适配器进行适配。</p>
+<p>​        类适配器缺点：</p>
+<p>​                1 . 对于Java、C# 等不支持多重类继承的语言，一次最多只能适配一个适配者类，不能同时适配多个适配者。</p>
+<p>​                2 . 在Java、C#等语言中，适配器模式中的目标抽象类只能为接口，不能为类，其使用有一定的局限性。 </p>
+<p>​        适用场景：</p>
+<p>​                1 . 系统需要使用一些现有的类，而这些类的接口不符合系统的需要，甚至没有这些类的代码。</p>
+<p>​                2 . 想创建一个可以重复使用的类，用于与一些彼此之间没有太大关联的一些类，包括一些可能在将来引进的类一起工作。</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2022/04/25/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2%E5%AE%9D%E5%A1%94/">云服务器部署宝塔面板</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2022-04-25</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-04-25</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>购买好服务器后，进入Xshell：</p>
+<p>1.安装宝塔面板</p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; sh install.sh</span><br></pre></td></tr></table></div></figure>
+
+<p>获得：</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">==================================================================</span><br><span class="line">Congratulations! Installed successfully!</span><br><span class="line">==================================================================</span><br><span class="line">外网面板地址: http://42.193.125.92:8888/ef1f509f</span><br><span class="line">内网面板地址: http://172.21.0.3:8888/ef1f509f</span><br><span class="line">username: upqknxq4</span><br><span class="line">password: f3701931</span><br><span class="line">If you cannot access the panel,</span><br><span class="line">release the following panel port [8888] in the security group</span><br><span class="line">若无法访问面板，请检查防火墙/安全组是否有放行面板[8888]端口</span><br><span class="line">==================================================================</span><br><span class="line">Time consumed: 1 Minute!</span><br></pre></td></tr></table></div></figure>
+
+<p>访问 <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="http://ip:8888/ef1f509f" >http://ip:8888/ef1f509f</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> 打开宝塔</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2022/03/23/Seatav%E9%83%A8%E7%BD%B2Linux%E6%96%87%E6%A1%A3/">Linux以及Windows部署Seata服务</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2022-03-23</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-03-23</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>   1.确保linux有Nacos正常启动，并知晓正确的端口 用户名 密码</p>
+<ol start="2">
+<li><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://github.com/seata/seata.git" >https://github.com/seata/seata.git</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> 克隆seata项目到本地</li>
+<li>在Github下载对应你项目SpringCloudAlibaba建议版本的Seata，我的版本是2.5.5，建议Seata版本1.3.0</li>
+<li>下载好后进入seata/conf 配置目录，修改file.conf</li>
+</ol>
+<figure class="highlight json"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## transaction log store, only used in seata-server</span><br><span class="line">store &#123;</span><br><span class="line">  ## store mode: file、db、redis</span><br><span class="line">  mode = <span class="string">&quot;db&quot;</span> #如果单机：file 如果是集群：db  并在下方配置你的Mysql数据源</span><br><span class="line"></span><br><span class="line">  ## file store property</span><br><span class="line">  file &#123;</span><br><span class="line">    ## store location dir</span><br><span class="line">    dir = <span class="attr">&quot;sessionStore&quot;</span></span><br><span class="line">    # branch session size , if exceeded first try compress lockkey, still exceeded throws exceptions</span><br><span class="line">    maxBranchSessionSize = 16384</span><br><span class="line">    # globe session size , if exceeded throws exceptions</span><br><span class="line">    maxGlobalSessionSize = 512</span><br><span class="line">    # file buffer size , if exceeded allocate new buffer</span><br><span class="line">    fileWriteBufferCacheSize = 16384</span><br><span class="line">    # when recover batch read size</span><br><span class="line">    sessionReloadReadSize = 100</span><br><span class="line">    # async, sync</span><br><span class="line">    flushDiskMode = async</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ## database store property</span><br><span class="line">  db &#123;</span><br><span class="line">    ## the implement of javax.sql.DataSource, such as DruidDataSource(druid)/BasicDataSource(dbcp)/HikariDataSource(hikari) etc.</span><br><span class="line">    datasource = <span class="attr">&quot;druid&quot;</span></span><br><span class="line">    ## mysql/oracle/postgresql/h2/oceanbase etc.</span><br><span class="line">    dbType = <span class="attr">&quot;mysql&quot;</span></span><br><span class="line">    driverClassName = <span class="attr">&quot;com.mysql.jdbc.Driver&quot;</span></span><br><span class="line">    url = <span class="attr">&quot;jdbc:mysql://sh-cynosdbmysql-grp-o5n8fbw2.sql.tencentcdb.com:20345/seata_server&quot;</span></span><br><span class="line">    user = <span class="attr">&quot;brath&quot;</span></span><br><span class="line">    password = <span class="attr">&quot;Lgq081538&quot;</span></span><br><span class="line">    minConn = 5</span><br><span class="line">    maxConn = 30</span><br><span class="line">    globalTable = <span class="attr">&quot;global_table&quot;</span></span><br><span class="line">    branchTable = <span class="attr">&quot;branch_table&quot;</span></span><br><span class="line">    lockTable = <span class="attr">&quot;lock_table&quot;</span></span><br><span class="line">    queryLimit = 100</span><br><span class="line">    maxWait = 5000</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+<p>5.修改registry.conf</p>
+<figure class="highlight json"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">registry &#123;</span><br><span class="line">  type = <span class="attr">&quot;nacos&quot;</span>  <span class="comment">//配置nacos</span></span><br><span class="line"></span><br><span class="line">  nacos &#123;</span><br><span class="line">    application = <span class="attr">&quot;seata-server&quot;</span></span><br><span class="line">    serverAddr = <span class="attr">&quot;nacosip+端口&quot;</span> <span class="comment">//nacosip+端口</span></span><br><span class="line">    group = <span class="attr">&quot;SEATA_GROUP&quot;</span></span><br><span class="line">    namespace = <span class="attr">&quot;命名空间&quot;</span> <span class="comment">//如果默认可以不填</span></span><br><span class="line">    cluster = <span class="attr">&quot;default&quot;</span> <span class="comment">//如果是集群请填写集群名</span></span><br><span class="line">    username = <span class="attr">&quot;账号&quot;</span></span><br><span class="line">    password = <span class="attr">&quot;密码&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">  file &#123;</span><br><span class="line">    name = <span class="attr">&quot;file.conf&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">config &#123;</span><br><span class="line">  type = <span class="attr">&quot;nacos&quot;</span></span><br><span class="line"></span><br><span class="line">  nacos &#123;</span><br><span class="line">    serverAddr = <span class="attr">&quot;nacosip+端口&quot;</span> <span class="comment">//nacosip+端口</span></span><br><span class="line">    namespace = <span class="attr">&quot;命名空间&quot;</span> <span class="comment">//如果默认可以不填</span></span><br><span class="line">    group = <span class="attr">&quot;SEATA_GROUP&quot;</span></span><br><span class="line">    username = <span class="attr">&quot;账号&quot;</span></span><br><span class="line">    password = <span class="attr">&quot;密码&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  file &#123;</span><br><span class="line">    name = <span class="attr">&quot;file.conf&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+
+<p>6.在克隆好的项目中找到 script/confing-center 找到config.txt文件</p>
+<p>修改</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">store.mode=db</span><br></pre></td></tr></table></div></figure>
+
+<p>修改数据源</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">store.db.url=localhost:3306/seata_server?useUnicode=true&amp;rewriteBatchedStatements=true</span><br><span class="line">store.db.user=****</span><br><span class="line">store.db.password=****</span><br></pre></td></tr></table></div></figure>
+
+<p>进入 script\config-center\nacos</p>
+<p>如果是windows系统请确保安装了GIT 以及 GIT bash</p>
+<p>点击nacos-config.sh 会自动把config.txt配置文件，配置到你的Nacos客户端中指定命名空间的配置中心供你的Seata使用</p>
+<p>7.进入Seata/bin </p>
+<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh seata-server.sh #启动seata服务</span><br></pre></td></tr></table></div></figure>
+
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2022/03/09/%E4%BD%BF%E7%94%A8docker%E6%90%AD%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E8%AE%B0%E5%BD%95/">使用docker搭建开发环境记录</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2022-03-09</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-04-25</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h1 id="使用docker搭建开发环境记录"   >
+          <a href="#使用docker搭建开发环境记录" class="heading-link"><i class="fas fa-link"></i></a><a href="#使用docker搭建开发环境记录" class="headerlink" title="使用docker搭建开发环境记录"></a>使用docker搭建开发环境记录</h1>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker start 容器名</span><br><span class="line">docker stop 容器名</span><br><span class="line">docker restart 容器名</span><br><span class="line"></span><br><span class="line">docker run = docker create + docker start</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="mysql"   >
+          <a href="#mysql" class="heading-link"><i class="fas fa-link"></i></a><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 拉取镜像</span></span><br><span class="line">docker pull mysql:5.7</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建实例并启动</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -p 映射端口</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> --name 名称</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -v 映射文件</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -e MYSQL_ROOT_PASSWORD mysql密码</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -d 后台运行并运行</span></span><br><span class="line">docker run -p 3306:3306 --name mysql -v /mydata/mysql/log:/var/log/mysql -v /mydata/mysql/data:/var/lib/mysql -v /mydata/mysql/conf:/etc/mysql -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 进入容器</span></span><br><span class="line">docker exec -it mysql /bin/bash</span><br><span class="line"><span class="meta">#</span><span class="bash"> 退出容器</span></span><br><span class="line">exit</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 配置my.conf</span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 1.在容器外编辑配置文件</span></span></span><br><span class="line">vi /mydata/mysql/conf/my.cnf</span><br><span class="line"></span><br><span class="line">[client]</span><br><span class="line">default-character-set=utf8</span><br><span class="line">[mysql]</span><br><span class="line">default-character-set=utf8</span><br><span class="line">[mysqld]</span><br><span class="line">init_connect=&#x27;SET conllation_connection = utf8_unicode_ci&#x27;</span><br><span class="line">init_connect=&#x27;SET NAMES utf8&#x27;</span><br><span class="line">character-set-server=utf8</span><br><span class="line">collation-server=utf8_unicode_ci</span><br><span class="line">skip-character-set-client-handshake</span><br><span class="line">skip-name-resolve</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 2. 重启mysql容器</span></span></span><br><span class="line">docker restart mysql</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 3. 进入mysql容器验证</span></span></span><br><span class="line">docker exec -it mysql /bin/bash </span><br><span class="line">cat /etc/mysql/my.cnf</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="Redis"   >
+          <a href="#Redis" class="heading-link"><i class="fas fa-link"></i></a><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 拉取镜像</span></span><br><span class="line">docker pull redis</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 配置文件</span></span><br><span class="line">本地：/mydata/redis/data/redis.conf 提前准备好</span><br><span class="line">主要配置</span><br><span class="line">bind 127.0.0.1 #注释掉这部分，使redis可以外部访问</span><br><span class="line">daemonize no#用守护线程的方式启动</span><br><span class="line">requirepass 你的密码#给redis设置密码</span><br><span class="line">appendonly yes#redis持久化　　默认是no</span><br><span class="line">tcp-keepalive 300 #防止出现远程主机强迫关闭了一个现有的连接的错误 默认是300</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建实例并启动</span></span><br><span class="line">docker run -p 6379:6379 --name redis -v /mydata/redis/data/redis.conf:/etc/redis/redis.conf  -v /mydata/redis/data:/data -d redis redis-server /etc/redis/redis.conf --appendonly yes</span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="Rabbitmq"   >
+          <a href="#Rabbitmq" class="heading-link"><i class="fas fa-link"></i></a><a href="#Rabbitmq" class="headerlink" title="Rabbitmq"></a>Rabbitmq</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 拉取镜像management带控制台</span></span><br><span class="line">docker pull rabbitmq:management</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建实例并启动</span></span><br><span class="line">docker run -d --hostname my-rabbit --name rabbit -v /mydata/rabbitmq:/var/lib/rabbitmq -e RABBITMQ_DEFAULT_USER=root -e RABBITMQ_DEFAULT_PASS=Mm_123456 -p 15672:15672 -p 5672:5672 rabbitmq:management</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="mongo"   >
+          <a href="#mongo" class="heading-link"><i class="fas fa-link"></i></a><a href="#mongo" class="headerlink" title="mongo"></a>mongo</h3>
+      <figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 拉取镜像</span></span><br><span class="line">docker pull mongo</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 创建实例并启动</span></span><br><span class="line">docker run -p 27017:27017 -v /mydata/mongo:/data/db --name mongodb -d mongo</span><br></pre></td></tr></table></div></figure>
+
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/10/30/Hbase%E4%B8%8Eswagger%E4%B8%8Eguava%E4%BE%9D%E8%B5%96%E9%94%99%E8%AF%AF/">Hbase整合SpringBoot的问题</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-10-30</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-04-25</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>在一个Demo中，springboot整合Hbase出了一个难解决的问题：</p>
+<p>tried to access method com.google.common.base.Stopwatch.<init>()V from class org.apache.hadoop.hbase.zookeeper.MetaTableLocator</p>
+<p>调用hbase就会报错，这是因为swagger和guava依赖冲突导致的，整合habse的1.0版本，依赖中不能有swagger，guava的版本要低于17.</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/10/28/SQuirreL%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/">Squirrel SQL客户端安装与使用</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-10-28</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-10-28</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h1 id="一、Squirrel简介"   >
+          <a href="#一、Squirrel简介" class="heading-link"><i class="fas fa-link"></i></a><a href="#一、Squirrel简介" class="headerlink" title="一、Squirrel简介"></a>一、Squirrel简介</h1>
+      <p>Squirrel是一个连接数据库的客户端工具，一般支持JDBC的数据库都可以用它来简介，如连接MySQL。</p>
+
+        <h1 id="二、安装准备"   >
+          <a href="#二、安装准备" class="heading-link"><i class="fas fa-link"></i></a><a href="#二、安装准备" class="headerlink" title="二、安装准备"></a>二、安装准备</h1>
+      <p>下载jar包：squirrel-sql-3.7.1-standard.jar</p>
+
+        <h1 id="三、安装"   >
+          <a href="#三、安装" class="heading-link"><i class="fas fa-link"></i></a><a href="#三、安装" class="headerlink" title="三、安装"></a>三、安装</h1>
+      <p>①进入squirrel-sql-3.7.1-standard.jar文件所在的目录，在地址栏输入：cmd，进入命令窗口</p>
+<p>②在命令窗口输入：java -jar squirrel-sql-3.7.1-standard.jar，进入安装界面</p>
+<p><img   src="https://img-blog.csdnimg.cn/20181207172341679.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70" style="width: image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,tepx;height: t_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70px;"  alt="img"></p>
+<p>点击Next</p>
+<p><img   src="https://img-blog.csdnimg.cn/20181207172428945.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70" style="width: image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,tepx;height: t_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70px;"  alt="img"></p>
+<p>点击Next</p>
+<p><img   src="https://img-blog.csdnimg.cn/20181207172456338.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70" style="width: image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,tepx;height: t_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70px;"  alt="img"></p>
+<p>自行选择安装目录，然后点击Next</p>
+<p><img   src="https://img-blog.csdnimg.cn/20181207172529452.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70" style="width: image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,tepx;height: t_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70px;"  alt="img"></p>
+<p>点击Yes</p>
+<p><img src="https://img-blog.csdnimg.cn/20181207172626599.png" alt="img"></p>
+<p>在下面这个页面，最好选中所有的复选框，以免后续出问题，然后点击Next</p>
+<p><img   src="https://img-blog.csdnimg.cn/20181207172830834.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70" style="width: image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,tepx;height: t_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70px;"  alt="img"></p>
+<p>进入安装窗口，结束后点击Next</p>
+<p><img   src="https://img-blog.csdnimg.cn/20181207172908294.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70" style="width: image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,tepx;height: t_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70px;"  alt="img"></p>
+<p>选中复选框，然后点击Next</p>
+<p><img   src="https://img-blog.csdnimg.cn/20181207173028690.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70" style="width: image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,tepx;height: t_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70px;"  alt="img"></p>
+<p>点击Done，完成安装</p>
+<p><img   src="https://img-blog.csdnimg.cn/20181207173319861.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70" style="width: image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,tepx;height: t_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70px;"  alt="img"></p>
+<p>此时，桌面会多出一个图标</p>
+<p><img src="https://img-blog.csdnimg.cn/20181207173404141.png" alt="img"></p>
+
+        <h1 id="四、配置客户端"   >
+          <a href="#四、配置客户端" class="heading-link"><i class="fas fa-link"></i></a><a href="#四、配置客户端" class="headerlink" title="四、配置客户端"></a>四、配置客户端</h1>
+      <p>点击SQuirrel，进入客户端页面</p>
+<p><img   src="https://img-blog.csdnimg.cn/20181207174019153.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70" style="width: image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,tepx;height: t_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70px;"  alt="img"></p>
+<p>双击Phoenix安装包</p>
+<p><img   src="https://img-blog.csdnimg.cn/20181207174359249.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70" style="width: image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,tepx;height: t_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70px;"  alt="img"></p>
+<p>将phoenix-4.8.1-HBase-0.98-client.jar文件拷贝到SQuirrel安装目录的lib目录下</p>
+<p><img   src="https://img-blog.csdnimg.cn/20181207174203592.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70" style="width: image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,tepx;height: t_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70px;"  alt="img"></p>
+<p><img   src="https://img-blog.csdnimg.cn/20181207174320964.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70" style="width: image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,tepx;height: t_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70px;"  alt="img"></p>
+<p>添加驱动</p>
+<p><img   src="https://img-blog.csdnimg.cn/2018120717512761.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70" style="width: image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,tepx;height: t_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70px;"  alt="img"></p>
+<p>点击OK后，出现下面界面，说明配置成功</p>
+<p><img   src="https://img-blog.csdnimg.cn/20181207175248755.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70" style="width: image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,tepx;height: t_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70px;"  alt="img"></p>
+<p>可以看到添加的驱动</p>
+<p><img   src="https://img-blog.csdnimg.cn/20181207175400924.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70" style="width: image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,tepx;height: t_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70px;"  alt="img"></p>
+<p>点击Aliases，添加“别名”</p>
+<p><img   src="https://img-blog.csdnimg.cn/2018120717573623.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70" style="width: image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,tepx;height: t_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70px;"  alt="img"></p>
+<p>点击Test，Connect</p>
+<p><img   src="https://img-blog.csdnimg.cn/20181207175819496.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70" style="width: image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,tepx;height: t_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70px;"  alt="img"></p>
+<p>如下所示，配置成功</p>
+<p><img   src="https://img-blog.csdnimg.cn/20181207180120990.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70" style="width: image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,tepx;height: t_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70px;"  alt="img"></p>
+<p>列表中出现添加的Hadoop01</p>
+<p><img   src="https://img-blog.csdnimg.cn/20181207180202313.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70" style="width: image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,tepx;height: t_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70px;"  alt="img"></p>
+<p>双击Hadoop01，点击TABLE即可看到对应的表</p>
+<p><img   src="https://img-blog.csdnimg.cn/20181207180425693.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70" style="width: image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,tepx;height: t_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0pvaG5zb244NzAy,size_16,color_FFFFFF,t_70px;"  alt="img"></p>
+<p><strong>至此，Squirrel SQL客户端安装配置完成！</strong></p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2021/10/28/Alibaba%E5%88%86%E5%B1%82%E9%A2%86%E5%9F%9F%E6%A8%A1%E5%9E%8B%E8%A7%84%E7%BA%A6/">阿里巴巴Java开发手册中的DO、DTO、BO、AO、VO、POJO定义</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-10-28</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-04-25</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>分层领域模型规约：</p>
+<p>DO（ Data Object）：与数据库表结构一一对应，通过DAO层向上传输数据源对象。<br>DTO（ Data Transfer Object）：数据传输对象，Service或Manager向外传输的对象。<br>BO（ Business Object）：业务对象。 由Service层输出的封装业务逻辑的对象。<br>AO（ Application Object）：应用对象。 在Web层与Service层之间抽象的复用对象模型，极为贴近展示层，复用度不高。<br>VO（ View Object）：显示层对象，通常是Web向模板渲染引擎层传输的对象。<br>POJO（ Plain Ordinary Java Object）：在本手册中， POJO专指只有setter/getter/toString的简单类，包括DO/DTO/BO/VO等。<br>Query：数据查询对象，各层接收上层的查询请求。 注意超过2个参数的查询封装，禁止使用Map类来传输。<br>领域模型命名规约：</p>
+<p>数据对象：xxxDO，xxx即为数据表名。<br>数据传输对象：xxxDTO，xxx为业务领域相关的名称。<br>展示对象：xxxVO，xxx一般为网页名称。<br>POJO是DO/DTO/BO/VO的统称，禁止命名成xxxPOJO。</p>
+</div></div></article></section><nav class="paginator"><div class="paginator-inner"><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-right"></i></a></div></nav></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><section class="sidebar-toc hide"></section><!-- ov = overview--><section class="sidebar-ov"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="https://brath.cloud/EnjoyNotesLogo.png?versionId=CAEQMhiBgID_rP.3_BciIGMyZGVkMjNmNzM0MDQxNWI5YmE4MGZjYTdkY2FkNjQw" alt="avatar"></div><p class="sidebar-ov-author__text">Brath</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">25</div><div class="sidebar-ov-state-item__name">归档</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2022</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Brath</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v5.4.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.2</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script></body></html>

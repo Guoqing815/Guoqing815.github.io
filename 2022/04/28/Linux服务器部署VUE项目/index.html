@@ -1,0 +1,188 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.2" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.2" type="image/png" sizes="32x32"><meta name="description" content="一、安装VUE环境       1.wget指定进行下载，下载后文件默认存在根目录下的root包下面； 1wget https:&#x2F;&#x2F;nodejs.org&#x2F;dist&#x2F;v16.14.0&#x2F;node-v16.14.0-linux-x64.tar.xz    解压缩 123xz -d node-v16.14.0-linux-x64.tar.xz  #将xz格式解压为t">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux服务器下部署vue 2.0项目">
+<meta property="og:url" content="http://example.com/2022/04/28/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2VUE%E9%A1%B9%E7%9B%AE/index.html">
+<meta property="og:site_name" content="BrathBlog">
+<meta property="og:description" content="一、安装VUE环境       1.wget指定进行下载，下载后文件默认存在根目录下的root包下面； 1wget https:&#x2F;&#x2F;nodejs.org&#x2F;dist&#x2F;v16.14.0&#x2F;node-v16.14.0-linux-x64.tar.xz    解压缩 123xz -d node-v16.14.0-linux-x64.tar.xz  #将xz格式解压为t">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://brath.cloud/blogImg/image-20220428084247115.png">
+<meta property="og:image" content="https://brath.cloud/blogImg/image-20220428084349346.png">
+<meta property="og:image" content="https://brath.cloud/blogImg/image-20220428084359625.png">
+<meta property="og:image" content="https://brath.cloud/blogImg/image-20220428084414353.png">
+<meta property="article:published_time" content="2022-04-28T00:48:30.839Z">
+<meta property="article:modified_time" content="2022-04-28T02:06:11.472Z">
+<meta property="article:author" content="Brath">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://brath.cloud/blogImg/image-20220428084247115.png"><title>Linux服务器下部署vue 2.0项目 | BrathBlog</title><link ref="canonical" href="http://example.com/2022/04/28/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2VUE%E9%A1%B9%E7%9B%AE/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: true,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">BrathBlog</div><div class="header-banner-info__subtitle">Brath</div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">Linux服务器下部署vue 2.0项目</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2022-04-28</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-04-28</span></span></div></header><div class="post-body">
+        <h3 id="一、安装VUE环境"   >
+          <a href="#一、安装VUE环境" class="heading-link"><i class="fas fa-link"></i></a><a href="#一、安装VUE环境" class="headerlink" title="一、安装VUE环境"></a>一、安装VUE环境</h3>
+      <p>1.wget指定进行下载，下载后文件默认存在根目录下的root包下面；</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://nodejs.org/dist/v16.14.0/node-v16.14.0-linux-x64.tar.xz</span><br></pre></td></tr></table></div></figure>
+
+
+
+<p>解压缩</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xz -d node-v16.14.0-linux-x64.tar.xz  #将xz格式解压为tar</span><br><span class="line"></span><br><span class="line">tar -xvf node-v16.14.0-linux-x64.tar  #将tar解压为文件</span><br></pre></td></tr></table></div></figure>
+
+
+
+<p>重命名文件夹</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mv node-v16.14.0-linux-x64 nodeJS-V16.14.0</span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+
+
+
+<p>配置node.js环境变量</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br></pre></td></tr></table></div></figure>
+
+
+
+<p>进入编辑,在文件最下面加上如下字段</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export NODEJS_HOME=/root/nodeJS-V16.14.0</span><br><span class="line">export PATH=$NODEJS_HOME/bin:$PATH</span><br></pre></td></tr></table></div></figure>
+
+
+<p>个人比较喜欢用Xftp将profile文件传输到windows系统下进行配置后再覆盖回去</p>
+<p>配置完成后使用source命令重新执行刚修改的初始化文件，使之立即生效，而不必注销并重新登录</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></div></figure>
+
+
+<p>检查环境变量是否配置成功</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></div></figure>
+
+
+<p>安装WebPackage</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install webpack -g --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></div></figure>
+
+
+
+
+        <h3 id="二、Nginx环境搭建配置"   >
+          <a href="#二、Nginx环境搭建配置" class="heading-link"><i class="fas fa-link"></i></a><a href="#二、Nginx环境搭建配置" class="headerlink" title="二、Nginx环境搭建配置"></a>二、Nginx环境搭建配置</h3>
+      <p>wget指定进行下载，下载后文件默认存在根目录下的 root 下面；</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1.wget https://nginx.org/download/nginx-1.21.6.tar.gz</span><br></pre></td></tr></table></div></figure>
+
+
+<p>解压缩</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf nginx-1.21.6.tar.gz</span><br></pre></td></tr></table></div></figure>
+
+
+<p>进入nginx文件夹</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /root/nginx-1.21.6</span><br></pre></td></tr></table></div></figure>
+
+
+<p>检查配置</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure</span><br></pre></td></tr></table></div></figure>
+
+
+<p>安装gcc环境，有就不需要安装了</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install gcc-c++</span><br></pre></td></tr></table></div></figure>
+
+
+<p>安装PCRE依赖库</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y pcre pcre-devel</span><br></pre></td></tr></table></div></figure>
+
+
+<p>安装zlib 依赖库</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y zlib zlib-devel</span><br></pre></td></tr></table></div></figure>
+
+
+<p>安装OpenSSL安全套接字层密码库</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y openssl openssl-devel</span><br></pre></td></tr></table></div></figure>
+
+
+<p>再次执行配置检查命令</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./configure</span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+
+
+<p>编译安装nginx</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make install</span><br></pre></td></tr></table></div></figure>
+
+
+<p>查找默认安装路径</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whereis nginx</span><br></pre></td></tr></table></div></figure>
+
+
+
+<p>配置nginx环境变量</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br></pre></td></tr></table></div></figure>
+
+
+<p>进入编辑,在文件最下面加上如下字段</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=$PATH:/usr/local/nginx/sbin</span><br></pre></td></tr></table></div></figure>
+
+
+<p>个人比较喜欢用Xftp将profile文件传输到windows系统下进行配置后再覆盖回去</p>
+<p>初始化配置</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></div></figure>
+
+
+<p>检查环境变量是否配置成功</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -v</span><br></pre></td></tr></table></div></figure>
+
+
+<p>启动nginx</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx</span><br></pre></td></tr></table></div></figure>
+
+
+<p>查看nginx是否启动，远程访问服务器，跳出nginx欢迎界面就算配置成功了！</p>
+<p>nginx常用命令</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">启动服务：nginx</span><br><span class="line">退出服务：nginx -s quit</span><br><span class="line">强制关闭服务：nginx -s stop</span><br><span class="line">重载服务：nginx -s reload　　（重载服务配置文件，类似于重启，但服务不会中止）</span><br><span class="line">验证配置文件：nginx -t</span><br><span class="line">使用配置文件：nginx -c &quot;配置文件路径&quot;</span><br><span class="line">使用帮助：nginx -h</span><br></pre></td></tr></table></div></figure>
+
+
+
+
+        <h3 id="三、发布VUE项目"   >
+          <a href="#三、发布VUE项目" class="heading-link"><i class="fas fa-link"></i></a><a href="#三、发布VUE项目" class="headerlink" title="三、发布VUE项目"></a>三、发布VUE项目</h3>
+      
+        <h5 id="打包VUE项目"   >
+          <a href="#打包VUE项目" class="heading-link"><i class="fas fa-link"></i></a><a href="#打包VUE项目" class="headerlink" title="打包VUE项目"></a>打包VUE项目</h5>
+      <p>1.首先配置好线上环境的路径：prod.env </p>
+<p><img src="https://brath.cloud/blogImg/image-20220428084247115.png" alt="image-20220428084247115"></p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">	NODE_ENV: &#x27;&quot;production&quot;&#x27;,</span><br><span class="line">	ENV_CONFIG: &#x27;&quot;prod&quot;&#x27;,</span><br><span class="line">	MANAGEMENT_SERVICE_API: &#x27;&quot;http://42.193.125.92:7815&quot;&#x27;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+
+
+<p>2.控制台输入 npm run build:prod</p>
+<p><img src="https://brath.cloud/blogImg/image-20220428084349346.png" alt="image-20220428084349346"></p>
+<p>3.打包完会生成一个dist文件夹</p>
+<p><img src="https://brath.cloud/blogImg/image-20220428084359625.png" alt="image-20220428084359625"></p>
+<p>4.将dist文件夹内容覆盖到/usr/local/nginx/html目录下面</p>
+<p><img src="https://brath.cloud/blogImg/image-20220428084414353.png" alt="image-20220428084414353"></p>
+<p>5.修改nginx配置</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/nginx/conf/nginx.conf 编辑打开</span><br></pre></td></tr></table></div></figure>
+
+<figure class="highlight nginx"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">worker_processes</span>  <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="section">events</span> &#123;</span><br><span class="line">    <span class="attribute">worker_connections</span>  <span class="number">1024</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">    <span class="attribute">include</span>       mime.types;</span><br><span class="line">    <span class="attribute">default_type</span>  application/octet-stream;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">sendfile</span>        <span class="literal">on</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">keepalive_timeout</span>  <span class="number">65</span>;</span><br><span class="line"></span><br><span class="line">    <span class="section">server</span> &#123;</span><br><span class="line">        <span class="attribute">listen</span>       <span class="number">8099</span>;  <span class="comment">#配置当前服务端口</span></span><br><span class="line">        <span class="attribute">server_name</span>  localhost; <span class="comment">#配置当前服务IP</span></span><br><span class="line">        </span><br><span class="line">        <span class="attribute">location</span> / &#123;</span><br><span class="line">            <span class="attribute">root</span>   html/dist; <span class="comment">#配置服务根目录</span></span><br><span class="line">            <span class="attribute">index</span>  index.html index.htm; <span class="comment">#配置服务索引页面</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">error_page</span>   <span class="number">500</span> <span class="number">502</span> <span class="number">503</span> <span class="number">504</span>  /50x.html;</span><br><span class="line">        <span class="attribute">location</span> = /50x.html &#123;</span><br><span class="line">            <span class="attribute">root</span>   html;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+
+
+
+<p>6.重启或关闭重开Nginx</p>
+<figure class="highlight nginx"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">nginx</span> -s reload <span class="comment">#重启</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">nginx -s stop <span class="comment">#强制停止</span></span><br><span class="line"></span><br><span class="line">nginx <span class="comment">#开启</span></span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="http://example.com">Brath</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="http://example.com/2022/04/28/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2VUE%E9%A1%B9%E7%9B%AE/">http://example.com/2022/04/28/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2VUE%E9%A1%B9%E7%9B%AE/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-reward reward"><div class="reward-button">请我喝杯咖啡~</div><div class="reward-qrcode"><span class="reward-qrcode-alipay"><img class="reward-qrcode-alipay__img" src="https://brath.cloud/zfb.jpg"><div class="reward-qrcode-alipay__text">支付宝打赏</div></span><span class="reward-qrcode-wechat"><img class="reward-qrcode-wechat__img" src="https://brath.cloud/wx.jpg"><div class="reward-qrcode-wechat__text">微信打赏</div></span></div></div><nav class="post-paginator paginator"><div class="paginator-prev"><a class="paginator-prev__link" href="/2022/04/28/typora%E9%85%8D%E7%BD%AEgitee%E5%92%8C%E9%98%BF%E9%87%8C%E4%BA%91OSS%E5%9B%BE%E5%BA%93%E4%BD%BF%E7%94%A8picgo%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/"><span class="paginator-prev__icon"><i class="fas fa-angle-left"></i></span><span class="paginator-prev__text">Typora使用gitee和阿里云OSS作为图库用picgo上传图片的教程~</span></a></div><div class="paginator-next"><a class="paginator-next__link" href="/2022/04/25/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%8B%86%E5%88%86%E7%BB%86%E5%88%99/"><span class="paginator-prev__text">微服务拆分细则</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%AE%89%E8%A3%85VUE%E7%8E%AF%E5%A2%83"><span class="toc-number">1.</span> <span class="toc-text">
+          一、安装VUE环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Nginx%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">
+          二、Nginx环境搭建配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%8F%91%E5%B8%83VUE%E9%A1%B9%E7%9B%AE"><span class="toc-number">3.</span> <span class="toc-text">
+          三、发布VUE项目</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%89%93%E5%8C%85VUE%E9%A1%B9%E7%9B%AE"><span class="toc-number">3.0.1.</span> <span class="toc-text">
+          打包VUE项目</span></a></li></ol></li></ol></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="https://brath.cloud/EnjoyNotesLogo.png?versionId=CAEQMhiBgID_rP.3_BciIGMyZGVkMjNmNzM0MDQxNWI5YmE4MGZjYTdkY2FkNjQw" alt="avatar"></div><p class="sidebar-ov-author__text">Brath</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">25</div><div class="sidebar-ov-state-item__name">归档</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2022</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Brath</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v5.4.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.2</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script></body></html>
