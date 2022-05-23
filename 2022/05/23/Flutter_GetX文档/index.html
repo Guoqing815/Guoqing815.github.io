@@ -1,0 +1,221 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.2" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.2" type="image/png" sizes="32x32"><meta name="description" content="​        GetX 是 Flutter 上的一个轻量且强大的解决方案：高性能的状态管理、智能的依赖注入和便捷的路由管理。 ​        与其说是一个状态管理库，倒不如是是一个简化 Flutter 开发的百宝箱。它提供了很多工具来简化我们的开发，本篇我们先对 GetX 有一个大概的认识，然后接下来的篇章再将 GetX 的具体应用。                     GetX 工具介">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter GETX框架">
+<meta property="og:url" content="http://example.com/2022/05/23/Flutter_GetX%E6%96%87%E6%A1%A3/index.html">
+<meta property="og:site_name" content="BrathBlog">
+<meta property="og:description" content="​        GetX 是 Flutter 上的一个轻量且强大的解决方案：高性能的状态管理、智能的依赖注入和便捷的路由管理。 ​        与其说是一个状态管理库，倒不如是是一个简化 Flutter 开发的百宝箱。它提供了很多工具来简化我们的开发，本篇我们先对 GetX 有一个大概的认识，然后接下来的篇章再将 GetX 的具体应用。                     GetX 工具介">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://brath.cloud/blogImg/v2-196c01dbae06a8e68132fcd94e3983a6_b.jpg">
+<meta property="article:published_time" content="2022-05-23T04:50:34.759Z">
+<meta property="article:modified_time" content="2022-05-23T04:53:15.592Z">
+<meta property="article:author" content="Brath">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://brath.cloud/blogImg/v2-196c01dbae06a8e68132fcd94e3983a6_b.jpg"><title>Flutter GETX框架 | BrathBlog</title><link ref="canonical" href="http://example.com/2022/05/23/Flutter_GetX%E6%96%87%E6%A1%A3/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: true,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">BrathBlog</div><div class="header-banner-info__subtitle">Brath</div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">Flutter GETX框架</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2022-05-23</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-05-23</span></span></div></header><div class="post-body"><p>​        GetX 是 Flutter 上的一个轻量且强大的解决方案：高性能的状态管理、智能的依赖注入和便捷的路由管理。</p>
+<p>​        与其说是一个状态管理库，倒不如是是一个简化 Flutter 开发的百宝箱。它提供了很多工具来简化我们的开发，本篇我们先对 GetX 有一个大概的认识，然后接下来的篇章再将 GetX 的具体应用。</p>
+
+        <h2 id="GetX-工具介绍"   >
+          <a href="#GetX-工具介绍" class="heading-link"><i class="fas fa-link"></i></a><a href="#GetX-工具介绍" class="headerlink" title="GetX 工具介绍"></a><strong>GetX 工具介绍</strong></h2>
+      <p>官方文档给出关于 GetX 的介绍如下：</p>
+<blockquote>
+<p>GetX is an extra-light and powerful solution for Flutter. It combines high-performance state management, intelligent dependency injection, and route management quickly and practically. GetX是一个超轻量且强大的 Flutter 应用解决方案。它组合了高性能的状态管理、智能的依赖注入以及快速可用的路由管理。</p>
+</blockquote>
+<p>而实际上，GetX 还有更多的小工具，示例如下：</p>
+
+        <h4 id="状态管理"   >
+          <a href="#状态管理" class="heading-link"><i class="fas fa-link"></i></a><a href="#状态管理" class="headerlink" title="状态管理"></a>状态管理</h4>
+      <ul>
+<li>Obx是配合Rx响应式变量使用、GetBuilder是配合update使用：请注意，这完全是俩套定点刷新控件的方案。<br> 区别：前者响应式变量变化，Obx自动刷新；后者需要使用update手动调用刷新</li>
+<li>每一个响应式变量，都需要生成对应的GetStream，占用资源大于基本数据类型，会对内存造成一定压力</li>
+<li>GetBuilder内部实际上是对StatefulWidget的封装，所以占用资源极小（推荐使用）</li>
+</ul>
+
+        <h4 id="控制器的注入"   >
+          <a href="#控制器的注入" class="heading-link"><i class="fas fa-link"></i></a><a href="#控制器的注入" class="headerlink" title="控制器的注入"></a>控制器的注入</h4>
+      <ul>
+<li>静态路由绑定</li>
+</ul>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class AsWorkStatisticsBinding implements Bindings &#123;</span><br><span class="line">  @override</span><br><span class="line">  void dependencies() &#123;</span><br><span class="line">    Get.lazyPut&lt;AsWorkStatisticsController&gt;(() =&gt; AsWorkStatisticsController());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static final List&lt;GetPage&gt; routes = [</span><br><span class="line">    GetPage(</span><br><span class="line">      name: workStatisticsPage,</span><br><span class="line">      page: () =&gt; const AsWorkStatisticsPage(),</span><br><span class="line">      binding: AsWorkStatisticsBinding(),</span><br><span class="line">    ),</span><br><span class="line">];</span><br><span class="line">Get.toNamed(ASRouteConfig.workPlanDetailPage);</span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li>动态路由绑定</li>
+</ul>
+<figure class="highlight css"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get<span class="selector-class">.to</span>(AsWorkStatisticsPage(),binding: <span class="built_in">AsWorkStatisticsBinding</span>());</span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li>页面注入</li>
+</ul>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get.lazyPut&lt;AsWorkStatisticsController&gt;(() =&gt; AsWorkStatisticsController());</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4 id="动态-简单路由和静态-命名路由"   >
+          <a href="#动态-简单路由和静态-命名路由" class="heading-link"><i class="fas fa-link"></i></a><a href="#动态-简单路由和静态-命名路由" class="headerlink" title="动态/简单路由和静态/命名路由"></a>动态/简单路由和静态/命名路由</h4>
+      <p>请注意命名路由，只需要在api结尾加上Named即可，举例：</p>
+<ul>
+<li>默认：Get.to(SomePage());</li>
+<li>命名路由：Get.toNamed(“/somePage”);</li>
+<li>导航到新的页面</li>
+</ul>
+<figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Get.to(NextScreen());</span><br><span class="line">Get.toNamed(<span class="string">&quot;/NextScreen&quot;</span>);</span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li>关闭SnackBars、Dialogs、BottomSheets或任何你通常会用Navigator.pop(context)关闭的东西</li>
+</ul>
+<figure class="highlight css"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get<span class="selector-class">.back</span>();</span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li>进入下一个页面，但没有返回上一个页面的选项（用于SplashScreens，登录页面等）</li>
+</ul>
+<figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Get.off(NextScreen());</span><br><span class="line">Get.offNamed(<span class="string">&quot;/NextScreen&quot;</span>);</span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li>进入下一个界面并取消之前的所有路由（在购物车、投票和测试中很有用）</li>
+</ul>
+<figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Get.offAll(NextScreen());</span><br><span class="line">Get.offAllNamed(<span class="string">&quot;/NextScreen&quot;</span>);</span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li>发送数据到其它页面</li>
+</ul>
+<p>只要发送你想要的参数即可。Get在这里接受任何东西，无论是一个字符串，一个Map，一个List，甚至一个类的实例。</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Get.to(NextScreen(), arguments: &#x27;Get is the best&#x27;);</span><br><span class="line">Get.toNamed(&quot;/NextScreen&quot;, arguments: &#x27;Get is the best&#x27;);</span><br></pre></td></tr></table></div></figure>
+
+<p>在你的类或控制器上。</p>
+<figure class="highlight dart"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(Get.arguments);</span><br><span class="line"><span class="comment">//print out: Get is the best</span></span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li>要导航到下一条路由，并在返回后立即接收或更新数据</li>
+</ul>
+<figure class="highlight csharp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> data = <span class="keyword">await</span> Get.to(Payment());</span><br><span class="line"><span class="keyword">var</span> data = <span class="keyword">await</span> Get.toNamed(<span class="string">&quot;/payment&quot;</span>);</span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li>在另一个页面上，发送前一个路由的数据</li>
+</ul>
+<figure class="highlight kotlin"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Get.back(result: <span class="string">&#x27;success&#x27;</span>);</span><br><span class="line"><span class="comment">// 并使用它，例：</span></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">data</span> == <span class="string">&#x27;success&#x27;</span>) madeAnything();</span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li>跳转重复页面，可以这样写</li>
+</ul>
+<figure class="highlight csharp"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Get.to(XxxxPage(), preventDuplicates: <span class="literal">false</span>);</span><br><span class="line"><span class="comment">// 或者</span></span><br><span class="line">Get.toNamed(<span class="string">&#x27;xxx&#x27;</span>,  preventDuplicates: <span class="literal">false</span>);</span><br></pre></td></tr></table></div></figure>
+
+<ul>
+<li>如果你不想使用GetX语法，只要把 Navigator（大写）改成 navigator（小写），你就可以拥有标准导航的所有功能，而不需要使用context，例如：</li>
+</ul>
+<figure class="highlight kotlin"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 默认的Flutter导航</span></span><br><span class="line">Navigator.of(context).push(</span><br><span class="line">  context,</span><br><span class="line">  MaterialPageRoute(</span><br><span class="line">    builder: (BuildContext context) &#123;</span><br><span class="line">      <span class="keyword">return</span> HomePage();</span><br><span class="line">    &#125;,</span><br><span class="line">  ),</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用Flutter语法获得，而不需要context。</span></span><br><span class="line">navigator.push(</span><br><span class="line">  MaterialPageRoute(</span><br><span class="line">    builder: (_) &#123;</span><br><span class="line">      <span class="keyword">return</span> HomePage();</span><br><span class="line">    &#125;,</span><br><span class="line">  ),</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">// get语法</span></span><br><span class="line">Get.to(HomePage());</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4 id="GetView的使用"   >
+          <a href="#GetView的使用" class="heading-link"><i class="fas fa-link"></i></a><a href="#GetView的使用" class="headerlink" title="GetView的使用"></a>GetView的使用</h4>
+      <p>GetView只是对已注册的Controller有一个名为controller的getter的const Stateless的Widget，如果我们只有单个控制器作为依赖项，那我们就可以使用GetView，而不是使用StatelessWidget，并且避免了写Get.Find()。</p>
+<p>GetView的使用方法非常简单，只是要将你的视图层继承自GetView并传入需要注册的控制器并Get.put()即可：</p>
+<figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GetViewAndGetWidgetExample</span> <span class="keyword">extends</span> <span class="title">GetView</span>&lt;<span class="title">GetViewCountController</span>&gt; </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  <span class="function">Widget <span class="title">build</span><span class="params">(BuildContext context)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    Get.put(GetViewCountController());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Container();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+
+        <h3 id="路由"   >
+          <a href="#路由" class="heading-link"><i class="fas fa-link"></i></a><a href="#路由" class="headerlink" title="路由"></a><strong>路由</strong></h3>
+      <p>路由支持命名路由和匿名路由：</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Get.to(() =&gt; Home());</span><br><span class="line">Get.toNamed(&#x27;/home&#x27;);</span><br><span class="line">// 返回上一个页面</span><br><span class="line">Get.back();</span><br><span class="line">// 使用下一个页面替换</span><br><span class="line">Get.off(NextScreen());</span><br><span class="line">// 清空导航堆栈全部页面</span><br><span class="line">Get.offAll(NextScreen());</span><br><span class="line">// 获取命名路由参数</span><br><span class="line">print(Get.parameters[&#x27;id&#x27;]);</span><br><span class="line">print(Get.parameters[&#x27;name&#x27;]);</span><br></pre></td></tr></table></div></figure>
+
+<p>GetX 的路由好处是不依赖于 <code>context</code>，十分简洁，更多路由介绍可以参考：**<span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://github.com/jonataslaw/getx/blob/master/documentation/en_US/route_management.md" >GetX 路由介绍官方文档</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>**。</p>
+
+        <h2 id="SnackBar"   >
+          <a href="#SnackBar" class="heading-link"><i class="fas fa-link"></i></a><a href="#SnackBar" class="headerlink" title="SnackBar"></a><strong>SnackBar</strong></h2>
+      <p>Flutter 自身携带的 SnackBar 有很多限制，而 GetX 的非常简单，当然也有更多的样式配置和位置配置参数。</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get.snackbar(&#x27;SnackBar&#x27;, &#x27;这是GetX的SnackBar&#x27;);</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="对话框"   >
+          <a href="#对话框" class="heading-link"><i class="fas fa-link"></i></a><a href="#对话框" class="headerlink" title="对话框"></a><strong>对话框</strong></h2>
+      <p>对话框也一样，默认的对话框开箱即用。</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Get.defaultDialog(</span><br><span class="line">  title: &#x27;对话框&#x27;,</span><br><span class="line">  content: Text(&#x27;对话框内容&#x27;),</span><br><span class="line">  onConfirm: () &#123;</span><br><span class="line">    print(&#x27;Confirm&#x27;);</span><br><span class="line">    Get.back();</span><br><span class="line">  &#125;,</span><br><span class="line">  onCancel: () &#123;</span><br><span class="line">    print(&#x27;Cancel&#x27;);</span><br><span class="line">  &#125;,</span><br><span class="line">);</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="内存缓存"   >
+          <a href="#内存缓存" class="heading-link"><i class="fas fa-link"></i></a><a href="#内存缓存" class="headerlink" title="内存缓存"></a><strong>内存缓存</strong></h2>
+      <p>GetX 可以缓存内容对象，以便在不同页面共享数据。使用的时候需要注意，需要先 <code>put</code> 操作再 <code>find</code>操作，否则会抛异常。</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Get.put(CacheData(name: &#x27;这是缓存数据&#x27;));</span><br><span class="line">CacheData cache = Get.find();</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="离线存储"   >
+          <a href="#离线存储" class="heading-link"><i class="fas fa-link"></i></a><a href="#离线存储" class="headerlink" title="离线存储"></a><strong>离线存储</strong></h2>
+      <p>GetX 提供了一个 <strong><span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://pub.flutter-io.cn/packages/get_storage" >get_storage</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></strong> 插件用于离线存储，与 <code>shared_preferences</code> 相比，其优点是纯 Dart 编写，不依赖于原生，因此可以在安卓、iOS、Web、Linux、Mac 等多个平台使用。<code>GetStorage</code> 是基于内存和文件存储的，当内存容器中有数据时优先从内存读取。同时在构建 GetStorage 对象到时候指定存储的文件名以及存储数据的容器。</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GetStorage storage = GetStorage();</span><br><span class="line">storage.write(&#x27;name&#x27;, &#x27;岛上码农&#x27;);</span><br><span class="line">storage.read(&#x27;name&#x27;);</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="更改主题"   >
+          <a href="#更改主题" class="heading-link"><i class="fas fa-link"></i></a><a href="#更改主题" class="headerlink" title="更改主题"></a><strong>更改主题</strong></h2>
+      <p>可以说是一行代码搞定深色和浅色模式，也可以更改为自定义主题 —— <strong>老板让你根据手机壳改主体颜色的需求</strong>已经搞定了一大半了！</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Get.changeTheme(</span><br><span class="line">  Get.isDarkMode ? ThemeData.light() : ThemeData.dark());</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></div></figure>
+
+<p><img src="https://brath.cloud/blogImg/v2-196c01dbae06a8e68132fcd94e3983a6_b.jpg" alt="img"></p>
+
+        <h2 id="多语言支持"   >
+          <a href="#多语言支持" class="heading-link"><i class="fas fa-link"></i></a><a href="#多语言支持" class="headerlink" title="多语言支持"></a><strong>多语言支持</strong></h2>
+      <p>多语言支持使用数据字典完成，在 <code>GetMaterialApp</code> 指定字典对象（继承自 <code>Translations</code>），使用字符串的时候假设<code>.tr</code> 后缀，就可以在切换语言的时候自动切换字符串对应语言的翻译了。</p>
+<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">class GetXDemo extends StatelessWidget &#123;</span><br><span class="line">  // 省略其他代码</span><br><span class="line">  TextButton(</span><br><span class="line">    onPressed: () &#123;</span><br><span class="line">      var locale = Locale(&#x27;en&#x27;, &#x27;US&#x27;);</span><br><span class="line">      Get.updateLocale(locale);</span><br><span class="line">    &#125;,</span><br><span class="line">    child: Text(&#x27;name&#x27;.tr),</span><br><span class="line">  ),</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Messages extends Translations &#123;</span><br><span class="line">  @override</span><br><span class="line">  Map&lt;String, Map&lt;String, String&gt;&gt; get keys =&gt; &#123;</span><br><span class="line">        &#x27;en_US&#x27;: &#123;</span><br><span class="line">          &#x27;name&#x27;: &#x27;Island Coder&#x27;,</span><br><span class="line">        &#125;,</span><br><span class="line">        &#x27;zh_CN&#x27;: &#123;</span><br><span class="line">          &#x27;name&#x27;: &#x27;岛上码农&#x27;,</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class MyApp extends StatelessWidget &#123;</span><br><span class="line">  // This widget is the root of your application.</span><br><span class="line">  @override</span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    return GetMaterialApp(</span><br><span class="line">      translations: Messages(),</span><br><span class="line">      locale: Locale(&#x27;zh&#x27;, &#x27;CN&#x27;),</span><br><span class="line">      color: Colors.white,</span><br><span class="line">      navigatorKey: Get.key,</span><br><span class="line">      title: &#x27;Flutter Demo&#x27;,</span><br><span class="line">      theme: ThemeData(</span><br><span class="line">        primarySwatch: Colors.blue,</span><br><span class="line">        brightness: Brightness.light,</span><br><span class="line">      ),</span><br><span class="line">      home: GetXDemo(),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></div></figure>
+
+
+        <h2 id="GetX-的理念"   >
+          <a href="#GetX-的理念" class="heading-link"><i class="fas fa-link"></i></a><a href="#GetX-的理念" class="headerlink" title="GetX 的理念"></a><strong>GetX 的理念</strong></h2>
+      <p>GetX有三个基本的理念，分别是性能、生产力和组织性（Organization）。</p>
+<ul>
+<li>性能（Performance）：GetX 关注性能并最小化资源消耗。GetX 不使用 <code>Stream</code> 或 <code>ChangeNotifier</code>。</li>
+<li>生产力（Productivity）：GetX 使用简洁愉悦的语法。不管你要做什么，使用 GetX都会觉得简便。这使得开发的时间大大节省，并且保证应用性能的最大化。通常来说，开发者需要关注从内存中移除控制器。而使用 GetX 的时候，则无需这么做。当控制器不被使用的时候，资源会自动从内存中释放。如果确实需要常住内存，那就需要在依赖中声明 <code>permanent:true</code>。通过这种方式，可以降低内存中有过多不必要依赖对象的风险。同时，依赖默认也是懒加载。</li>
+<li>组织性（Organization）：GetX 可以将视图、展示逻辑、业务逻辑、依赖注入和导航完全解耦。路由之间跳转无需 <code>context</code>，因此我们的导航不会依赖组件树。也不需要使用通过 <code>InheritedWidget</code> 的 <code>context</code> 访问控制器或 BLOC 对象，因此可以将展示逻辑和业务逻辑从虚拟的组件层分离。我们也不需要像 MultiProvider 那样往组件树中注入 Controller/Model/Bloc 等类对象。因此可以将依赖注入和视图分离。</li>
+</ul>
+
+        <h2 id="GetX-生态"   >
+          <a href="#GetX-生态" class="heading-link"><i class="fas fa-link"></i></a><a href="#GetX-生态" class="headerlink" title="GetX 生态"></a><strong>GetX 生态</strong></h2>
+      <p>GetX 有很多特性，使得编码变得容易。每个特性之间是相互独立的，并且只会在使用的时候才启动。例如，如果仅仅是使用状态管理，那么只有状态管理会被编译。而如果只使用路由，那么状态管理的部分就不会编译。</p>
+<p>GetX 有一个很大的生态，包括了大型的社区维护，大量的协作者（GitHub 上看有132位），并且承诺只要 Flutter 存在就会继续维护下去。而且 GetX 兼容 Android, iOS, Web, Mac, Linux, Windows多个平台。GetX 甚至还有服务端版本 **<span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://github.com/jonataslaw/get_server" >Get_Server</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>**（感觉Flutter要一统程序员界啊，啥时候支持鸿蒙？）。</p>
+<p>为了简化开发，GetX 还提供了脚手架工具**<span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://pub.flutter-io.cn/packages/get_cli" >GET_CLI</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>**和 VSCode 插件<code>GetX Snippets</code>（也有Android Studio和 Intellij 插件）。提供了如下快速代码模板：</p>
+<ul>
+<li><p>getmain：GetX 的 main.dart代码；</p>
+</li>
+<li><p>getmodel：Model 类代码，包括了 fromJson 和 toJson 方法</p>
+</li>
+<li><p>其他，输入 getxxxx 根据提示生成即可，具体参考：**<span class="exturl"><a class="exturl__link"   href="https://link.zhihu.com/?target=https://marketplace.visualstudio.com/items?itemName=get-snippets.get-snippets" >GetX Snippets 介绍</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>**。</p>
+</li>
+</ul>
+
+        <h2 id="总结"   >
+          <a href="#总结" class="heading-link"><i class="fas fa-link"></i></a><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h2>
+      <p>本篇对 GetX 插件做了简单的介绍，可以看到 GetX 的生态确实很丰富，感觉是一个集大成者，GetX 基本上涵盖了 Flutter应用开发的很大一部分，如路由、主题、多语言、弹层、状态管理、依赖注入、网络请求封装等等。GetX看着像一个框架， 但实际上它的各个模块是独立的，其实是一个工具箱。对于开发的时候，可以用它的全家桶，也可以从中任取所需的模块到我们的应用中使用。</p>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="http://example.com">Brath</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="http://example.com/2022/05/23/Flutter_GetX%E6%96%87%E6%A1%A3/">http://example.com/2022/05/23/Flutter_GetX%E6%96%87%E6%A1%A3/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><div class="post-reward reward"><div class="reward-button">请我喝杯咖啡~</div><div class="reward-qrcode"><span class="reward-qrcode-alipay"><img class="reward-qrcode-alipay__img" src="https://brath.cloud/zfb.jpg"><div class="reward-qrcode-alipay__text">支付宝打赏</div></span><span class="reward-qrcode-wechat"><img class="reward-qrcode-wechat__img" src="https://brath.cloud/wx.jpg"><div class="reward-qrcode-wechat__text">微信打赏</div></span></div></div><nav class="post-paginator paginator"><div class="paginator-next"><a class="paginator-next__link" href="/2022/05/07/Flutter%E6%96%87%E6%A1%A3/"><span class="paginator-prev__text">Flutter全网最全学习笔记！</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#GetX-%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">
+          GetX 工具介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86"><span class="toc-number">1.0.1.</span> <span class="toc-text">
+          状态管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8%E7%9A%84%E6%B3%A8%E5%85%A5"><span class="toc-number">1.0.2.</span> <span class="toc-text">
+          控制器的注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%80%81-%E7%AE%80%E5%8D%95%E8%B7%AF%E7%94%B1%E5%92%8C%E9%9D%99%E6%80%81-%E5%91%BD%E5%90%8D%E8%B7%AF%E7%94%B1"><span class="toc-number">1.0.3.</span> <span class="toc-text">
+          动态&#x2F;简单路由和静态&#x2F;命名路由</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GetView%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.0.4.</span> <span class="toc-text">
+          GetView的使用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1"><span class="toc-number">1.1.</span> <span class="toc-text">
+          路由</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SnackBar"><span class="toc-number">2.</span> <span class="toc-text">
+          SnackBar</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E8%AF%9D%E6%A1%86"><span class="toc-number">3.</span> <span class="toc-text">
+          对话框</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E7%BC%93%E5%AD%98"><span class="toc-number">4.</span> <span class="toc-text">
+          内存缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A6%BB%E7%BA%BF%E5%AD%98%E5%82%A8"><span class="toc-number">5.</span> <span class="toc-text">
+          离线存储</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%94%B9%E4%B8%BB%E9%A2%98"><span class="toc-number">6.</span> <span class="toc-text">
+          更改主题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E8%AF%AD%E8%A8%80%E6%94%AF%E6%8C%81"><span class="toc-number">7.</span> <span class="toc-text">
+          多语言支持</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GetX-%E7%9A%84%E7%90%86%E5%BF%B5"><span class="toc-number">8.</span> <span class="toc-text">
+          GetX 的理念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GetX-%E7%94%9F%E6%80%81"><span class="toc-number">9.</span> <span class="toc-text">
+          GetX 生态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">10.</span> <span class="toc-text">
+          总结</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="https://brath.cloud/EnjoyNotesLogo.png?versionId=CAEQMhiBgID_rP.3_BciIGMyZGVkMjNmNzM0MDQxNWI5YmE4MGZjYTdkY2FkNjQw" alt="avatar"></div><p class="sidebar-ov-author__text">Brath</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">27</div><div class="sidebar-ov-state-item__name">归档</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2022</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Brath</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v5.4.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.2</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script></body></html>
