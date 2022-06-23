@@ -28,7 +28,96 @@ var CONFIG = {
   sourcePath: {"js":"js","css":"css","images":"images"},
 };
 
-window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">BrathBlog</div><div class="header-banner-info__subtitle">Brath</div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content content-home" id="content"><section class="postlist"><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2022/06/01/%E9%98%BF%E9%87%8C%E4%BA%91OSS%E7%9A%84CDN%E5%8A%A0%E9%80%9F%E5%92%8COSS%E4%BC%A0%E8%BE%93%E5%8A%A0%E9%80%9F%E7%9A%84%E5%8C%BA%E5%88%AB/">阿里云OSS的CDN加速和OSS传输加速的区别</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2022-06-01</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-06-01</span></span></div></header><div class="post-body"><div class="post-excerpt">
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">BrathBlog</div><div class="header-banner-info__subtitle">Brath</div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content content-home" id="content"><section class="postlist"><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2022/06/23/Knife4J%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/">Knife4J接口文档</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2022-06-23</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-06-23</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>Swagger2 及knife4j使用</p>
+<p>最近项目中用到了 Swagger2 和knife4j作为接口文档。所以自己简单搭建了一套环境学习下，总体体验下来，这个框架很方便也很简单易用。</p>
+<p>Swagger2 和 Swagger-ui<br>springFox官方推荐的是Swagger2 和 Swagger-ui配套使用</p>
+<p>maven依赖<br>    <dependencies><br>        <dependency><br>            <groupId>io.springfox</groupId><br>            <artifactId>springfox-swagger2</artifactId><br>            <version>2.9.2</version><br>        </dependency><br>    <!--生成UI界面--><br>    <dependency><br>        <groupId>io.springfox</groupId><br>        <artifactId>springfox-swagger-ui</artifactId><br>        <version>2.9.2</version><br>    </dependency><br>    </dependencies></p>
+<p>增加配置文件<br>@Configuration<br>@EnableSwagger2<br>public class Swagger2 {</p>
+<pre><code>@Bean
+public Docket controllerApi() &#123;
+    return new Docket(DocumentationType.SWAGGER_2)
+            .apiInfo(new ApiInfoBuilder()
+                    .title(&quot;文档说明--API接口文档&quot;)
+                    .description(&quot;包括保存、查询等&quot;)
+                    .version(&quot;版本号:1.0&quot;)
+                    .build())
+            .select()
+            .apis(RequestHandlerSelectors.basePackage(&quot;com.example.myswagger.controller&quot;))
+            .paths(PathSelectors.any()) // 如果适配所有api，可以改为PathSelectors.any()
+            .build();
+&#125;
+</code></pre>
+<p>API接口增加swagger注解<br>@Controller<br>@RequestMapping<br>@Api(tags = “接口服务”)<br>public class HelloController {</p>
+<pre><code>@ApiOperation(&quot;根目录&quot;)
+@GetMapping(&quot;/&quot;)
+@ResponseBody
+public  String hello()&#123;
+    System.out.println(&quot;23123&quot;);
+    return &quot;hello&quot;;
+&#125;
+
+
+@ApiOperation(&quot;保存用户信息&quot;)
+@ApiImplicitParams(&#123;
+        @ApiImplicitParam(name = &quot;name&quot;, value = &quot;名字&quot;, required = true, paramType = &quot;path&quot;),
+        @ApiImplicitParam(name = &quot;age&quot;, dataType = &quot;int&quot;, value = &quot;年龄&quot;, required = true, paramType = &quot;query&quot;)
+&#125;)
+@PostMapping(&quot;/save&quot;)
+@ResponseBody
+public Boolean save(
+        @RequestParam(&quot;name&quot;) String name,
+        @RequestParam(&quot;age&quot;) Integer age
+) &#123;
+    return true;
+&#125;
+</code></pre>
+<p>效果展示<br>启动项目访问</p>
+<p><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="http://localhost:8080/swagger-ui.html" >http://localhost:8080/swagger-ui.html</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p>测试接口：</p>
+<p>项目地址<br><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://gitee.com/LylYorick/myswagger" >https://gitee.com/LylYorick/myswagger</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p>swagger注解详解<br>@Api：用在请求的类上，表示对类的说明<br>    tags=”说明该类的作用，可以在UI界面上看到的注解”<br>    value=”该参数没什么意义，在UI界面上也看到，所以不需要配置”</p>
+<p>@ApiOperation：用在请求的方法上，说明方法的用途、作用<br>    value=”说明方法的用途、作用”<br>    notes=”方法的备注说明”</p>
+<p>@ApiImplicitParams：用在请求的方法上，表示一组参数说明<br>    @ApiImplicitParam：用在@ApiImplicitParams注解中，指定一个请求参数的各个方面<br>        name：参数名<br>        value：参数的汉字说明、解释<br>        required：参数是否必须传<br>        paramType：参数放在哪个地方<br>            · header –&gt; 请求参数的获取：@RequestHeader<br>            · query –&gt; 请求参数的获取：@RequestParam<br>            · path（用于restful接口）–&gt; 请求参数的获取：@PathVariable<br>            · body（不常用）<br>            · form（不常用）<br>        dataType：参数类型，默认String，其它值dataType=”Integer”<br>        defaultValue：参数的默认值</p>
+<p>@ApiResponses：用在请求的方法上，表示一组响应<br>    @ApiResponse：用在@ApiResponses中，一般用于表达一个错误的响应信息<br>        code：数字，例如400<br>        message：信息，例如”请求参数没填好”<br>        response：抛出异常的类</p>
+<p>@ApiModel：用于响应类上，表示一个返回响应数据的信息<br>            （这种一般用在post创建的时候，使用@RequestBody这样的场景，<br>            请求参数无法使用@ApiImplicitParam注解进行描述的时候）<br>    @ApiModelProperty：用在属性上，描述响应类的属性<br>Swagger2 和 knife4j<br>虽然Swagger-ui很好，但是国人还是开发了一个 knife4j的的swaggerui，更加好看和方便使用</p>
+<p>maven依赖</p>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.xiaoymin<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>knife4j-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.8<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.springfox<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>springfox-swagger2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.10.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></div></figure>
+
+
+<p>增加配置类<br>@Configuration<br>@EnableSwagger2WebMvc<br>public class Knife4jConfiguration {</p>
+<pre><code>@Bean(value = &quot;defaultApi2&quot;)
+public Docket defaultApi2() &#123;
+    Docket docket=new Docket(DocumentationType.SWAGGER_2)
+            .apiInfo(new ApiInfoBuilder()
+                    //.title(&quot;swagger-bootstrap-ui-demo RESTful APIs&quot;)
+                    .description(&quot;# swagger-bootstrap-ui-demo RESTful APIs&quot;)
+                    .termsOfServiceUrl(&quot;http://www.xx.com/&quot;)
+                    .contact(&quot;xx@qq.com&quot;)
+                    .version(&quot;1.0&quot;)
+                    .build())
+            //分组名称
+            .groupName(&quot;2.X版本&quot;)
+            .select()
+            //这里指定Controller扫描包路径
+            .apis(RequestHandlerSelectors.basePackage(&quot;com.example.myswaggerknife4j.controller&quot;))
+            .paths(PathSelectors.any())
+            .build();
+    return docket;
+&#125;
+</code></pre>
+<p>API接口增加swagger注解<br>@Controller<br>public class HelloController {</p>
+<pre><code>@PostMapping(&quot;/save&quot;)
+@ResponseBody
+public Boolean save(
+        @RequestParam(&quot;name&quot;) String name,
+        @RequestParam(&quot;age&quot;) Integer age
+) &#123;
+    return true;
+&#125;
+</code></pre>
+<p>效果展示<br>访问 <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="http://localhost:8080/doc.html" >http://localhost:8080/doc.html</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p>项目地址<br><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://gitee.com/LylYorick/my-swagger-knife4j" >https://gitee.com/LylYorick/my-swagger-knife4j</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2022/06/01/%E9%98%BF%E9%87%8C%E4%BA%91OSS%E7%9A%84CDN%E5%8A%A0%E9%80%9F%E5%92%8COSS%E4%BC%A0%E8%BE%93%E5%8A%A0%E9%80%9F%E7%9A%84%E5%8C%BA%E5%88%AB/">阿里云OSS的CDN加速和OSS传输加速的区别</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2022-06-01</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-06-01</span></span></div></header><div class="post-body"><div class="post-excerpt">
         <h2 id="概述"   >
           <a href="#概述" class="heading-link"><i class="fas fa-link"></i></a><a href="#概述" class="headerlink" title="概述"></a>概述</h2>
       <p>本文主要介绍阿里云对象存储OSS的传输加速功能和CDN加速OSS资源的区别，以便您根据实际业务进行选择。</p>
@@ -1874,12 +1963,4 @@ window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></he
 <p>​        适用场景：</p>
 <p>​                1 . 系统需要使用一些现有的类，而这些类的接口不符合系统的需要，甚至没有这些类的代码。</p>
 <p>​                2 . 想创建一个可以重复使用的类，用于与一些彼此之间没有太大关联的一些类，包括一些可能在将来引进的类一起工作。</p>
-</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2022/04/25/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2%E5%AE%9D%E5%A1%94/">云服务器部署宝塔面板</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2022-04-25</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-04-25</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>购买好服务器后，进入Xshell：</p>
-<p>1.安装宝塔面板</p>
-<figure class="highlight shell"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y wget &amp;&amp; wget -O install.sh http://download.bt.cn/install/install_6.0.sh &amp;&amp; sh install.sh</span><br></pre></td></tr></table></div></figure>
-
-<p>获得：</p>
-<figure class="highlight plaintext"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">==================================================================</span><br><span class="line">Congratulations! Installed successfully!</span><br><span class="line">==================================================================</span><br><span class="line">外网面板地址: http://42.193.125.92:8888/ef1f509f</span><br><span class="line">内网面板地址: http://172.21.0.3:8888/ef1f509f</span><br><span class="line">username: upqknxq4</span><br><span class="line">password: f3701931</span><br><span class="line">If you cannot access the panel,</span><br><span class="line">release the following panel port [8888] in the security group</span><br><span class="line">若无法访问面板，请检查防火墙/安全组是否有放行面板[8888]端口</span><br><span class="line">==================================================================</span><br><span class="line">Time consumed: 1 Minute!</span><br></pre></td></tr></table></div></figure>
-
-<p>访问 <span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="http://ip:8888/ef1f509f" >http://ip:8888/ef1f509f</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span> 打开宝塔</p>
-</div></div></article></section><nav class="paginator"><div class="paginator-inner"><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-right"></i></a></div></nav></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><section class="sidebar-toc hide"></section><!-- ov = overview--><section class="sidebar-ov"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="https://brath.cloud/EnjoyNotesLogo.png?versionId=CAEQMhiBgID_rP.3_BciIGMyZGVkMjNmNzM0MDQxNWI5YmE4MGZjYTdkY2FkNjQw" alt="avatar"></div><p class="sidebar-ov-author__text">Brath</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">30</div><div class="sidebar-ov-state-item__name">归档</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2022</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Brath</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v5.4.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.2</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script></body></html>
+</div></div></article></section><nav class="paginator"><div class="paginator-inner"><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-right"></i></a></div></nav></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><section class="sidebar-toc hide"></section><!-- ov = overview--><section class="sidebar-ov"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="https://brath.cloud/EnjoyNotesLogo.png?versionId=CAEQMhiBgID_rP.3_BciIGMyZGVkMjNmNzM0MDQxNWI5YmE4MGZjYTdkY2FkNjQw" alt="avatar"></div><p class="sidebar-ov-author__text">Brath</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">31</div><div class="sidebar-ov-state-item__name">归档</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2022</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Brath</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v5.4.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.2</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script></body></html>
