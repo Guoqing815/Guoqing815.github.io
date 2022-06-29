@@ -28,7 +28,119 @@ var CONFIG = {
   sourcePath: {"js":"js","css":"css","images":"images"},
 };
 
-window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">BrathBlog</div><div class="header-banner-info__subtitle">Brath</div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content content-home" id="content"><section class="postlist"><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2022/06/23/Knife4J%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/">Knife4J接口文档</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2022-06-23</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-06-23</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>Swagger2 及knife4j使用</p>
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">BrathBlog</div><div class="header-banner-info__subtitle">Brath</div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content content-home" id="content"><section class="postlist"><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2022/06/29/Redis%E4%B8%8EMysql%20Master%E4%B8%8ESlave%E5%90%8C%E6%AD%A5%EF%BC%9Acanal%E6%95%99%E5%AD%A6/">Redis与Mysql | Master与Slave同步：canal教学</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2022-06-29</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-06-29</span></span></div></header><div class="post-body"><div class="post-excerpt">
+        <h2 id="前言："   >
+          <a href="#前言：" class="heading-link"><i class="fas fa-link"></i></a><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2>
+      <p>​        作者最近在做自己的项目，使用到Redis，需要热更新，修改Mysql后同步Redis缓存，出于对圈子的贡献，也较于当前的canal的博客大多数不是很详细，所以写下这篇文章，时间是2022年6月29日。目的是帮助更多的人，希望能为在祖国的经济发展作出小小的贡献。</p>
+<p>​        end</p>
+
+        <h4 id="学习Canal基本需要："   >
+          <a href="#学习Canal基本需要：" class="heading-link"><i class="fas fa-link"></i></a><a href="#学习Canal基本需要：" class="headerlink" title="学习Canal基本需要："></a>学习Canal基本需要：</h4>
+      <p>​    Linux服务器，性能无大要求</p>
+<p>​    Java基础</p>
+<p>​    Mysql，Redis基础</p>
+
+        <h3 id="俗话说，要了解一个东西，先了解他的由来："   >
+          <a href="#俗话说，要了解一个东西，先了解他的由来：" class="heading-link"><i class="fas fa-link"></i></a><a href="#俗话说，要了解一个东西，先了解他的由来：" class="headerlink" title="俗话说，要了解一个东西，先了解他的由来："></a>俗话说，要了解一个东西，先了解他的由来：</h3>
+      
+        <h2 id="一、Canal起源"   >
+          <a href="#一、Canal起源" class="heading-link"><i class="fas fa-link"></i></a><a href="#一、Canal起源" class="headerlink" title="一、Canal起源"></a>一、Canal起源</h2>
+      <p>​        阿里巴巴因为业务特性，买家集中在国外，衍生出了杭州美国异地数据同步需求，从2010年开始，阿里巴巴开始开发canal，canal是基于Java开发的数据库增量日志解析，提供增量数据订阅&amp;消费的中间件。Canal主要支持了Mysql和Bilog解析，解析完成后利用canal Client来处理获取相关数据。</p>
+<p>了解完canal的起源，再来看看canal的核心业务依赖，也就是mysql的二进制日志：binary_log 简称：Binlog</p>
+
+        <h2 id="二、Binlog"   >
+          <a href="#二、Binlog" class="heading-link"><i class="fas fa-link"></i></a><a href="#二、Binlog" class="headerlink" title="二、Binlog"></a>二、Binlog</h2>
+      <p>​        binlog指二进制日志，它记录了数据库上的所有改变，并以二进制的形式保存在磁盘中，它可以用来查看数据库的变更历史、数据库增量备份和恢复、MySQL的复制（主从数据库的复制）。</p>
+
+        <h4 id="binlog有三种格式："   >
+          <a href="#binlog有三种格式：" class="heading-link"><i class="fas fa-link"></i></a><a href="#binlog有三种格式：" class="headerlink" title="binlog有三种格式："></a>binlog有三种格式：</h4>
+      <p>statement：基于SQL语句的复制（statement-based replication，SBR）<br>row：基于行的复制（row-based replication，RBR）<br>mixed：混合模式复制（mixed-based replication，MBR）</p>
+
+        <h4 id="statement：语句级别"   >
+          <a href="#statement：语句级别" class="heading-link"><i class="fas fa-link"></i></a><a href="#statement：语句级别" class="headerlink" title="statement：语句级别"></a>statement：语句级别</h4>
+      <p>每一条会修改数据的sql都会记录在binlog中。</p>
+<p>​        优点：不需要记录每一行的变化，减少了binlog日志量，节约了IO，提高性能。但是注意statement相比于row能节约多少性能与日志量，取决于应用的SQL情况。正常同一条记录修改或者插入row格式所产生的日志量还小于Statement产生的日志量，但是考虑到如果带条件的update操作，以及整表删除，alter表等操作，ROW格式会产生大量日志，因此在考虑是否使用ROW格式日志时应该跟据应用的实际情况，其所产生的日志量会增加多少，以及带来的IO性能问题。</p>
+<p>​        缺点：由于记录的只是执行语句，为了这些语句在slave上正确运行，我们还必须记录每条语句在执行时候的一些相关信息，以保证所有语句能在slave得到和在master端执行时相同的结果。另外，一些特定的函数功能如果要在slave和master上保持一致会有很多相关问题。</p>
+
+        <h4 id="row：行数据级别"   >
+          <a href="#row：行数据级别" class="heading-link"><i class="fas fa-link"></i></a><a href="#row：行数据级别" class="headerlink" title="row：行数据级别"></a>row：行数据级别</h4>
+      <p>5.1.5版本的MySQL才开始支持row level的复制，它不记录sql语句上下文相关信息，仅保存哪条记录被修改。</p>
+<p>​        优点：binlog中可以不记录执行的sql语句的上下文相关的信息，仅需要记录那一条记录被修改成什么了。所以row level的日志会非常清楚的记下每一行数据修改的细节。而且不会出现某些特定情况下的存储过程，或function，以及trigger的调用和触发无法被正确复制的问题。</p>
+<p>​        缺点：所有的执行的语句当记录到日志中的时候，都将以每行记录的修改来记录，这样可能会产生大量的日志内容。但是新版本的MySQL对row level模式进行了优化，并不是所有的修改都会以row level来记录，像遇到表结构变更的时候就会以statement模式来记录，如果sql语句确实就是update或者delete等修改数据的语句，那么还是会记录所有行的变更。</p>
+
+        <h4 id="mixed：混合级别"   >
+          <a href="#mixed：混合级别" class="heading-link"><i class="fas fa-link"></i></a><a href="#mixed：混合级别" class="headerlink" title="mixed：混合级别"></a>mixed：混合级别</h4>
+      <p>从5.1.8版本开始，MySQL提供了Mixed格式，实际上就是Statement与Row的结合。</p>
+<p>​        在Mixed模式下，一般的语句修改使用statment格式保存binlog，如果一些函数，statement无法完成主从复制的操作，则采用row格式保存binlog，MySQL会根据执行的每一条具体的sql语句来区分对待记录的日志形式，也就是在Statement和Row之间选择一种。</p>
+
+        <h5 id="由于-statement-和-mixed-的特殊性，通过sql来备份，总会有数据不一致的情况，比如：now-函数。"   >
+          <a href="#由于-statement-和-mixed-的特殊性，通过sql来备份，总会有数据不一致的情况，比如：now-函数。" class="heading-link"><i class="fas fa-link"></i></a><a href="#由于-statement-和-mixed-的特殊性，通过sql来备份，总会有数据不一致的情况，比如：now-函数。" class="headerlink" title="由于 statement 和 mixed 的特殊性，通过sql来备份，总会有数据不一致的情况，比如：now()函数。"></a>由于 statement 和 mixed 的特殊性，通过sql来备份，总会有数据不一致的情况，比如：now()函数。</h5>
+      
+        <h5 id="所以绝大多数场景下使用-Row级别，也就是行级别，这样保证我们备份的数据和出口的数据相一致。"   >
+          <a href="#所以绝大多数场景下使用-Row级别，也就是行级别，这样保证我们备份的数据和出口的数据相一致。" class="heading-link"><i class="fas fa-link"></i></a><a href="#所以绝大多数场景下使用-Row级别，也就是行级别，这样保证我们备份的数据和出口的数据相一致。" class="headerlink" title="所以绝大多数场景下使用 Row级别，也就是行级别，这样保证我们备份的数据和出口的数据相一致。"></a>所以绝大多数场景下使用 Row级别，也就是行级别，这样保证我们备份的数据和出口的数据相一致。</h5>
+      
+        <h3 id="三、下载和安装Canal工具"   >
+          <a href="#三、下载和安装Canal工具" class="heading-link"><i class="fas fa-link"></i></a><a href="#三、下载和安装Canal工具" class="headerlink" title="三、下载和安装Canal工具"></a>三、下载和安装Canal工具</h3>
+      <p>下载前，在mysql创建canal用户，因为canal服务端需要连接mysql数据库</p>
+<figure class="highlight bash"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- 使用命令登录：mysql -u root -p</span><br><span class="line">-- 创建用户 用户名：canal 密码：Canal@123456</span><br><span class="line">create user <span class="string">&#x27;canal&#x27;</span>@<span class="string">&#x27;%&#x27;</span> identified by <span class="string">&#x27;Canal@123456&#x27;</span>;</span><br><span class="line">-- 授权 *.*表示所有库</span><br><span class="line">grant SELECT, REPLICATION SLAVE, REPLICATION CLIENT on *.* to <span class="string">&#x27;canal&#x27;</span>@<span class="string">&#x27;%&#x27;</span> identified by <span class="string">&#x27;Canal@123456&#x27;</span>;</span><br></pre></td></tr></table></div></figure>
+
+
+        <h4 id="改了配置文件之后，重启MySQL，使用命令查看是否打开binlog模式："   >
+          <a href="#改了配置文件之后，重启MySQL，使用命令查看是否打开binlog模式：" class="heading-link"><i class="fas fa-link"></i></a><a href="#改了配置文件之后，重启MySQL，使用命令查看是否打开binlog模式：" class="headerlink" title="改了配置文件之后，重启MySQL，使用命令查看是否打开binlog模式："></a>改了配置文件之后，重启MySQL，使用命令查看是否打开binlog模式：</h4>
+      <p><img src="https://brath.cloud/blogImg/20200808151606261.png" alt="在这里插入图片描述"></p>
+
+        <h4 id="查看binlog日志文件列表："   >
+          <a href="#查看binlog日志文件列表：" class="heading-link"><i class="fas fa-link"></i></a><a href="#查看binlog日志文件列表：" class="headerlink" title="查看binlog日志文件列表："></a>查看binlog日志文件列表：</h4>
+      <p><img src="https://brath.cloud/blogImg/20200808151715291.png" alt="在这里插入图片描述"></p>
+
+        <h3 id="点此下载Canal👇"   >
+          <a href="#点此下载Canal👇" class="heading-link"><i class="fas fa-link"></i></a><a href="#点此下载Canal👇" class="headerlink" title="点此下载Canal👇"></a>点此下载Canal👇</h3>
+      <p><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://ghproxy.com/https://github.com/alibaba/canal/releases/download/canal-1.1.2/canal.deployer-1.1.2.tar.gz" >https://ghproxy.com/https://github.com/alibaba/canal/releases/download/canal-1.1.2/canal.deployer-1.1.2.tar.gz</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p>此链接为github代理提供连接，仅供参考，此处无广告意义。</p>
+<p><img src="https://brath.cloud/blogImg/image-20220629152616754.png" alt="image-20220629152616754"></p>
+<p>下载好后上传至linux服务器，创建canal文件夹并解压到canal文件夹中</p>
+<p><img src="https://brath.cloud/blogImg/image-20220629153150741.png" alt="image-20220629153150741"></p>
+<p>完成后会得到以上四个核心文件：bin，conf，lib，logs</p>
+<p>需要修改一处配置文件：</p>
+<p>​        /canal/conf/example 下的 instance.properties</p>
+<p><img src="https://brath.cloud/blogImg/image-20220629153511220.png" alt="image-20220629153511220"></p>
+<p>修改完成后保存退出</p>
+<p>接下来进入bin目录 sh startUp.sh 启动 canal 服务端</p>
+
+        <h4 id="至此服务端的操作基本完成"   >
+          <a href="#至此服务端的操作基本完成" class="heading-link"><i class="fas fa-link"></i></a><a href="#至此服务端的操作基本完成" class="headerlink" title="至此服务端的操作基本完成"></a>至此服务端的操作基本完成</h4>
+      <p>Java客户端操作<br>首先引入maven依赖：</p>
+<figure class="highlight xml"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.otter<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>canal.client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></div></figure>
+
+<p>然后创建一个canal项目，使用SpringBoot构建，如图所示，创建canal包：</p>
+<p><img src="C:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20220629153956493.png" alt="image-20220629153956493"></p>
+<p>canal工具类，仅供参考</p>
+<figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.brath.canal;</span><br><span class="line"><span class="keyword">import</span> java.awt.print.Printable;</span><br><span class="line"><span class="keyword">import</span> java.time.LocalDateTime;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> cn.brath.common.redis.service.TokenService;</span><br><span class="line"><span class="keyword">import</span> cn.brath.common.redis.util.RedisKeys;</span><br><span class="line"><span class="keyword">import</span> cn.brath.common.utils.AssertUtil;</span><br><span class="line"><span class="keyword">import</span> cn.brath.common.utils.UserTokenManager;</span><br><span class="line"><span class="keyword">import</span> cn.brath.entity.IvUser;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONObject;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.otter.canal.client.CanalConnector;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.otter.canal.client.CanalConnectors;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.otter.canal.protocol.CanalEntry.*;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.otter.canal.protocol.Message;</span><br><span class="line"><span class="keyword">import</span> com.google.protobuf.InvalidProtocolBufferException;</span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.lang3.StringUtils;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.print.attribute.standard.MediaPrintableArea;</span><br><span class="line"><span class="keyword">import</span> java.net.InetSocketAddress;</span><br><span class="line"><span class="keyword">import</span> java.time.ZoneId;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CanalClient</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * SLF4J日志</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Logger logger = LoggerFactory.getLogger(CanalClient.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String host = <span class="string">&quot;***.***.***.***&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String port = <span class="string">&quot;11111&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String destination = <span class="string">&quot;example&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 用户令牌业务接口</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> TokenService tokenService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">TokenServiceIn</span><span class="params">(TokenService tokenService)</span> </span>&#123;</span><br><span class="line">        CanalClient.tokenService = tokenService;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * canal启动方法</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!AssertUtil.isEmptys(host, port, destination)) &#123;</span><br><span class="line">            logger.error(<span class="string">&quot;canal客户端连接失败，当前服务端host：&#123;&#125;，port：&#123;&#125;，destination：&#123;&#125;&quot;</span>, host, port, destination);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        CanalConnector connector = CanalConnectors.newSingleConnector(</span><br><span class="line">                <span class="keyword">new</span> InetSocketAddress(host, Integer.valueOf(port)), destination, <span class="string">&quot;&quot;</span>, <span class="string">&quot;&quot;</span></span><br><span class="line">        );</span><br><span class="line">        <span class="keyword">int</span> batchSize = <span class="number">1000</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//建立连接</span></span><br><span class="line">            connector.connect();</span><br><span class="line">            <span class="comment">//目标为全部表</span></span><br><span class="line">            connector.subscribe(<span class="string">&quot;.*\\..*&quot;</span>);</span><br><span class="line">            connector.rollback();</span><br><span class="line">            logger.info(<span class="string">&quot;canal客户端连接完成，当前服务端host：&#123;&#125;，port：&#123;&#125;，destination：&#123;&#125;&quot;</span>, host, port, destination);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">                    <span class="comment">//尝试从master那边拉去数据batchSize条记录，有多少取多少</span></span><br><span class="line">                    Message message = connector.getWithoutAck(batchSize);</span><br><span class="line">                    <span class="keyword">long</span> batchId = message.getId();</span><br><span class="line">                    <span class="keyword">int</span> size = message.getEntries().size();</span><br><span class="line">                    <span class="keyword">if</span> (batchId == -<span class="number">1</span> || size == <span class="number">0</span>) &#123;</span><br><span class="line">                        Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        logger.info(<span class="string">&quot;同步任务进行中，检测到修改数据，执行同步Redis&quot;</span>);</span><br><span class="line">                        dataHandle(message.getEntries());</span><br><span class="line">                    &#125;</span><br><span class="line">                    connector.ack(batchId);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InvalidProtocolBufferException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            connector.disconnect();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 数据处理</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> entrys</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dataHandle</span><span class="params">(List&lt;Entry&gt; entrys)</span> <span class="keyword">throws</span> InvalidProtocolBufferException </span>&#123;</span><br><span class="line">        JSONObject beforeData = <span class="keyword">null</span>;</span><br><span class="line">        JSONObject afterData = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">for</span> (Entry entry : entrys) &#123;</span><br><span class="line">            <span class="keyword">if</span> (EntryType.ROWDATA.equals(entry.getEntryType())) &#123;</span><br><span class="line">                <span class="comment">//反序列化rowdata</span></span><br><span class="line">                RowChange rowChange = RowChange.parseFrom(entry.getStoreValue());</span><br><span class="line">                <span class="comment">//获取数据集</span></span><br><span class="line">                List&lt;RowData&gt; rowDataList = rowChange.getRowDatasList();</span><br><span class="line">                <span class="comment">//获取数据遍历</span></span><br><span class="line">                <span class="keyword">for</span> (RowData rowData : rowDataList) &#123;</span><br><span class="line">                    afterData = <span class="keyword">new</span> JSONObject();</span><br><span class="line">                    List&lt;Column&gt; afterColumnsList = rowData.getAfterColumnsList();</span><br><span class="line">                    <span class="keyword">for</span> (Column column : afterColumnsList) &#123;</span><br><span class="line">                        afterData.put(column.getName(), column.getValue());</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">                <span class="comment">//因为作者这里只做同步Redis，不考虑到操作类型，只需要覆盖相同键值数据</span></span><br><span class="line">                </span><br><span class="line">                <span class="comment">//写入Redis</span></span><br><span class="line">                executeRedisWarehousing(afterData);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 执行Redis用户数据入库</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> afterData</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">executeRedisWarehousing</span><span class="params">(JSONObject afterData)</span> </span>&#123;</span><br><span class="line">        logger.info(<span class="string">&quot;开始执行Redis热更新入库同步Mysql -- &quot;</span>);</span><br><span class="line">		</span><br><span class="line">        <span class="keyword">do</span>...</span><br><span class="line">        </span><br><span class="line">        logger.info(<span class="string">&quot;入库完成&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+
+
+
+
+        <h3 id="启动类使用："   >
+          <a href="#启动类使用：" class="heading-link"><i class="fas fa-link"></i></a><a href="#启动类使用：" class="headerlink" title="启动类使用："></a>启动类使用：</h3>
+      <figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(InterviewUserServiceApplication.class, args);</span><br><span class="line">        <span class="comment">//项目启动，执行canal客户端监听</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">new</span> CanalClient().run();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            log.error(<span class="string">&quot; canal客户端监听 启动失败，原因可能是：&#123;&#125;&quot;</span>, e.getMessage());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></div></figure>
+
+
+
+
+
+<p>接下来启动项目运行，成功连接canal后我们尝试修改一个mysql的数据，发现在客户端成功完成了与Redis的同步操作</p>
+<p><img src="https://brath.cloud/blogImg/image-20220629154454409.png" alt="image-20220629154454409"></p>
+
+        <h3 id="相关异常："   >
+          <a href="#相关异常：" class="heading-link"><i class="fas fa-link"></i></a><a href="#相关异常：" class="headerlink" title="相关异常："></a>相关异常：</h3>
+      <p>Canal异常：</p>
+<p>dump address /124.222.106.122:3306 has an error, retrying. caused by java.la</p>
+<p>解决办法：重启Mysql，删除example下的 dat 后缀文件后重启canal</p>
+<p>其他：</p>
+<p>​    是否开放端口 11111 </p>
+<p>​    mysql是否连接成功，查看logs/example/example.log</p>
+<p>​    服务端与客户端是否连接成功，查看当前项目日志即可</p>
+</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2022/06/23/Knife4J%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/">Knife4J接口文档</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2022-06-23</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-06-23</span></span></div></header><div class="post-body"><div class="post-excerpt"><p>Swagger2 及knife4j使用</p>
 <p>最近项目中用到了 Swagger2 和knife4j作为接口文档。所以自己简单搭建了一套环境学习下，总体体验下来，这个框架很方便也很简单易用。</p>
 <p>Swagger2 和 Swagger-ui<br>springFox官方推荐的是Swagger2 和 Swagger-ui配套使用</p>
 <p>maven依赖<br>    <dependencies><br>        <dependency><br>            <groupId>io.springfox</groupId><br>            <artifactId>springfox-swagger2</artifactId><br>            <version>2.9.2</version><br>        </dependency><br>    <!--生成UI界面--><br>    <dependency><br>        <groupId>io.springfox</groupId><br>        <artifactId>springfox-swagger-ui</artifactId><br>        <version>2.9.2</version><br>    </dependency><br>    </dependencies></p>
@@ -1804,163 +1916,4 @@ public Boolean save(
 <td>数据的类型， 读写的多少，数据量</td>
 </tr>
 </tbody></table></div>
-</div></div></article><article class="postlist-item post"><header class="post-header"><h1 class="post-title"><a class="post-title__link" href="/2022/04/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%AC%94%E8%AE%B0/">设计模式（一）</a></h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2022-04-25</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2022-04-25</span></span></div></header><div class="post-body"><div class="post-excerpt">
-        <h3 id="设计模式笔记-Brath-Li"   >
-          <a href="#设计模式笔记-Brath-Li" class="heading-link"><i class="fas fa-link"></i></a><a href="#设计模式笔记-Brath-Li" class="headerlink" title="设计模式笔记  __Brath.Li"></a>设计模式笔记  <strong>__Brath.Li</strong></h3>
-      
-        <h3 id="GoF23：23种设计模式"   >
-          <a href="#GoF23：23种设计模式" class="heading-link"><i class="fas fa-link"></i></a><a href="#GoF23：23种设计模式" class="headerlink" title="GoF23：23种设计模式"></a>GoF23：23种设计模式</h3>
-      <p>​        <strong>设计模式的本质是面向对象设原则的实际运用，是对类的封装性，继承性，多态性以及类的关联关系和组合关系的充分理解。</strong></p>
-<p>​            <strong>正确使用设计模式具有以下优点：</strong></p>
-<p>​            <strong>1.提高程序员思维能力，编程能力和设计能力</strong></p>
-<p>​            <strong>2.使程序设计更加标准化，代码编制更加工程化，使软件开发效率大大提高，从而缩短软件的开的周期。</strong></p>
-<p>​            <strong>3.使设计的代码可重用性高、可读性强、可靠性高、灵活性好、可维护性强。</strong></p>
-
-        <h3 id="创建型模式："   >
-          <a href="#创建型模式：" class="heading-link"><i class="fas fa-link"></i></a><a href="#创建型模式：" class="headerlink" title="创建型模式："></a><strong>创建型模式：</strong></h3>
-      <p>​            <strong>单例模式、工厂模式、抽象工厂模式、建造者模式、原型模式。</strong></p>
-
-        <h3 id="结构型模式："   >
-          <a href="#结构型模式：" class="heading-link"><i class="fas fa-link"></i></a><a href="#结构型模式：" class="headerlink" title="结构型模式："></a><strong>结构型模式：</strong></h3>
-      <p>​            <strong>适配器模式、桥接模式、装饰模式、组合模式、外欧冠模式、享元模式、代理模式。</strong></p>
-
-        <h3 id="行为性模式："   >
-          <a href="#行为性模式：" class="heading-link"><i class="fas fa-link"></i></a><a href="#行为性模式：" class="headerlink" title="行为性模式："></a><strong>行为性模式：</strong></h3>
-      <p>​            <strong>模板方法模式、命令模式、迭代器模式、观察者模式、中介者模式、备忘录模式、解释器模式、状态模式、策略模式、责任链模式、访问者模式。</strong></p>
-
-        <h4 id="OOP面向对象七大原则："   >
-          <a href="#OOP面向对象七大原则：" class="heading-link"><i class="fas fa-link"></i></a><a href="#OOP面向对象七大原则：" class="headerlink" title="OOP面向对象七大原则："></a>OOP面向对象七大原则：</h4>
-      <p><strong>1.OCP开闭原则：</strong></p>
-<p>​            <strong>软件实体（包括类、模块、功能等）应该对扩展开放，但是对修改关闭。</strong></p>
-<p><strong>2.里氏替换原则：</strong></p>
-<p>​            <strong>继承必须确保超类锁拥有的性质在子类中仍然成立。</strong></p>
-<p><strong>3.依赖倒置原则：</strong></p>
-<p>​            <strong>面向接口编程，不要面向实现编程。</strong></p>
-<p><strong>4.单一职责原则：</strong></p>
-<p>​            <strong>控制类粒度大小、将对象解耦合、提高内聚性。</strong></p>
-<p><strong>5.接口隔离原则：</strong></p>
-<p>​            <strong>要为各个类建立他们需要的专用接口。</strong></p>
-<p><strong>6.迪米特法则：</strong></p>
-<p>​            **只与你的直接朋友交谈、不跟 “陌生人” 说话。 **</p>
-<p><strong>7.合成复用原则：</strong></p>
-<p>​            <strong>尽量先使用组合或者聚合等关联关系来实现，其次才考虑使用继承关系来实现。</strong></p>
-
-        <h2 id="单例设计模式："   >
-          <a href="#单例设计模式：" class="heading-link"><i class="fas fa-link"></i></a><a href="#单例设计模式：" class="headerlink" title="单例设计模式："></a>单例设计模式：</h2>
-      <p>作用：让一个类只能创建一个实例（因为频繁的创建对象，回收对象会造成系统性能下降。）。解决对象的唯一性，保证了内存中一个对象是唯一的 。</p>
-
-        <h4 id="饿汉式：Hunary"   >
-          <a href="#饿汉式：Hunary" class="heading-link"><i class="fas fa-link"></i></a><a href="#饿汉式：Hunary" class="headerlink" title="饿汉式：Hunary"></a>饿汉式：Hunary</h4>
-      <p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\饿汉式.png" alt="饿汉式"></p>
-<p><strong>步骤：1.私有化构造器  2.直接创建静态对象 3.创建一个静态的方法，供外部调用实例</strong></p>
-<p>优点：类初始化的时候，会立即加载该对象，线程天生安全，调用效率高。</p>
-<p>缺点：无法避免被反射破解，不安全</p>
-
-        <h4 id="懒汉式：LazyMan"   >
-          <a href="#懒汉式：LazyMan" class="heading-link"><i class="fas fa-link"></i></a><a href="#懒汉式：LazyMan" class="headerlink" title="懒汉式：LazyMan"></a>懒汉式：LazyMan</h4>
-      <p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910151318667.png" alt="image-20210910151318667"></p>
-<p>步骤：1.私有化构造器，不会直接创建对象  2.向外暴露调用对象方法，在方法中先进行对象判空，为空才创建对象，这就是懒汉式 </p>
-<p>优点：类初始化时，不会初始化该对象，真正需要使用的时候才会去创建该对象，具备懒加载功能。</p>
-<p>缺点：</p>
-<p>1.判空浪费时间</p>
-<p>2.不加Synchronized的懒汉式线程不安全，需要用到volatile关键字保持new对象的原子性一致</p>
-<p>懒汉式单线程下是OK的，但是多线程并发下不安全。</p>
-<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910153316119.png" alt="image-20210910153316119">开启十次线程测试</p>
-<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910153327761.png" alt="image-20210910153327761"></p>
-<p><strong>每次重启线程数都不一致</strong>，线程不安全。</p>
-<p>怎么解决：</p>
-<p>Tips：懒汉式也是可以实现线程安全的：只要加上Synchronized加锁即可：</p>
-<p>但是这样一来，会降低整个访问的速度，而且每次都要判断。那么有没有更好的方式来实现呢？</p>
-<p>解决方案：</p>
-<p><strong>double-check-lock双重加锁</strong></p>
-<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910152638263.png" alt="image-20210910152638263"></p>
-<p>所谓双重加锁机制。指的是，并不是每次进入getInstance方法都需要同步，而是先不同步，进入方法之后先检查实例是否存在，如果不存在才进入下面Synchronized加锁，之后会再次检查实例是否存在，如果还不存在才创建实例。</p>
-<p>双重检测方式（因为JVM本身重排序的原因，可能会出现多次的初始化）</p>
-<p>这种模式下的懒汉式，称为<strong>DCL懒汉式</strong>！</p>
-<p>你以为这样就没问题了？大错特错，注意：这里的new对象操作不是原子性的</p>
-<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910153630120.png" alt="image-20210910153630120"></p>
-<p>new 一个对象的执行顺序 ↓</p>
-<figure class="highlight java"><div class="table-container"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 1.分配内存空间</span></span><br><span class="line"><span class="comment">  * 2.执行构造方法初始化对象</span></span><br><span class="line"><span class="comment">  * 3.把这个对象指向内存空间</span></span><br><span class="line"><span class="comment">  * 这是创建对象的步骤 正确顺序为 123</span></span><br><span class="line"><span class="comment">  * 举例：</span></span><br><span class="line"><span class="comment">  * 线程A 创建对象 步骤为 123, 我们的代码没有问题</span></span><br><span class="line"><span class="comment">  * 线程B 创建对象 因为操作步骤不是原子性的，可能会走成 1 3 2，先指向了内存空间，再去构造对象</span></span><br><span class="line"><span class="comment">  * 这时会出现一个问题，指令重排：双重检测模式会失效，因为此时我们的类，不为空了，但是里面返回的对象是空的。</span></span><br><span class="line"><span class="comment">  * 所以就要用到一个关键字volatile，避免指令重排，保持操作原子性</span></span><br><span class="line"><span class="comment">  */</span></span><br></pre></td></tr></table></div></figure>
-
-<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910153756918.png" alt="image-20210910153756918"></p>
-
-        <h4 id="静态内部类模式："   >
-          <a href="#静态内部类模式：" class="heading-link"><i class="fas fa-link"></i></a><a href="#静态内部类模式：" class="headerlink" title="静态内部类模式："></a>静态内部类模式：</h4>
-      <p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910155204370.png" alt="image-20210910155204370"></p>
-<p>步骤：1. 私有化构造器  2. 创建一个静态内部类，类中创建外部类的实例  3.向外暴露一个方法获取静态内部类中创建的对象</p>
-<p>优点：结合了懒汉式和饿汉式各自的优点，真正需要对象的时候才会加载，加载类是线程安全的。</p>
-<p>缺点：每次调用都会创建多余的对象</p>
-
-        <h3 id="以上单例设计模式都会被反射破解，枚举不会！"   >
-          <a href="#以上单例设计模式都会被反射破解，枚举不会！" class="heading-link"><i class="fas fa-link"></i></a><a href="#以上单例设计模式都会被反射破解，枚举不会！" class="headerlink" title="以上单例设计模式都会被反射破解，枚举不会！"></a>以上单例设计模式都会被反射破解，枚举不会！</h3>
-      <p>枚举：枚举本身是一个类，继承了Enum的实例就成为了枚举类</p>
-<p>使用枚举实现单例模式，实现简单、调用效率高，枚举本身就是单例，由JVM从根本上提供保障，避免通过反射和反序列化的漏洞，缺点是没有延迟加载。</p>
-<p>在源码Constructor中<img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910150042754.png" alt="image-20210910150042754"></p>
-<p>如果是对象是通过反射机制创建的会抛出一个异常</p>
-<p>IllegalArgumentException: Cannot reflectively create enum objects</p>
-<p>枚举类在traget输出的代码中，构造器是空的，隐藏起来了，用javap -p 反编译也看不见构造器</p>
-<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910150706569.png" alt="image-20210910150706569"></p>
-<p>我们用反射机制获取空构造器会获取不到对象，这时候用jad反编译工具，得到的java文件中，</p>
-<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910150400927.png" alt="image-20210910150400927"></p>
-<p>可以看见构造器其实是有数据的，我们把数据放到反射中实现，就会得到这个异常Cannot reflectively create enum objects</p>
-<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910150429958.png" alt="image-20210910150429958"></p>
-<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910150418256.png" alt="image-20210910150418256"></p>
-<p>由此可见，反射不能破坏枚举的单例模式</p>
-<p>优点：实现简单，线程安全，防止反射攻击等。</p>
-<p>缺点： 在不需要的时候可能就加载了，造成内存浪费</p>
-<p>Tips：利用反射破解懒汉式。懒汉式不是安全的！</p>
-<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910160648326.png" alt="image-20210910160648326"></p>
-<p>私有化构造器的时候判断外面的字段guoqing是否==false，等于的话就设置为true，如果不等于的话就抛出运行异常，这样设计的话在我们用反射机制获取构造器的时候，就获取不到对象了</p>
-<p>但是有解决方法：利用反射强大的机制，假如我们反编译，知道要破解的字段是guoqing，那我们直接用反射获取guoqing字段，然后设置解除私有化限制，在创建构造器实例的时候，把guoqing设置为true，就可以破解DCL懒汉式了</p>
-<p><img src="C:\Users\26344\AppData\Roaming\Typora\typora-user-images\image-20210910160638735.png" alt="image-20210910160638735"></p>
-
-        <h2 id="工厂设计模式-Factory-Model："   >
-          <a href="#工厂设计模式-Factory-Model：" class="heading-link"><i class="fas fa-link"></i></a><a href="#工厂设计模式-Factory-Model：" class="headerlink" title="工厂设计模式 Factory Model："></a>工厂设计模式 Factory Model：</h2>
-      <p>​        <strong>核心本质：</strong></p>
-<p>​            <strong>实例化对象不使用new，用工厂方法代替</strong></p>
-<p>​            <strong>将选择实现类，创建对象统一管理和控制。从而将调用者跟我们的实现类解耦。</strong></p>
-<p>​        <strong>详细分类：</strong></p>
-<p>​            <strong>简单工厂模式</strong></p>
-<p>​                        <strong>用来生产同一等级结构中的任意产品：扩展性差</strong></p>
-<p>​            <strong>工厂方法模式</strong></p>
-<p>​                        <strong>用来生产同一等级结构中的固定产品：扩展性强</strong></p>
-<p>​            <strong>抽象工厂模式</strong></p>
-<p>​                        <strong>围绕一个超级工厂创建其他工厂。该超级工厂又称为其他工厂的工厂。</strong></p>
-<p><strong>工厂设计模式应用场景：</strong></p>
-<p>​            <strong>JDK中的Calendar的getInstance方法</strong></p>
-<p>​            <strong>JDBC中的Connection对象的获取</strong></p>
-<p>​            <strong>Spring的IOC容器创建管理Bean对象</strong></p>
-<p>​            <strong>反射Class对象的newInsetance方法</strong></p>
-
-        <h2 id="建造者模式："   >
-          <a href="#建造者模式：" class="heading-link"><i class="fas fa-link"></i></a><a href="#建造者模式：" class="headerlink" title="建造者模式："></a>建造者模式：</h2>
-      <p>​    <strong>建造者模式也属于创建型模式，它提供了一种创建对象的最佳方式。</strong></p>
-<p>​    <strong>定义：将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示</strong></p>
-<p>​    <strong>主要作用：在用户不知道对象的建造过程和细节的情况下就可以直接创建复杂对象。</strong></p>
-<p>​    <strong>用户只需要给出指定复杂对象的类型和内容，建造者模式负责将按顺序创建复杂对象（把内部的建造过程和细节隐藏起来）</strong></p>
-<p>​    <strong>例子：</strong></p>
-<p>​            <strong>工厂（建造者模式）：负责制造汽车（组装过程和细节在工厂内）</strong></p>
-<p>​            <strong>汽车购买者（用户）：你只需要说你需要的型号（对象的类型和内容），然后直接购买就可以了（不需要知道汽车是怎么组装的（发动机、变速箱、轮毂、车门））</strong></p>
-
-        <h2 id="原型模式："   >
-          <a href="#原型模式：" class="heading-link"><i class="fas fa-link"></i></a><a href="#原型模式：" class="headerlink" title="原型模式："></a>原型模式：</h2>
-      <p>​        创建型模式之一。</p>
-<p>​        </p>
-
-        <h2 id="适配器模式"   >
-          <a href="#适配器模式" class="heading-link"><i class="fas fa-link"></i></a><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h2>
-      <p>​        将一个类的接口转换成客户希望的另外一个接口，Adapter模式使得原本由于接口不兼容而不能一起工作的那些类可以在一起工作！</p>
-<p>​        角色分析：</p>
-<p>​                1 . 目标接口：客户所期待的接口，目标可以使具体或抽象的类，也可以是接口。</p>
-<p>​                2 . 需要适配的类：需要适配的类或者适配者类。</p>
-<p>​                3 . 适配器：通过包装一个需要适配的对象，将原接口转换成目标对象。</p>
-<p>​        对象适配器优点</p>
-<p>​                1 . 一个对象适配器可以把多个不同的适配者适配到同一个目标</p>
-<p>​                2 . 可以适配一个适配者的子类，由于适配器和适配者之间是关联关系，根据 “里氏代换原则” ，适配者的子类也可以通过该适配器进行适配。</p>
-<p>​        类适配器缺点：</p>
-<p>​                1 . 对于Java、C# 等不支持多重类继承的语言，一次最多只能适配一个适配者类，不能同时适配多个适配者。</p>
-<p>​                2 . 在Java、C#等语言中，适配器模式中的目标抽象类只能为接口，不能为类，其使用有一定的局限性。 </p>
-<p>​        适用场景：</p>
-<p>​                1 . 系统需要使用一些现有的类，而这些类的接口不符合系统的需要，甚至没有这些类的代码。</p>
-<p>​                2 . 想创建一个可以重复使用的类，用于与一些彼此之间没有太大关联的一些类，包括一些可能在将来引进的类一起工作。</p>
-</div></div></article></section><nav class="paginator"><div class="paginator-inner"><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-right"></i></a></div></nav></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><section class="sidebar-toc hide"></section><!-- ov = overview--><section class="sidebar-ov"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="https://brath.cloud/EnjoyNotesLogo.png?versionId=CAEQMhiBgID_rP.3_BciIGMyZGVkMjNmNzM0MDQxNWI5YmE4MGZjYTdkY2FkNjQw" alt="avatar"></div><p class="sidebar-ov-author__text">Brath</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">31</div><div class="sidebar-ov-state-item__name">归档</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2022</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Brath</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v5.4.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.2</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script></body></html>
+</div></div></article></section><nav class="paginator"><div class="paginator-inner"><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-right"></i></a></div></nav></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><section class="sidebar-toc hide"></section><!-- ov = overview--><section class="sidebar-ov"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="https://brath.cloud/EnjoyNotesLogo.png?versionId=CAEQMhiBgID_rP.3_BciIGMyZGVkMjNmNzM0MDQxNWI5YmE4MGZjYTdkY2FkNjQw" alt="avatar"></div><p class="sidebar-ov-author__text">Brath</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">32</div><div class="sidebar-ov-state-item__name">归档</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2022</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Brath</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v5.4.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.2</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script></body></html>
